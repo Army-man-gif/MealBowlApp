@@ -1,5 +1,5 @@
 import BowlImage from "./BowlImage.jsx";
-import "./Bowl.css";
+import "./BowlImage.css";
 function App() {
   return (
     <>

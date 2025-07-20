@@ -1,4 +1,4 @@
-import "./Bowl.css";
+import "./BowlImage.css";
 function BowlImage(props) {
   return <span className={props.css}>𓎩</span>;
 }
