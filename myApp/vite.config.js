@@ -3,6 +3,6 @@ import react from "@vitejs/plugin-react";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "./Build_files",
+  base: "/MealBowlApp/Build_files",
   plugins: [react()],
 });
