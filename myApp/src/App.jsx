@@ -2,7 +2,10 @@ import Bowl from "./Bowl.jsx";
 function App() {
   return (
     <>
-      <Bowl />
+      <Bowl css="reSize" />
+      <Bowl css="reSize red" />
+      <Bowl css="reSize blue" />
+      <Bowl css="reSize green" />
     </>
   );
 }
