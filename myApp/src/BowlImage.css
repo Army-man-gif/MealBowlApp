@@ -18,3 +18,7 @@
 .green {
   color: green;
 }
+.BowlImage:hover {
+  cursor: pointer;
+  color: aqua;
+}
