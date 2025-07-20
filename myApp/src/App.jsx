@@ -1,5 +1,10 @@
+import Bowl from "./Bowl.jsx";
 function App() {
-  return <></>;
+  return (
+    <>
+      <Bowl />
+    </>
+  );
 }
 
 export default App;
