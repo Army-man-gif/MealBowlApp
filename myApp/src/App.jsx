@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
   return (
     <>
-      <BrowserRouter basename="/MealBowlApp/Build_files">
+      <BrowserRouter basename="/MealBowlApp/docs">
         <Routes>
           <Route path="/" element={<RenderBowls />} />
           <Route
