@@ -1,13 +1,13 @@
-import Bowl from "./Bowl.jsx";
+import BowlImage from "./BowlImage.jsx";
 import "./Bowl.css";
 function App() {
   return (
     <>
       <div className="flex">
-        <Bowl css="reSize" />
-        <Bowl css="reSize red" />
-        <Bowl css="reSize blue" />
-        <Bowl css="reSize green" />
+        <BowlImage css="reSize" />
+        <BowlImage css="reSize red" />
+        <BowlImage css="reSize blue" />
+        <BowlImage css="reSize green" />
       </div>
     </>
   );

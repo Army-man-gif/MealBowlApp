@@ -1,6 +1,6 @@
 import "./Bowl.css";
-function Bowl(props) {
+function BowlImage(props) {
   return <span className={props.css}>𓎩</span>;
 }
 
-export default Bowl;
+export default BowlImage;
