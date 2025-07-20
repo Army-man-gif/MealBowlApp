@@ -1,8 +1,9 @@
+import "./Specific.css";
 function Contents(props) {
   return (
     <>
       {props.contents.map((value, index) => (
-        <p>{value}</p>
+        <p className="moveAndAdjust">{value}</p>
       ))}
     </>
   );
