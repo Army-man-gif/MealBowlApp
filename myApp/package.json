@@ -16,13 +16,15 @@
     "clean-dist": "rimraf dist",
     "move-build": "npm run clean-buildfiles && npm run make-buildfiles && npm run copy-build && npm run clean-dist",
     "build-and-move": "npm run build && npm run move-build",
-    "build-and-move-and-push": "npm run build && npm run move-build && npm run format && npm run git",
+    "deploy": "npm run build && npm run move-build && npm run format && npm run git",
     "pushToGit": "npm run format && npm run git",
-    "git": "cd ../../../../Courses && git add . && git commit -m '.' && git push"
+    "git": "cd ../../MealBowlApp && git add . && git commit -m '.' && git push"
   },
   "dependencies": {
+    "prettier": "^3.6.2",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "rimraf": "^6.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",
