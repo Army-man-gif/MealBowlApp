@@ -1,14 +1,21 @@
-import BowlImage from "./BowlImage.jsx";
-import "./BowlImage.css";
+import RenderBowls from "./BowlImgRendering";
+import Contents from "./SpecificBowlContents.jsx";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
   return (
     <>
-      <div className="flex">
-        <BowlImage css="reSize" />
-        <BowlImage css="reSize red" />
-        <BowlImage css="reSize blue" />
-        <BowlImage css="reSize green" />
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<RenderBowls />} />
+          <Route
+            path="/contents"
+            element={
+              <Contents contents={["Chicken curry", "Legumes", "Fruit"]} />
+            }
+          />
+          <Route />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

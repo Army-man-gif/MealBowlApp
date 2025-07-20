@@ -18,6 +18,9 @@
 .green {
   color: green;
 }
+.bowl {
+  text-decoration: none;
+}
 .bowl:hover {
   cursor: pointer;
   color: aqua;
