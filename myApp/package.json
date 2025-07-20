@@ -7,6 +7,8 @@
     "test": "vitest",
     "dev": "vite",
     "build": "vite build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "lint": "eslint .",
     "preview": "vite preview",
     "format": "prettier --write .",
@@ -16,11 +18,12 @@
     "clean-dist": "rimraf dist",
     "move-build": "npm run clean-buildfiles && npm run make-buildfiles && npm run copy-build && npm run clean-dist",
     "build-and-move": "npm run build && npm run move-build",
-    "deploy": "npm run build && npm run move-build && npm run format && npm run git",
+    "deployCustom": "npm run build && npm run move-build && npm run format && npm run git",
     "pushToGit": "npm run format && npm run git",
     "git": "cd ../../MealBowlApp && git add . && git commit -m '.' && git push"
   },
   "dependencies": {
+    "gh-pages": "^6.3.0",
     "prettier": "^3.6.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
