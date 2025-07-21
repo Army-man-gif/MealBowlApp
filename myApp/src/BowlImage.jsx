@@ -3,9 +3,14 @@ import { Link } from "react-router-dom";
 function BowlImage(props) {
   const color = props.css ? { color: props.css } : {};
   return (
-    <Link to="/contents" className={"bowl item reSize"} style={color}>
-      𓎩
-    </Link>
+    <>
+      <div className={"item"}>
+        <Link to="/contents" style={color} className="bowl reSize">
+          𓎩
+        </Link>
+        <p className="bowlText">{props.name}</p>
+      </div>
+    </>
   );
 }
 
