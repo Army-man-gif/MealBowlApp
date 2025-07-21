@@ -1,0 +1,25 @@
+.center{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size: 3em;
+}
+.caption{
+    font-size: 1.5em;
+    color:brown;
+}
+.link{
+    font-size: 1.1em;
+}
+a:link{
+    color:blue;
+}
+a:visited{
+    color: purple;
+}
+a:hover,a:focus{
+    color:aquamarine;
+}
+a:active{
+    color:blueviolet;
+}
