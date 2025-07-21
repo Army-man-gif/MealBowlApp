@@ -29,10 +29,10 @@ function RenderBowls() {
         )}
       </div>
       <div id="Bowls" className="flex">
-        <BowlImage css="reSize" />
-        <BowlImage css="reSize red" />
-        <BowlImage css="reSize blue" />
-        <BowlImage css="reSize green" />
+        <BowlImage />
+        <BowlImage css="red" />
+        <BowlImage css="blue" />
+        <BowlImage css="green" />
       </div>
     </>
   );

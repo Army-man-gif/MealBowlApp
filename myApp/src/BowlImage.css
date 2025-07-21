@@ -1,12 +1,21 @@
+:root {
+  --gap: 100px;
+}
 .flex {
+  margin-left: 20%;
   margin-top: 150px;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 100px;
+  gap: var(--gap);
+  flex-wrap: wrap;
 }
 .reSize {
   font-size: 180px;
+}
+.item {
+  flex: 1 1 calc((100% - var(--gap)) / 2);
+  box-sizing: border-box;
 }
 .red {
   color: red;
