@@ -1,8 +1,19 @@
 .moveAndAdjust {
-  margin-top: 100px;
-  margin-left: 50px;
+  background-image: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  width: max-content;
+  padding: 0.05em 0.1em;
+  text-align: center;
+  margin: 30px auto;
   display: flex;
-  justify-content: start;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 20px;
   align-items: center;
-  font-size: 50px;
+  font-size: 1.5em;
+}
+
+.position {
+  position: absolute;
+  top: 0px;
+  left: 20px;
 }

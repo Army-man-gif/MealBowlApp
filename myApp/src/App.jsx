@@ -7,12 +7,7 @@ function App() {
       <BrowserRouter basename="/MealBowlApp/docs">
         <Routes>
           <Route path="/" element={<RenderBowls />} />
-          <Route
-            path="/contents"
-            element={
-              <Contents contents={["Chicken curry", "Legumes", "Fruit"]} />
-            }
-          />
+          <Route path="/contents/:bowlID" element={<Contents />} />
           <Route />
         </Routes>
       </BrowserRouter>
