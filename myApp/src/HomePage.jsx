@@ -16,17 +16,20 @@ function RenderBowls() {
         Explore bowls
       </a>
       <br></br>
-      <div className="push">
-        <h2 onClick={pressed} className="clickable">
-          Contact us:{" "}
-        </h2>
-        {clicked && (
-          <div className="pushChildAlign">
-            <p>Owner: Jyoti Sharma</p>
-            <p>Email: gobbledygook@gmail.com</p>
-            <p>Phone number: 05406405640606</p>
-          </div>
-        )}
+      <div className="center">
+        <h2 className="push default clickable">Login/Sign up</h2>
+        <div className="push">
+          <h2 onClick={pressed} className="clickable">
+            📞 Contact us{" "}
+          </h2>
+          {clicked && (
+            <div className="pushChildAlign">
+              <p>Owner: Jyoti Sharma</p>
+              <p>Email: gobbledygook@gmail.com</p>
+              <p>Phone number: 05406405640606</p>
+            </div>
+          )}
+        </div>
       </div>
       <div id="Bowls" className="flex">
         <BowlImage name="Paneer Power Bowl" />
