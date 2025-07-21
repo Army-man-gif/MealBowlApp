@@ -1,7 +1,11 @@
 import BowlImage from "./BowlImage.jsx";
-import "./BowlImage.css";
 import "./HomePage.css";
+import { useState } from "react";
 function RenderBowls() {
+  const [clicked, setClicked] = useState(false);
+  function pressed() {
+    setClicked(!clicked);
+  }
   return (
     <>
       <h1 className="center">Tasty and healthy food bowls</h1>
@@ -11,13 +15,18 @@ function RenderBowls() {
       <a href="#Bowls" className="center link">
         Explore bowls
       </a>
+      <br></br>
       <div className="push">
-        <h2>Contact us: </h2>
-        <div className="pushChildAlign">
-          <p>Owner: Jyoti Sharma</p>
-          <p>Email: gobbledygook@gmail.com</p>
-          <p>Phone number: 05406405640606</p>
-        </div>
+        <h2 onClick={pressed} className="clickable">
+          Contact us:{" "}
+        </h2>
+        {clicked && (
+          <div className="pushChildAlign">
+            <p>Owner: Jyoti Sharma</p>
+            <p>Email: gobbledygook@gmail.com</p>
+            <p>Phone number: 05406405640606</p>
+          </div>
+        )}
       </div>
       <div id="Bowls" className="flex">
         <BowlImage css="reSize" />

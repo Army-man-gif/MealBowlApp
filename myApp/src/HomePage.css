@@ -5,14 +5,25 @@
   font-size: 3em;
 }
 .push {
-  margin-left: 43%;
+  display: block;
   font-size: 1.5em;
+  background-image: linear-gradient(to right, pink, purple, yellow);
+  border-radius: 20px;
+  width: max-content;
+  padding: 0.05em 0.1em;
+  text-align: center;
+  margin: 30px auto;
+}
+.clickable {
+  cursor: pointer;
 }
 .pushChildAlign {
   display: flex;
   flex-direction: column;
+  align-items: center;
   font-size: 1.2em;
-  gap: 0.3em;
+  gap: 0.1px;
+  margin-top: 10px;
 }
 .caption {
   font-size: 1.5em;
@@ -21,16 +32,16 @@
 .link {
   font-size: 1.4em;
 }
-a:link {
+.link:link {
   color: blue;
 }
-a:visited {
+.link:visited {
   color: purple;
 }
-a:hover,
-a:focus {
+.link:hover,
+.link:focus {
   color: aquamarine;
 }
-a:active {
+.link:active {
   color: blueviolet;
 }
