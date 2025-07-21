@@ -1,25 +1,36 @@
-.center{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size: 3em;
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3em;
 }
-.caption{
-    font-size: 1.5em;
-    color:brown;
+.push {
+  margin-left: 43%;
+  font-size: 1.5em;
 }
-.link{
-    font-size: 1.1em;
+.pushChildAlign {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.2em;
+  gap: 0.3em;
 }
-a:link{
-    color:blue;
+.caption {
+  font-size: 1.5em;
+  color: brown;
 }
-a:visited{
-    color: purple;
+.link {
+  font-size: 1.4em;
 }
-a:hover,a:focus{
-    color:aquamarine;
+a:link {
+  color: blue;
 }
-a:active{
-    color:blueviolet;
+a:visited {
+  color: purple;
+}
+a:hover,
+a:focus {
+  color: aquamarine;
+}
+a:active {
+  color: blueviolet;
 }
