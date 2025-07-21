@@ -1,8 +1,9 @@
 :root {
-  --gap: 100px;
+  --gap: 80px;
+  --pushToRight: 90px;
 }
 .flex {
-  margin-left: 20%;
+  margin-left: var(--pushToRight);
   margin-top: 150px;
   display: flex;
   flex-direction: row;
@@ -14,17 +15,8 @@
   font-size: 180px;
 }
 .item {
-  flex: 1 1 calc((100% - var(--gap)) / 2);
+  flex: 1 1 calc((100% - (2 * var(--gap))) / 3);
   box-sizing: border-box;
-}
-.red {
-  color: red;
-}
-.blue {
-  color: blue;
-}
-.green {
-  color: green;
 }
 .bowl {
   text-decoration: none;

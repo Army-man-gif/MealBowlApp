@@ -33,6 +33,11 @@ function RenderBowls() {
         <BowlImage css="red" />
         <BowlImage css="blue" />
         <BowlImage css="green" />
+        <BowlImage css="orange" />
+        <BowlImage css="yellow" />
+        <BowlImage css="purple" />
+        <BowlImage css="pink" />
+        <BowlImage css="aqua" />
       </div>
     </>
   );
