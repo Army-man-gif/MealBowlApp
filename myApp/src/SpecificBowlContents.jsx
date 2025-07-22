@@ -5,6 +5,16 @@ function Contents() {
   const { bowlID } = useParams();
   const [ingredientsClicked, setingredientsClicked] = useState(true);
   const [macrosClicked, setMacrosClicked] = useState(true);
+  const Hot = {
+    "Paneer-Power-Bowl": true,
+    "Soya-Chunk-High-Protein-Bowl": false,
+    "Rajma-Superfood-Bowl": true,
+    "Tofu-Stir-Fry-Bowl": false,
+    "Eggless-Bhurji-&-Oats-Bowl": true,
+    "Egg-Bhurji-Nutrition-Bowl": false,
+    "Fish-&-Veggie-Grain-Bowl": true,
+    "Chicken-Tikka-Macro-Bowl": false,
+  };
   const Macros = {
     "Paneer-Power-Bowl": [480, 30, 35, 20],
     "Soya-Chunk-High-Protein-Bowl": [460, 32, 30, 18],
@@ -78,6 +88,8 @@ function Contents() {
     ? information[bowlID]
     : ["No ingredients found"];
   const bowlMacros = Macros[bowlID] ? Macros[bowlID] : [];
+  const bowlHot = Hot[bowlID] ? Hot[bowlID] : [];
+
   const stopCase = "Toppings";
   const bold = { fontWeight: "bold" };
   function toggle(toChange) {
