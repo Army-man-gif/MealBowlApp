@@ -94,4 +94,8 @@
   .positioning {
     left: 60%;
   }
+  .positionHotImage {
+    background-size: 100px 100px;
+    left: 60%;
+  }
 }
