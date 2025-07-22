@@ -15,6 +15,14 @@
   text-align: center;
   margin: 30px auto;
 }
+@media screen and (max-width: 480px) {
+  .push {
+    font-size: 1em;
+  }
+  .flexedLogin {
+    font-size: 0.8em;
+  }
+}
 .default {
   background-image: linear-gradient(to right, red, orange, yellow);
   display: revert;
