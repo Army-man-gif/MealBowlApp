@@ -106,6 +106,7 @@ function Contents() {
             ))}
         </div>
       </div>
+      <p className="centerAndEnlarge">𓎩</p>
       <div className="positioning">
         <div className="adjust">
           <h2 onClick={() => toggle("macros")} className="clickable">

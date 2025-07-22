@@ -11,7 +11,14 @@
   align-items: center;
   font-size: 1.1em;
 }
-
+.centerAndEnlarge {
+  font-size: 20em;
+  padding: 0.05em 0.1em;
+  text-align: center;
+  margin: 140px auto;
+  display: flex;
+  justify-content: center;
+}
 .position {
   position: absolute;
   top: 0px;
