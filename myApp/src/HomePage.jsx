@@ -119,7 +119,7 @@ function RenderBowls() {
         </div>
       </div>
       <div id="Bowls" className="flex">
-        <BowlImage name="Paneer Power Bowl" />
+        <BowlImage name="Paneer Power Bowl price" price="₹ 30" />
         <BowlImage css="red" name="Chicken Tikka Macro Bowl" price="₹ 50" />
         <BowlImage
           css="blue"
