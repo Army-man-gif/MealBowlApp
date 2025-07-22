@@ -121,8 +121,17 @@ function Contents() {
         </div>
       </div>
       <div className="centerAndEnlarge">
-        {bowlHot && <div className="positionHotImage"></div>}
-        <p>𓎩</p>
+        {bowlHot && (
+          <>
+            <div className="positionHotImage"></div>
+            <p>𓎩</p>
+          </>
+        )}
+        {!bowlHot && (
+          <>
+            <p>𓎩</p>
+          </>
+        )}
       </div>
       <div className="positioning">
         <div className="adjust">
