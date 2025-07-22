@@ -18,14 +18,14 @@
 }
 @media screen and (max-width: 480px) {
   .moveAndAdjust {
-    font-size: 0.5em;
+    font-size: 0.65em;
     border-radius: 10px;
   }
   .centerAndEnlarge {
     font-size: 10em;
   }
   .adjust {
-    font-size: 0.5em;
+    font-size: 0.35em;
   }
 }
 @keyframes steaming {
