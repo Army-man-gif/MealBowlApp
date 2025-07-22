@@ -2,6 +2,7 @@ import "./Specific.css";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 function Contents() {
+  window.scrollTo(0, 0);
   const { bowlID } = useParams();
   const [ingredientsClicked, setingredientsClicked] = useState(true);
   const [macrosClicked, setMacrosClicked] = useState(true);
