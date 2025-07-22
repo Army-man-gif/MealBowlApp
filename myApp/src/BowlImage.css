@@ -8,6 +8,12 @@
   font-weight: 600;
   color: black;
 }
+@media screen and (max-width: 480px) {
+  :root {
+    --gap: 20px;
+    --pushToRight: 10px;
+  }
+}
 .flex {
   margin-left: var(--pushToRight);
   margin-top: 150px;
