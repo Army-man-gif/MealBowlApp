@@ -80,6 +80,9 @@
   font-size: 1.1em;
 }
 @media screen and (max-width: 480px) {
+  .body {
+    background: red !important;
+  }
   .moveAndAdjust {
     font-size: 0.35em;
   }
