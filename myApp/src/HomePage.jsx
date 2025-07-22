@@ -56,7 +56,7 @@ function RenderBowls() {
       </a>
       <br></br>
       <div className="center">
-        <div className="push flexedLogin">
+        <div className="flexedLogin">
           <h2 onClick={() => pressed("login")} className="clickable">
             Login/Sign up
           </h2>
