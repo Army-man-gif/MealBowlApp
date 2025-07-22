@@ -9,12 +9,12 @@ function Contents() {
   const labels = ["Calories", "Protein", "Carbs", "Fats"];
   const Hot = {
     "Paneer-Power-Bowl": true,
-    "Soya-Chunk-High-Protein-Bowl": false,
-    "Rajma-Superfood-Bowl": true,
-    "Tofu-Stir-Fry-Bowl": false,
-    "Eggless-Bhurji-&-Oats-Bowl": true,
-    "Egg-Bhurji-Nutrition-Bowl": false,
-    "Fish-&-Veggie-Grain-Bowl": true,
+    "Soya-Chunk-High-Protein-Bowl": true,
+    "Rajma-Superfood-Bowl": false,
+    "Tofu-Stir-Fry-Bowl": true,
+    "Eggless-Bhurji-&-Oats-Bowl": false,
+    "Egg-Bhurji-Nutrition-Bowl": true,
+    "Fish-&-Veggie-Grain-Bowl": false,
     "Chicken-Tikka-Macro-Bowl": false,
   };
   const Macros = {

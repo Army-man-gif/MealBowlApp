@@ -31,12 +31,12 @@
   height: 150px;
   top: 40%;
   left: 43%;
-  background-image: url("assets/smoke.png");
+  background-image: url("/assets/smoke.png");
   background-size: 170px 150px;
   background-repeat: no-repeat;
   background-position: center;
   opacity: 1;
-  animation: steaming 5s ease-in-out infinite;
+  animation: steaming 3s ease-in-out infinite;
   pointer-events: none;
   z-index: -1;
 }
