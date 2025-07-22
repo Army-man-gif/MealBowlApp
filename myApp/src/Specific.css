@@ -16,18 +16,7 @@
   top: 0px;
   left: 20px;
 }
-@media screen and (max-width: 480px) {
-  .moveAndAdjust {
-    font-size: 0.65em;
-  }
-  .centerAndEnlarge {
-    font-size: 10em;
-  }
-  .adjust {
-    font-size: 0.35em;
-    margin: 30px 40px;
-  }
-}
+
 @keyframes steaming {
   0% {
     opacity: 0%;
@@ -89,4 +78,16 @@
   border-radius: 20px;
   align-items: center;
   font-size: 1.1em;
+}
+@media screen and (max-width: 480px) {
+  .moveAndAdjust {
+    font-size: 0.65em;
+  }
+  .centerAndEnlarge {
+    font-size: 10em;
+  }
+  .adjust {
+    font-size: 0.35em;
+    margin: 30px 40px;
+  }
 }
