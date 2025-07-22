@@ -76,6 +76,7 @@ function Contents() {
   const bowlInfo = information[bowlID]
     ? information[bowlID]
     : ["No ingredients found"];
+  const bowlMacros = Macros[bowlID] ? Macros[bowlID] : [];
   const stopCase = "Toppings";
   const bold = { fontWeight: "bold" };
   function toggle() {
