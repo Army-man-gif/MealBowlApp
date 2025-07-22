@@ -1,11 +1,48 @@
 import BowlImage from "./BowlImage.jsx";
 import "./HomePage.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 function RenderBowls() {
-  const [clicked, setClicked] = useState(false);
-  function pressed() {
-    setClicked(!clicked);
+  const [contactClicked, setcontactClicked] = useState(false);
+  const [loginClicked, setloginClicked] = useState(false);
+  const [username, setusername] = useState("");
+  const [password, setpassword] = useState("");
+  const [enteredUsername, setenteredUsername] = useState("");
+  const [enteredPassowrd, setenteredPassowrd] = useState("");
+  const [validLogin, setValidLogin] = useState(false);
+  const userRef = useRef("");
+  const passRef = useRef("");
+
+  function set() {
+    const data = { username: enteredUsername, password: enteredPassowrd };
+    const dataStringified = JSON.stringify(data);
+    localStorage.setItem("Details", dataStringified);
+    userRef.current.value = "";
+    passRef.current.value = "";
+    setloginClicked(false);
   }
+  function verify() {
+    if (username === enteredUsername && password === enteredPassowrd) {
+      userRef.current.value = "";
+      passRef.current.value = "";
+      setValidLogin(true);
+    } else {
+      userRef.current.value = "Incorrect details";
+      passRef.current.value = "";
+      console.log("Username: " + username + " Password: " + password);
+      setValidLogin(false);
+    }
+  }
+  function pressed(param) {
+    if (param === "contact") {
+      setcontactClicked(!contactClicked);
+    }
+    if (param === "login") {
+      setloginClicked(!loginClicked);
+      setusername(JSON.parse(localStorage.getItem("Details")).username);
+      setpassword(JSON.parse(localStorage.getItem("Details")).password);
+    }
+  }
+
   return (
     <>
       <h1 className="center">Tasty and healthy food bowls</h1>
@@ -17,12 +54,60 @@ function RenderBowls() {
       </a>
       <br></br>
       <div className="center">
-        <h2 className="push default clickable">Login/Sign up</h2>
+        <div className="push flexedLogin">
+          <h2 onClick={() => pressed("login")} className="clickable">
+            Login/Sign up
+          </h2>
+          {loginClicked &&
+            (localStorage.getItem("Details") ? (
+              <>
+                <br></br>
+                <label htmlFor="username">Enter username: </label>
+                <input
+                  ref={userRef}
+                  id="username"
+                  type="text"
+                  onChange={(e) => setenteredUsername(e.target.value)}
+                />
+                <label htmlFor="password">Enter password: </label>
+                <input
+                  ref={passRef}
+                  id="password"
+                  type="password"
+                  onChange={(e) => setenteredPassowrd(e.target.value)}
+                />
+                <button type="button" onClick={verify}>
+                  Login
+                </button>
+              </>
+            ) : (
+              <>
+                <br></br>
+                <label htmlFor="username">Enter username: </label>
+                <input
+                  ref={userRef}
+                  id="username"
+                  type="text"
+                  onChange={(e) => setenteredUsername(e.target.value)}
+                />
+                <label htmlFor="password">Enter password: </label>
+                <input
+                  ref={passRef}
+                  id="password"
+                  type="text"
+                  onChange={(e) => setenteredPassowrd(e.target.value)}
+                />
+                <button type="button" onClick={set}>
+                  Signup
+                </button>
+              </>
+            ))}
+        </div>
         <div className="push">
-          <h2 onClick={pressed} className="clickable">
+          <h2 onClick={() => pressed("contact")} className="clickable">
             📞 Contact us{" "}
           </h2>
-          {clicked && (
+          {contactClicked && (
             <div className="pushChildAlign">
               <p>Owner: Jyoti Sharma</p>
               <p>Email: gobbledygook@gmail.com</p>

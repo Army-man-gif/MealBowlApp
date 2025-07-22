@@ -20,6 +20,15 @@
   display: revert;
   font-size: 1.5em;
 }
+.flexedLogin {
+  background-image: linear-gradient(to right, red, orange, yellow);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 1.5em;
+}
 .clickable {
   cursor: pointer;
 }
