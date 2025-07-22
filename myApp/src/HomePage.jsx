@@ -120,13 +120,17 @@ function RenderBowls() {
       </div>
       <div id="Bowls" className="flex">
         <BowlImage name="Paneer Power Bowl" />
-        <BowlImage css="red" name="Chicken Tikka Macro Bowl" />
-        <BowlImage css="blue" name="Soya Chunk High-Protein Bowl" />
-        <BowlImage css="green" name="Fish & Veggie Grain Bowl" />
-        <BowlImage css="orange" name="Egg Bhurji Nutrition Bowl" />
-        <BowlImage css="yellow" name="Rajma Superfood Bowl" />
-        <BowlImage css="purple" name="Tofu Stir-Fry Bowl" />
-        <BowlImage css="pink" name="Eggless Bhurji & Oats Bowl" />
+        <BowlImage css="red" name="Chicken Tikka Macro Bowl" price="₹ 50" />
+        <BowlImage
+          css="blue"
+          name="Soya Chunk High-Protein Bowl"
+          price="₹ 20"
+        />
+        <BowlImage css="green" name="Fish & Veggie Grain Bowl" price="₹ 30" />
+        <BowlImage css="orange" name="Egg Bhurji Nutrition Bowl" price="₹ 70" />
+        <BowlImage css="yellow" name="Rajma Superfood Bowl" price="₹ 60" />
+        <BowlImage css="purple" name="Tofu Stir-Fry Bowl" price="₹ 40" />
+        <BowlImage css="pink" name="Eggless Bhurji & Oats Bowl" price="₹ 80" />
       </div>
     </>
   );
