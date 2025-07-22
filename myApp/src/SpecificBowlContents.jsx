@@ -88,7 +88,7 @@ function Contents() {
     ? information[bowlID]
     : ["No ingredients found"];
   const bowlMacros = Macros[bowlID] ? Macros[bowlID] : [];
-  const bowlHot = Hot[bowlID] ? Hot[bowlID] : [];
+  const bowlHot = Hot[bowlID] ? Hot[bowlID] : false;
 
   const stopCase = "Toppings";
   const bold = { fontWeight: "bold" };
@@ -119,7 +119,7 @@ function Contents() {
         </div>
       </div>
       <div className="centerAndEnlarge">
-        <div className="positionHotImage"></div>
+        {bowlHot && <div className="positionHotImage"></div>}
         <p>𓎩</p>
       </div>
       <div className="positioning">
