@@ -107,7 +107,7 @@ function Contents() {
         </div>
       </div>
       <div className="centerAndEnlarge">
-        <div className="positionImage"></div>
+        <div className="positionHotImage"></div>
         <p>𓎩</p>
       </div>
       <div className="positioning">

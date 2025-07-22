@@ -25,7 +25,7 @@
     transform: translateY(-70px);
   }
 }
-.positionImage {
+.positionHotImage {
   position: absolute;
   width: 170px;
   height: 150px;
