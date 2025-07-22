@@ -1,4 +1,4 @@
-import "./Specific.css?v=2";
+import "./Specific.css?v=4";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 function Contents() {
