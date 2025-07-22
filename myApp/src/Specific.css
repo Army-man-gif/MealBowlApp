@@ -85,6 +85,7 @@
   }
   .centerAndEnlarge {
     font-size: 10em;
+    margin: 60% auto;
   }
   .adjust {
     font-size: 0.35em;
