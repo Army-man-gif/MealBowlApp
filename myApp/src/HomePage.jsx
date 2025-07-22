@@ -1,5 +1,5 @@
 import BowlImage from "./BowlImage.jsx";
-import "./HomePage.css?v=3";
+import "./HomePage.css?v=5";
 import { useState, useRef } from "react";
 function RenderBowls() {
   const [contactClicked, setcontactClicked] = useState(false);
