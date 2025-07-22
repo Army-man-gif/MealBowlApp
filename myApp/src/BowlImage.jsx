@@ -16,7 +16,7 @@ function BowlImage(props) {
         <p className="bowlText">
           {props.name}
           <br></br>
-          "Price: "+{props.price}
+          "Price: "{props.price}
         </p>
       </div>
     </>
