@@ -95,9 +95,9 @@
     left: 60%;
   }
   .positionHotImage {
-    background-size: 40px 40px;
-    left: 40%;
-    top: 50%;
+    background-size: 50px 50px;
+    left: 30%;
+    top: 40%;
     bottom: 0%;
   }
 }
