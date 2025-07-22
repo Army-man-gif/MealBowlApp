@@ -25,21 +25,7 @@
     transform: translateY(-70px);
   }
 }
-.positionHotImage {
-  position: absolute;
-  width: 170px;
-  height: 150px;
-  top: 40%;
-  left: 35%;
-  background-image: url("/assets/smoke.png");
-  background-size: 170px 150px;
-  background-repeat: no-repeat;
-  background-position: center;
-  opacity: 1;
-  animation: steaming 3s ease-in-out infinite;
-  pointer-events: none;
-  z-index: -1;
-}
+
 .centerAndEnlarge {
   position: relative;
   font-size: 20em;
@@ -48,6 +34,21 @@
   margin: -150px auto;
   display: flex;
   justify-content: center;
+}
+.positionHotImage {
+  position: absolute;
+  width: 170px;
+  height: 150px;
+  bottom: 100%;
+  left: 50%;
+  background-image: url("/assets/smoke.png");
+  background-size: 170px 150px;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 1;
+  animation: steaming 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
 }
 .position {
   position: absolute;
