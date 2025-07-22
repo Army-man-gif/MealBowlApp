@@ -87,6 +87,7 @@
     font-size: 10em;
   }
   .adjust {
+    background-image: linear-gradient(135deg, lightblue, lightgreen);
     font-size: 0.35em;
     margin: 30px 40px;
   }
