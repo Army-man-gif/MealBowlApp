@@ -11,7 +11,7 @@ function BowlImage(props) {
     <>
       <div className={"item"}>
         <Link to={`/contents/${bowlID}`} style={color} className="bowl reSize">
-          <img src={picture} alt="𓎩" width="200" height="200"></img>
+          <img src={picture} alt="𓎩" className="bowlImageDimensions"></img>
         </Link>
         <p className="bowlText">{props.name}</p>
       </div>

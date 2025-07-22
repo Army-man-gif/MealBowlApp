@@ -8,10 +8,19 @@
   font-weight: 600;
   color: black;
 }
+.bowlImageDimensions {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
 @media screen and (max-width: 480px) {
   :root {
     --gap: 20px;
     --pushToRight: 10px;
+  }
+  .bowlImageDimensions {
+    width: 100px;
+    height: 100px;
   }
 }
 .flex {
