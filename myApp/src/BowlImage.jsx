@@ -13,7 +13,11 @@ function BowlImage(props) {
         <Link to={`/contents/${bowlID}`} style={color} className="bowl reSize">
           <img src={picture} alt="𓎩" className="bowlImageDimensions"></img>
         </Link>
-        <p className="bowlText">{props.name}</p>
+        <p className="bowlText">
+          {props.name}
+          <br></br>
+          "Price: "+{props.price}
+        </p>
       </div>
     </>
   );
