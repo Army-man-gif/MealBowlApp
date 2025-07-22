@@ -38,8 +38,10 @@ function RenderBowls() {
     }
     if (param === "login") {
       setloginClicked(!loginClicked);
-      setusername(JSON.parse(localStorage.getItem("Details")).username);
-      setpassword(JSON.parse(localStorage.getItem("Details")).password);
+      const use = JSON.parse(localStorage.getItem("Details")).username;
+      const pass = JSON.parse(localStorage.getItem("Details")).password;
+      setusername(use ? use : "");
+      setpassword(pass ? pass : "");
     }
   }
 
