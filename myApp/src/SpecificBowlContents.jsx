@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 function Contents() {
   const { bowlID } = useParams();
   const [ingredientsClicked, setingredientsClicked] = useState(true);
+  const [macrosClicked, setMacrosClicked] = useState(true);
   const Macros = {
     "Paneer-Power-Bowl": [480, 30, 35, 20],
     "Soya-Chunk-High-Protein-Bowl": [460, 32, 30, 18],
@@ -79,14 +80,19 @@ function Contents() {
   const bowlMacros = Macros[bowlID] ? Macros[bowlID] : [];
   const stopCase = "Toppings";
   const bold = { fontWeight: "bold" };
-  function toggle() {
-    setingredientsClicked(!ingredientsClicked);
+  function toggle(toChange) {
+    if (toChange == "ingredients") {
+      setingredientsClicked(!ingredientsClicked);
+    }
+    if (toChange == "macros") {
+      setMacrosClicked(!macrosClicked);
+    }
   }
   return (
     <>
       <div className="position">
         <div className="moveAndAdjust">
-          <h2 onClick={toggle} className="clickable">
+          <h2 onClick={() => toggle("ingredients")} className="clickable">
             Ingredients
           </h2>
           {ingredientsClicked &&
@@ -96,6 +102,20 @@ function Contents() {
                 {value.startsWith(stopCase) && (
                   <p style={bold}>{value + "\n"}</p>
                 )}
+              </React.Fragment>
+            ))}
+        </div>
+      </div>
+      <div className="positioning">
+        <div className="adjust">
+          <h2 onClick={() => toggle("macros")} className="clickable">
+            Macros
+          </h2>
+          {macrosClicked &&
+            bowlMacros.map((value, index) => (
+              <React.Fragment key={index}>
+                {index === 0 && <p>{value + "kcal \n"}</p>}
+                {index > 0 && <p>{value + "g \n"}</p>}
               </React.Fragment>
             ))}
         </div>

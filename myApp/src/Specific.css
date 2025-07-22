@@ -20,3 +20,22 @@
 .clickable {
   cursor: pointer;
 }
+
+.positioning {
+  position: absolute;
+  top: 0px;
+  left: 80%;
+}
+.adjust {
+  background-image: linear-gradient(to top, red, orange, yellow);
+  width: max-content;
+  padding: 0.05em 0.1em;
+  text-align: center;
+  margin: 30px auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 20px;
+  align-items: center;
+  font-size: 1.1em;
+}
