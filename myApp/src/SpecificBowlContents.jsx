@@ -19,7 +19,7 @@ function Contents() {
       "2 tbsp roasted peanuts",
       "Sprinkle of chat masala and lemon juice",
     ],
-    "Rajma Superfood Bowl": [
+    "Rajma-Superfood-Bowl": [
       "3/4 cup boiled rajma (kidney beans)",
       "1/2 cup cooked red rice or millets",
       "1/2 cup mixed vegetables (carrot, peas, beans)",
