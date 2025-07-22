@@ -81,14 +81,14 @@
 }
 @media screen and (max-width: 480px) {
   .moveAndAdjust {
-    font-size: 0.35em;
+    font-size: 0.5em;
   }
   .centerAndEnlarge {
     font-size: 4em;
     margin: 60% auto;
   }
   .adjust {
-    font-size: 0.45em;
+    font-size: 0.55em;
     margin: 30px 40px;
   }
   .positioning {
