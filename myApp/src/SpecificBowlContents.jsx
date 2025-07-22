@@ -4,6 +4,16 @@ import { useParams } from "react-router-dom";
 function Contents() {
   const { bowlID } = useParams();
   const [ingredientsClicked, setingredientsClicked] = useState(true);
+  const Macros = {
+    "Paneer-Power-Bowl": [480, 30, 35, 20],
+    "Soya-Chunk-High-Protein-Bowl": [460, 32, 30, 18],
+    "Rajma-Superfood-Bowl": [470, 22, 38, 16],
+    "Tofu-Stir-Fry-Bowl": [480, 28, 30, 22],
+    "Eggless-Bhurji-&-Oats-Bowl": [440, 25, 35, 16],
+    "Egg-Bhurji-Nutrition-Bowl": [450, 28, 25, 20],
+    "Fish-&-Veggie-Grain-Bowl": [520, 36, 25, 28],
+    "Chicken-Tikka-Macro-Bowl": [500, 38, 30, 22],
+  };
   const information = {
     "Paneer-Power-Bowl": [
       "150g Grilled paneer (cubes, tossed with spices)",
@@ -66,6 +76,8 @@ function Contents() {
   const bowlInfo = information[bowlID]
     ? information[bowlID]
     : ["No ingredients found"];
+  const stopCase = "Toppings";
+  const bold = { fontWeight: "bold" };
   function toggle() {
     setingredientsClicked(!ingredientsClicked);
   }
@@ -79,7 +91,10 @@ function Contents() {
           {ingredientsClicked &&
             bowlInfo.map((value, index) => (
               <React.Fragment key={index}>
-                <p>{value + "\n"}</p>
+                {!value.startsWith(stopCase) && <p>{value + "\n"}</p>}
+                {value.startsWith(stopCase) && (
+                  <p style={bold}>{value + "\n"}</p>
+                )}
               </React.Fragment>
             ))}
         </div>
