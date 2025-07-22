@@ -1,8 +1,9 @@
 import "./Specific.css";
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 function Contents() {
   const { bowlID } = useParams();
+  const [ingredientsClicked, setingredientsClicked] = useState(true);
   const information = {
     "Paneer-Power-Bowl": [
       "150g Grilled paneer (cubes, tossed with spices)",
@@ -65,16 +66,22 @@ function Contents() {
   const bowlInfo = information[bowlID]
     ? information[bowlID]
     : ["No ingredients found"];
+  function toggle() {
+    setingredientsClicked(!ingredientsClicked);
+  }
   return (
     <>
       <div className="position">
         <div className="moveAndAdjust">
-          <h2>Ingredients</h2>
-          {bowlInfo.map((value, index) => (
-            <React.Fragment key={index}>
-              <p>{value + "\n"}</p>
-            </React.Fragment>
-          ))}
+          <h2 onClick={toggle} className="clickable">
+            Ingredients
+          </h2>
+          {ingredientsClicked &&
+            bowlInfo.map((value, index) => (
+              <React.Fragment key={index}>
+                <p>{value + "\n"}</p>
+              </React.Fragment>
+            ))}
         </div>
       </div>
     </>

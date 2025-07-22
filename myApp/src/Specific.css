@@ -1,5 +1,5 @@
 .moveAndAdjust {
-  background-image: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  background-image: linear-gradient(135deg, lightblue, lightgreen);
   width: max-content;
   padding: 0.05em 0.1em;
   text-align: center;
@@ -9,11 +9,14 @@
   flex-direction: column;
   border-radius: 20px;
   align-items: center;
-  font-size: 1.5em;
+  font-size: 1.1em;
 }
 
 .position {
   position: absolute;
   top: 0px;
   left: 20px;
+}
+.clickable {
+  cursor: pointer;
 }
