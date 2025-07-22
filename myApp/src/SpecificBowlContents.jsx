@@ -6,6 +6,7 @@ function Contents() {
   const { bowlID } = useParams();
   const [ingredientsClicked, setingredientsClicked] = useState(true);
   const [macrosClicked, setMacrosClicked] = useState(true);
+  const labels = ["Calories", "Protein", "Carbs", "Fats"];
   const Hot = {
     "Paneer-Power-Bowl": true,
     "Soya-Chunk-High-Protein-Bowl": false,
@@ -131,8 +132,10 @@ function Contents() {
           {macrosClicked &&
             bowlMacros.map((value, index) => (
               <React.Fragment key={index}>
-                {index === 0 && <p>{value + "kcal \n"}</p>}
-                {index > 0 && <p>{value + "g \n"}</p>}
+                {index === 0 && (
+                  <p>{labels[index] + ": " + value + "kcal \n"}</p>
+                )}
+                {index > 0 && <p>{labels[index] + ": " + value + "g \n"}</p>}
               </React.Fragment>
             ))}
         </div>

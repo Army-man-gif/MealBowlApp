@@ -10,7 +10,7 @@ function BowlImage(props) {
     <>
       <div className={"item"}>
         <Link to={`/contents/${bowlID}`} style={color} className="bowl reSize">
-          𓎩
+          <img src="assets/bowl.png" alt="𓎩" width="200" height="200"></img>
         </Link>
         <p className="bowlText">{props.name}</p>
       </div>
@@ -19,3 +19,5 @@ function BowlImage(props) {
 }
 
 export default BowlImage;
+
+//
