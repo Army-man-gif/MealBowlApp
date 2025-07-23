@@ -1,5 +1,4 @@
 import "./BowlImage.css";
-import picture from "./assets/bowl3.jpg";
 import { Link } from "react-router-dom";
 function BowlImage(props) {
   const color = props.css ? { color: props.css } : {};
@@ -11,7 +10,11 @@ function BowlImage(props) {
     <>
       <div className={"item"}>
         <Link to={`/contents/${bowlID}`} style={color} className="bowl reSize">
-          <img src={picture} alt="𓎩" className="bowlImageDimensions"></img>
+          <img
+            src={props.picture}
+            alt="𓎩"
+            className="bowlImageDimensions"
+          ></img>
         </Link>
         <p className="bowlText">
           {props.name}

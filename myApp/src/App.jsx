@@ -1,5 +1,6 @@
 import RenderBowls from "./HomePage.jsx";
 import Contents from "./SpecificBowlContents.jsx";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
   return (
