@@ -1,5 +1,5 @@
 import "./BowlImage.css";
-import picture from "./assets/picture3.jpg";
+import picture from "./assets/bowl3.jpg";
 import { Link } from "react-router-dom";
 function BowlImage(props) {
   const color = props.css ? { color: props.css } : {};
