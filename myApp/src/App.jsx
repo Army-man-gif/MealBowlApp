@@ -24,4 +24,6 @@ Different pics for different bowls
 Background of veggies
 Delivery system 
 Basket system
+Admin page
+Use layout of sites mum said to get my design better
 */
