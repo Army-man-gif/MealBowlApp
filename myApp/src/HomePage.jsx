@@ -119,18 +119,22 @@ function RenderBowls() {
         </div>
       </div>
       <div id="Bowls" className="flex">
-        <BowlImage name="Paneer Power Bowl" price="₹ 30" />
-        <BowlImage css="red" name="Chicken Tikka Macro Bowl" price="₹ 50" />
+        <BowlImage name="Paneer Power Bowl" price="₹ 300" />
+        <BowlImage css="red" name="Chicken Tikka Macro Bowl" price="₹ 500" />
         <BowlImage
           css="blue"
           name="Soya Chunk High-Protein Bowl"
-          price="₹ 20"
+          price="₹ 200"
         />
-        <BowlImage css="green" name="Fish & Veggie Grain Bowl" price="₹ 30" />
-        <BowlImage css="orange" name="Egg Bhurji Nutrition Bowl" price="₹ 70" />
-        <BowlImage css="yellow" name="Rajma Superfood Bowl" price="₹ 60" />
-        <BowlImage css="purple" name="Tofu Stir-Fry Bowl" price="₹ 40" />
-        <BowlImage css="pink" name="Eggless Bhurji & Oats Bowl" price="₹ 80" />
+        <BowlImage css="green" name="Fish & Veggie Grain Bowl" price="₹ 300" />
+        <BowlImage
+          css="orange"
+          name="Egg Bhurji Nutrition Bowl"
+          price="₹ 700"
+        />
+        <BowlImage css="yellow" name="Rajma Superfood Bowl" price="₹ 600" />
+        <BowlImage css="purple" name="Tofu Stir-Fry Bowl" price="₹ 400" />
+        <BowlImage css="pink" name="Eggless Bhurji & Oats Bowl" price="₹ 800" />
       </div>
     </>
   );
