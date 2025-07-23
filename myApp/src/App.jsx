@@ -16,3 +16,11 @@ function App() {
 }
 
 export default App;
+
+/*
+Banner in space between login/sinup buton and contact us buttons and bowls
+Different pics for different bowls
+Background of veggies
+Delivery system 
+Basket system
+*/
