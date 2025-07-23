@@ -26,6 +26,13 @@
   text-align: center;
   margin: 30px auto;
 }
+.banner {
+  position: relative;
+  z-index: 1000;
+  background-color: rgb(255, 0, 0, 0.5);
+  width: 100dvw;
+  height: 150px;
+}
 @media screen and (max-width: 480px) {
   .push {
     font-size: 0.7em;

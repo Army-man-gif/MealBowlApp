@@ -1,5 +1,5 @@
 import BowlImage from "./BowlImage.jsx";
-import "./HomePage.css?v=5";
+import "./HomePage.css";
 import { useState, useRef } from "react";
 import bowl2 from "./assets/bowl2.jpg";
 import bowl3 from "./assets/bowl3.jpg";
@@ -125,6 +125,7 @@ function RenderBowls() {
           )}
         </div>
       </div>
+      <div className="banner"></div>
       <div id="Bowls" className="flex">
         <BowlImage name="Paneer Power Bowl" price="₹ 300" picture={bowl2} />
         <BowlImage
