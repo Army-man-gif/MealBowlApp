@@ -46,7 +46,7 @@
 .banner {
   position: relative;
   z-index: 1000;
-  background-color: rgb(255, 0, 0, 0.5);
+  background-color: rgb(255, 69, 0, 0.9);
   width: 100dvw;
   height: 260px;
   font-size: 3.8em;
