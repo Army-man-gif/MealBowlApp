@@ -41,7 +41,7 @@
   z-index: 1000;
   background-color: rgb(255, 0, 0, 0.5);
   width: 100dvw;
-  height: 150px;
+  height: 240px;
   font-size: 3.8em;
   text-align: center;
   display: flex;
@@ -61,6 +61,11 @@
   margin-top: -50px;
   font-size: 0.4em;
   color: green;
+}
+.captionSecond {
+  color: pink;
+  font-size: 0.4em;
+  margin-top: -20px;
 }
 .rounded {
   border-radius: 20px;

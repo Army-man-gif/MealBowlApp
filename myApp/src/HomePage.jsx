@@ -131,6 +131,13 @@ function RenderBowls() {
         <p className="caption">
           Fuel your body with delicious healthy food delivered right to you
         </p>
+        <p className="caption captionSecond">
+          Do you want to want to be healthy, fit and energetic? Are you dieting
+          and struggling to find time to make healthy, balanced <br></br> meals?
+          Do you need a nourishing office lunch box? Eating well doesn't have to
+          mean bland food. Jyoti's superbowls brings <br></br> you balanced
+          meals, with lots of options, all bursting with flavours
+        </p>
       </div>
       <div id="Bowls" className="flex">
         <BowlImage name="Paneer Power Bowl" price="₹ 300" picture={bowl2} />
