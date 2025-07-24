@@ -35,6 +35,16 @@
   font-size: 3.8em;
   text-align: center;
 }
+.default {
+  background-image: linear-gradient(to right, red, orange, yellow);
+  display: revert;
+  font-size: 1.5em;
+}
+.caption {
+  margin-top: -50px;
+  font-size: 0.4em;
+  color: green;
+}
 @media screen and (max-width: 480px) {
   .push {
     font-size: 0.7em;
@@ -42,11 +52,12 @@
   .flexedLogin {
     font-size: 0.7em;
   }
-}
-.default {
-  background-image: linear-gradient(to right, red, orange, yellow);
-  display: revert;
-  font-size: 1.5em;
+  .banner {
+    font-size: 0.8em;
+  }
+  .caption {
+    font-size: 0.2em;
+  }
 }
 
 .clickable {
@@ -59,11 +70,6 @@
   font-size: 1.2em;
   gap: 0.1px;
   margin-top: 10px;
-}
-.caption {
-  margin-top: -50px;
-  font-size: 0.4em;
-  color: green;
 }
 .link {
   font-size: 1.4em;
