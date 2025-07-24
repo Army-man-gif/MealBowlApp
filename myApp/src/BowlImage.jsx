@@ -1,4 +1,4 @@
-import "./BowlImage.css";
+import BowlStyles from "./BowlImage.module.css";
 import { Link } from "react-router-dom";
 function BowlImage(props) {
   const color = props.css ? { color: props.css } : {};
@@ -8,15 +8,19 @@ function BowlImage(props) {
     .join("");
   return (
     <>
-      <div className={"item"}>
-        <Link to={`/contents/${bowlID}`} style={color} className="bowl reSize">
+      <div className={BowlStyles.item}>
+        <Link
+          to={`/contents/${bowlID}`}
+          style={color}
+          className={`${BowlStyles.bowl} ${BowlStyles.reSize}`}
+        >
           <img
             src={props.picture}
             alt="𓎩"
-            className="bowlImageDimensions"
+            className={BowlStyles.bowlImageDimensions}
           ></img>
         </Link>
-        <p className="bowlText">
+        <p className={BowlStyles.bowlText}>
           {props.name}
           <br></br>
           Price: {props.price}
