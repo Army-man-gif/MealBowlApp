@@ -123,7 +123,7 @@ function RenderBowls() {
         </div>
       </div>
       <div className="banner">
-        <p>Tasty and healthy food bowls</p>
+        <p className="stuff">Tasty and healthy food bowls</p>
         <p className="caption">
           Fuel your body with delicious healthy food delivered right to you
         </p>

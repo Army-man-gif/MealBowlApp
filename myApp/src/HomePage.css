@@ -35,6 +35,9 @@
   font-size: 3.8em;
   text-align: center;
 }
+.stuff {
+  margin-top: 0px;
+}
 .default {
   background-image: linear-gradient(to right, red, orange, yellow);
   display: revert;
@@ -57,7 +60,10 @@
   }
   .caption {
     font-size: 0.7em;
-    margin-top: 0px;
+    margin-top: 20px;
+  }
+  .stuff {
+    margin-top: 20px;
   }
 }
 
