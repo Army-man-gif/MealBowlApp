@@ -54,9 +54,9 @@ function RenderBowls() {
 
   return (
     <>
-      <h3 className="center caption"></h3>
       <a href="#Bowls" className="center link">
-        Explore bowls
+        {" "}
+        Explore bowls{" "}
       </a>
       <br></br>
       <div className="center">
