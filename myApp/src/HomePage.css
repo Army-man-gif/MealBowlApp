@@ -74,12 +74,12 @@
   .push {
     font-size: 0.6em;
     left: 60%;
-    top: -30px;
+    top: -50px;
   }
   .flexedLogin {
     left: 9%;
     font-size: 0.6em;
-    top: -30px;
+    top: -50px;
   }
   .banner {
     font-size: 1.4em;
@@ -89,7 +89,7 @@
     margin-top: 0.2em;
   }
   .stuff {
-    margin-top: 0.2em;
+    margin-top: 0.3em;
   }
 }
 
