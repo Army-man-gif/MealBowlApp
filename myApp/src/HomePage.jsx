@@ -142,13 +142,18 @@ function RenderBowls() {
           )}
         </div>
       </div>
-      <a
-        href="#Bowls"
-        className={`${HomepageStyles.center} ${HomepageStyles.link}`}
-      >
-        {" "}
-        Explore bowls{" "}
-      </a>
+
+      <div>
+        <a
+          href="#Bowls"
+          className={`${HomepageStyles.center} ${HomepageStyles.link}`}
+        >
+          Explore bowls
+        </a>
+        <p className={HomepageStyles.styleBowlTextSymbolToBeaContainingImage}>
+          ◗
+        </p>
+      </div>
       <div id="Bowls" className={HomepageStyles.flex}>
         <BowlImage name="Paneer Power Bowl" price="₹ 300" picture={bowl2} />
         <BowlImage

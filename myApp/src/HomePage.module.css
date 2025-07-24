@@ -9,6 +9,16 @@
     transform: rotate(360deg);
   }
 }
+.styleBowlTextSymbolToBeaContainingImage {
+  z-index: -5;
+  pointer-events: none;
+  top: -6%;
+  left: 41%;
+  position: absolute;
+  transform: rotate(90deg);
+  font-size: 250px;
+  color: rgb(170, 219, 20);
+}
 .Logo {
   position: absolute;
   background: transparent;
@@ -37,6 +47,7 @@
   justify-content: center;
   align-items: center;
   margin: 50px auto;
+  text-decoration: none;
 }
 .flex {
   margin-left: var(--pushToRight);
