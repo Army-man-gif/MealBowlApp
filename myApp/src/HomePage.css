@@ -1,3 +1,6 @@
+:root {
+  --pushToRight: 100px;
+}
 .container {
   position: relative;
   display: flex;
@@ -10,7 +13,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 30px auto;
+  margin: 50px auto;
+}
+.flex {
+  margin-left: var(--pushToRight);
+  margin-top: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: var(--gap);
+  flex-wrap: wrap;
 }
 .flexedLogin {
   position: absolute;
@@ -26,14 +38,14 @@
   text-align: center;
   left: 20px;
   margin: 30px auto;
-  top: -50px;
+  top: -120px;
   z-index: 2000;
 }
 .contactPlacement {
   position: absolute;
   z-index: 2000;
   left: 75%;
-  top: -50px;
+  top: -120px;
   display: block;
   font-size: 1.5em;
   background-image: linear-gradient(to right, pink, purple, yellow);

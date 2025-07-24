@@ -27,15 +27,7 @@
     font-size: 0.8em;
   }
 }
-.flex {
-  margin-left: var(--pushToRight);
-  margin-top: 0px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: var(--gap);
-  flex-wrap: wrap;
-}
+
 .reSize {
   font-size: 180px;
 }
