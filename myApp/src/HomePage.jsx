@@ -55,7 +55,7 @@ function RenderBowls() {
   return (
     <>
       <div className="banner">
-        <p className="stuff">Tasty and healthy food bowls</p>
+        <p className="slogan">Tasty and healthy food bowls</p>
         <p className="caption">
           Fuel your body with delicious healthy food delivered right to you
         </p>
@@ -121,12 +121,12 @@ function RenderBowls() {
               </>
             ))}
         </div>
-        <div className="push">
+        <div className="contactPlacement">
           <h2 onClick={() => pressed("contact")} className="clickable">
             📞 Contact us{" "}
           </h2>
           {contactClicked && (
-            <div className="pushChildAlign">
+            <div className="contactPlacementChildAlign">
               <p>Owner: Jyoti Sharma</p>
               <p>Email: gobbledygook@gmail.com</p>
               <p>Phone number: 05406405640606</p>
