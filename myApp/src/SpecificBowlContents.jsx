@@ -104,8 +104,10 @@ function Contents() {
   }
   return (
     <>
-      <div className={BowlContentsStyles.position}>
-        <div className={BowlContentsStyles.moveAndAdjust}>
+      <div className={BowlContentsStyles.ingredientsContainerPositiononPage}>
+        <div
+          className={BowlContentsStyles.ingredientsFlextheContentsVertically}
+        >
           <h2
             onClick={() => toggle("ingredients")}
             className={BowlContentsStyles.clickable}
@@ -123,10 +125,11 @@ function Contents() {
             ))}
         </div>
       </div>
-      <div className={BowlContentsStyles.centerAndEnlarge}>
+
+      <div className={BowlContentsStyles.positionBowlinCenter}>
         {bowlHot && (
           <>
-            <div className={BowlContentsStyles.positionHotImage}></div>
+            <div className={BowlContentsStyles.positionSteam}></div>
             <p>𓎩</p>
           </>
         )}
@@ -136,8 +139,9 @@ function Contents() {
           </>
         )}
       </div>
-      <div className={BowlContentsStyles.positioning}>
-        <div className={BowlContentsStyles.adjust}>
+
+      <div className={BowlContentsStyles.macrosContainerPositiononPage}>
+        <div className={BowlContentsStyles.macrosFlextheContentsVertically}>
           <h2
             onClick={() => toggle("macros")}
             className={BowlContentsStyles.clickable}

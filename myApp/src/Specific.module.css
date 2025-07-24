@@ -1,4 +1,4 @@
-.moveAndAdjust {
+.ingredientsFlextheContentsVertically {
   background-image: linear-gradient(135deg, lightblue, lightgreen);
   width: max-content;
   padding: 0.05em 0.1em;
@@ -11,7 +11,7 @@
   align-items: center;
   font-size: 1.1em;
 }
-.position {
+.ingredientsContainerPositiononPage {
   position: absolute;
   top: 0px;
   left: 20px;
@@ -32,7 +32,7 @@
   }
 }
 
-.centerAndEnlarge {
+.positionBowlinCenter {
   position: relative;
   font-size: 20em;
   padding: 0.05em 0.1em;
@@ -41,7 +41,7 @@
   display: flex;
   justify-content: center;
 }
-.positionHotImage {
+.positionSteam {
   position: absolute;
   width: 170px;
   height: 150px;
@@ -61,12 +61,12 @@
   cursor: pointer;
 }
 
-.positioning {
+.macrosContainerPositiononPage {
   position: absolute;
   top: 0px;
   left: 80%;
 }
-.adjust {
+.macrosFlextheContentsVertically {
   background-image: linear-gradient(to top, red, orange, yellow);
   width: max-content;
   padding: 0.05em 0.1em;
