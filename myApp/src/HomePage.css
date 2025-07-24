@@ -61,6 +61,9 @@
   font-size: 0.4em;
   color: green;
 }
+.rounded {
+  border-radius: 20px;
+}
 @media screen and (max-width: 480px) {
   .push {
     font-size: 0.6em;

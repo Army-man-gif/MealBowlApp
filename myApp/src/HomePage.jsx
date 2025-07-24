@@ -70,6 +70,7 @@ function RenderBowls() {
                 <br></br>
                 <label htmlFor="username">Enter username: </label>
                 <input
+                  className="rounded"
                   ref={userRef}
                   id="username"
                   type="text"
@@ -77,6 +78,7 @@ function RenderBowls() {
                 />
                 <label htmlFor="password">Enter password: </label>
                 <input
+                  className="rounded"
                   ref={passRef}
                   id="password"
                   type="password"
@@ -91,6 +93,7 @@ function RenderBowls() {
                 <br></br>
                 <label htmlFor="username">Enter username: </label>
                 <input
+                  className="rounded"
                   ref={userRef}
                   id="username"
                   type="text"
@@ -98,6 +101,7 @@ function RenderBowls() {
                 />
                 <label htmlFor="password">Enter password: </label>
                 <input
+                  className="rounded"
                   ref={passRef}
                   id="password"
                   type="text"
