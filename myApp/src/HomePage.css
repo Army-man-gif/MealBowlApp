@@ -1,8 +1,15 @@
-.center {
+.container {
   position: relative;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  margin: 30px auto;
+}
+.center {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 30px auto;
 }
 .flexedLogin {
@@ -48,6 +55,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  top: 0;
 }
 .stuff {
   margin-top: 0px;
