@@ -64,7 +64,7 @@
 @media screen and (max-width: 480px) {
   .push {
     font-size: 0.6em;
-    left: 66%;
+    left: 60%;
     top: -30px;
   }
   .flexedLogin {
