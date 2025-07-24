@@ -61,8 +61,9 @@
   margin-top: 10px;
 }
 .caption {
-  font-size: 0.6em;
-  color: brown;
+  margin-top: -50px;
+  font-size: 0.4em;
+  color: green;
 }
 .link {
   font-size: 1.4em;
