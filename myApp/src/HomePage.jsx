@@ -1,5 +1,5 @@
 import BowlImage from "./BowlImage.jsx";
-import "./HomePage.css";
+import HomepageStyles from "./HomePage.module.css";
 import { useState, useRef } from "react";
 import bowl2 from "./assets/bowl2.jpg";
 import bowl3 from "./assets/bowl3.jpg";
@@ -55,24 +55,29 @@ function RenderBowls() {
 
   return (
     <>
-      <div className="banner">
-        <img src={logo} className="Logo" />
-        <p className="logoText">JS</p>
-        <p className="slogan">Tasty and healthy food bowls</p>
-        <p className="caption">
+      <div className={HomepageStyles.banner}>
+        <img src={logo} className={HomepageStyles.Logo} />
+        <p className={HomepageStyles.logoText}>JS</p>
+        <p className={HomepageStyles.slogan}>Tasty and healthy food bowls</p>
+        <p className={HomepageStyles.caption}>
           Fuel your body with delicious healthy food delivered right to you
         </p>
       </div>
-      <p className="caption captionSecond">
+      <p
+        className={`${HomepageStyles.caption} ${HomepageStyles.captionSecond}`}
+      >
         Do you want to want to be healthy, fit and energetic? Are you dieting
         and struggling to find time to make healthy, balanced <br></br> meals?
         Do you need a nourishing office lunch box? Eating well doesn't have to
         mean bland food. Jyoti's superbowls brings <br></br> you balanced meals,
         with lots of options, all bursting with flavours
       </p>
-      <div className="container">
-        <div className="flexedLogin">
-          <h2 onClick={() => pressed("login")} className="clickable">
+      <div className={HomepageStyles.container}>
+        <div className={HomepageStyles.flexedLogin}>
+          <h2
+            onClick={() => pressed("login")}
+            className={HomepageStyles.clickable}
+          >
             Login/Sign up
           </h2>
           {loginClicked &&
@@ -81,7 +86,7 @@ function RenderBowls() {
                 <br></br>
                 <label htmlFor="username">Enter username: </label>
                 <input
-                  className="rounded"
+                  className={HomepageStyles.rounded}
                   ref={userRef}
                   id="username"
                   type="text"
@@ -89,7 +94,7 @@ function RenderBowls() {
                 />
                 <label htmlFor="password">Enter password: </label>
                 <input
-                  className="rounded"
+                  className={HomepageStyles.rounded}
                   ref={passRef}
                   id="password"
                   type="password"
@@ -104,7 +109,7 @@ function RenderBowls() {
                 <br></br>
                 <label htmlFor="username">Enter username: </label>
                 <input
-                  className="rounded"
+                  className={HomepageStyles.rounded}
                   ref={userRef}
                   id="username"
                   type="text"
@@ -112,7 +117,7 @@ function RenderBowls() {
                 />
                 <label htmlFor="password">Enter password: </label>
                 <input
-                  className="rounded"
+                  className={HomepageStyles.rounded}
                   ref={passRef}
                   id="password"
                   type="text"
@@ -124,12 +129,12 @@ function RenderBowls() {
               </>
             ))}
         </div>
-        <div className="contactPlacement">
+        <div className={HomepageStyles.contactPlacement}>
           <h2 onClick={() => pressed("contact")} className="clickable">
             📞 Contact us{" "}
           </h2>
           {contactClicked && (
-            <div className="contactPlacementChildAlign">
+            <div className={HomepageStyles.contactPlacementChildAlign}>
               <p>Owner: Jyoti Sharma</p>
               <p>Email: gobbledygook@gmail.com</p>
               <p>Phone number: 05406405640606</p>
@@ -137,11 +142,14 @@ function RenderBowls() {
           )}
         </div>
       </div>
-      <a href="#Bowls" className="center link">
+      <a
+        href="#Bowls"
+        className={`${HomepageStyles.center} ${HomepageStyles.link}`}
+      >
         {" "}
         Explore bowls{" "}
       </a>
-      <div id="Bowls" className="flex">
+      <div id="Bowls" className={HomepageStyles.flex}>
         <BowlImage name="Paneer Power Bowl" price="₹ 300" picture={bowl2} />
         <BowlImage
           css="red"
