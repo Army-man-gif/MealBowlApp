@@ -1,4 +1,4 @@
-import "./Specific.css?v=4";
+import BowlContentsStyles from "./Specific.module.css";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 function Contents() {
@@ -104,9 +104,12 @@ function Contents() {
   }
   return (
     <>
-      <div className="position">
-        <div className="moveAndAdjust">
-          <h2 onClick={() => toggle("ingredients")} className="clickable">
+      <div className={BowlContentsStyles.position}>
+        <div className={BowlContentsStyles.moveAndAdjust}>
+          <h2
+            onClick={() => toggle("ingredients")}
+            className={BowlContentsStyles.clickable}
+          >
             Ingredients
           </h2>
           {ingredientsClicked &&
@@ -120,10 +123,10 @@ function Contents() {
             ))}
         </div>
       </div>
-      <div className="centerAndEnlarge">
+      <div className={BowlContentsStyles.centerAndEnlarge}>
         {bowlHot && (
           <>
-            <div className="positionHotImage"></div>
+            <div className={BowlContentsStyles.positionHotImage}></div>
             <p>𓎩</p>
           </>
         )}
@@ -133,9 +136,12 @@ function Contents() {
           </>
         )}
       </div>
-      <div className="positioning">
-        <div className="adjust">
-          <h2 onClick={() => toggle("macros")} className="clickable">
+      <div className={BowlContentsStyles.positioning}>
+        <div className={BowlContentsStyles.adjust}>
+          <h2
+            onClick={() => toggle("macros")}
+            className={BowlContentsStyles.clickable}
+          >
             Macros
           </h2>
           {macrosClicked &&
