@@ -8,6 +8,7 @@ import bowl5 from "./assets/bowl5.jpg";
 import bowl6 from "./assets/bowl6.jpg";
 import bowl7 from "./assets/bowl7.jpg";
 import bowl8 from "./assets/bowl8.jpg";
+import logo from "./assets/logo.png";
 function RenderBowls() {
   const [contactClicked, setcontactClicked] = useState(false);
   const [loginClicked, setloginClicked] = useState(false);
@@ -55,6 +56,8 @@ function RenderBowls() {
   return (
     <>
       <div className="banner">
+        <img src={logo} className="Logo" />
+        <p className="logoText">JS</p>
         <p className="slogan">Tasty and healthy food bowls</p>
         <p className="caption">
           Fuel your body with delicious healthy food delivered right to you
