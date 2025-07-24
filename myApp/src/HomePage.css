@@ -41,7 +41,7 @@
   z-index: 1000;
   background-color: rgb(255, 0, 0, 0.5);
   width: 100dvw;
-  height: 240px;
+  height: 260px;
   font-size: 3.8em;
   text-align: center;
   display: flex;
@@ -90,7 +90,7 @@
   }
   .stuff {
     font-size: 1em;
-    margin-top: 0.4em;
+    margin-top: 0.5em;
   }
 }
 
