@@ -22,6 +22,7 @@
   position: absolute;
   left: 5.8%;
   font-size: 20px;
+  color: blue;
 }
 .container {
   position: relative;
@@ -169,4 +170,44 @@
 }
 .link:active {
   color: blueviolet;
+}
+
+/* ---------------------------------------------
+   Basic Responsive Media Queries for Mobile UI
+---------------------------------------------- */
+
+/* 1. Mobile devices - Portrait mode (typical phones) */
+@media only screen and (max-width: 600px) and (orientation: portrait) {
+  /* Styles for phones held vertically */
+}
+
+/* 2. Mobile devices - Landscape mode (phones held sideways) */
+@media only screen and (max-width: 900px) and (orientation: landscape) {
+  /* Styles for phones held horizontally */
+}
+
+/* 3. Small tablets (portrait & landscape) */
+@media only screen and (min-width: 601px) and (max-width: 900px) {
+  /* Styles for small tablets */
+}
+
+/* 4. General mobile devices (up to 600px wide) ignoring orientation */
+@media only screen and (max-width: 600px) {
+  /* Styles for all mobile screens */
+}
+
+/* 5. Example: Adjustments when zoomed out (like 80% zoom) */
+/* Zooming changes viewport size; treat like smaller width */
+@media only screen and (max-width: 800px) {
+  /* Styles to fix layout issues when zoomed */
+}
+
+/* 6. Landscape tablets and larger phones */
+@media only screen and (min-width: 600px) and (orientation: landscape) {
+  /* Landscape styles for bigger phones/tablets */
+}
+
+/* 7. High-resolution small devices (Retina or similar) */
+@media only screen and (max-width: 600px) and (min-resolution: 2dppx) {
+  /* Styles for high-density mobile screens */
 }
