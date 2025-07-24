@@ -63,10 +63,13 @@
 }
 @media screen and (max-width: 480px) {
   .push {
-    font-size: 0.7em;
+    font-size: 0.6em;
+    left: 70%;
+    top: -30px;
   }
   .flexedLogin {
-    font-size: 0.7em;
+    font-size: 0.6em;
+    top: -30px;
   }
   .banner {
     font-size: 1.4em;
