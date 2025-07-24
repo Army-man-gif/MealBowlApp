@@ -54,10 +54,7 @@ function RenderBowls() {
 
   return (
     <>
-      <h1 className="center">Tasty and healthy food bowls</h1>
-      <h3 className="center caption">
-        Fuel your body with delicious healthy food delivered right to you
-      </h3>
+      <h3 className="center caption"></h3>
       <a href="#Bowls" className="center link">
         Explore bowls
       </a>
@@ -125,7 +122,12 @@ function RenderBowls() {
           )}
         </div>
       </div>
-      <div className="banner"></div>
+      <div className="banner">
+        <p>Tasty and healthy food bowls</p>
+        <p className="caption">
+          Fuel your body with delicious healthy food delivered right to you
+        </p>
+      </div>
       <div id="Bowls" className="flex">
         <BowlImage name="Paneer Power Bowl" price="₹ 300" picture={bowl2} />
         <BowlImage
