@@ -141,8 +141,13 @@
   margin-top: 20px;
   margin-bottom: 100px;
 }
-.rounded {
-  border-radius: 20px;
+.contactPlacementChildAlign {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.2em;
+  gap: 0.1px;
+  margin-top: 10px;
 }
 @media screen and (max-width: 480px) {
   .html {
@@ -185,17 +190,6 @@
   }
 }
 
-.clickable {
-  cursor: pointer;
-}
-.contactPlacementChildAlign {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 1.2em;
-  gap: 0.1px;
-  margin-top: 10px;
-}
 .link:link {
   color: blue;
 }
