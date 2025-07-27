@@ -143,15 +143,15 @@ function RenderBowls() {
         </div>
       </div>
 
-      <div className="bowlTextContainer">
-        <a
-          href="#Bowls"
-          className={`${HomepageStyles.center} ${HomepageStyles.link}`}
-        >
-          Explore bowls
-        </a>
+      <div className={HomepageStyles.bowlTextContainer}>
         <p className={HomepageStyles.styleBowlTextSymbolToBeaContainingImage}>
-          ◗
+          <span className={HomepageStyles.rotate}>◗</span>
+          <a
+            href="#Bowls"
+            className={`${HomepageStyles.center} ${HomepageStyles.link}`}
+          >
+            Explore bowls
+          </a>
         </p>
       </div>
       <div id="Bowls" className={HomepageStyles.arrangeBowls}>

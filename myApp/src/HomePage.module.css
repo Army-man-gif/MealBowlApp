@@ -8,19 +8,27 @@
 }
 .bowlTextContainer {
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10rem;
+  width: 70rem;
 }
 .styleBowlTextSymbolToBeaContainingImage {
   z-index: -5;
   pointer-events: none;
-  top: -18.5rem;
-  left: 27.5rem;
-  position: absolute;
-  transform: rotate(90deg);
+  position: relative;
   font-size: var(--BowlContainerFontSize);
   color: rgb(170, 219, 20);
 }
+.rotate {
+  display: inline-block;
+  transform: rotate(90deg);
+}
 .center {
-  position: relative;
+  position: absolute;
+  top: 42%;
+  left: 18%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,7 +60,7 @@
 }
 .arrangeBowls {
   margin-left: var(--pushToRight);
-  margin-top: 0px;
+  margin-top: 100px;
   display: flex;
   flex-direction: row;
   justify-content: center;
