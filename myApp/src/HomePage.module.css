@@ -144,6 +144,9 @@
   .html {
     font-size: 60%;
   }
+  .bowlTextContainer {
+    width: 40rem;
+  }
   .contactPlacement {
     font-size: 0.6em;
     left: 60%;
