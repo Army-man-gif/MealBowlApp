@@ -127,7 +127,7 @@
 .caption {
   margin-top: -50px;
   font-size: 0.4em;
-  color: black;
+  color: rgb(159, 214, 7);
 }
 .captionSecond {
   position: relative;
@@ -156,7 +156,8 @@
     height: 80px;
   }
   .logoText {
-    left: 6.5%;
+    left: 7%;
+    top: 1%;
     font-size: 15px;
   }
   .html {
