@@ -169,10 +169,6 @@
     flex-direction: column;
     margin-left: 0px;
   }
-  .arrangeBowls > * {
-    width: 100%;
-    flex: 1 0 20rem;
-  }
   .contactPlacement {
     font-size: 0.6em;
     left: 60%;
