@@ -12,8 +12,8 @@
 .styleBowlTextSymbolToBeaContainingImage {
   z-index: -5;
   pointer-events: none;
-  top: -48%;
-  left: 35%;
+  top: -18.5rem;
+  left: 27.5rem;
   position: absolute;
   transform: rotate(90deg);
   font-size: var(--BowlContainerFontSize);
