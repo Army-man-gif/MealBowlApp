@@ -3,16 +3,18 @@
   --pushToRight: 100px;
 }
 .bowlText {
-  margin-left: 0px;
-  margin-top: -30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0px;
   font-size: 1.2em;
   font-weight: 600;
   color: black;
 }
 .bowlImageDimensions {
-  width: 200px;
-  height: 200px;
-  object-fit: contain;
+  width: 500px;
+  height: 500px;
+  object-fit: cover;
 }
 @media screen and (max-width: 480px) {
   :root {
@@ -37,6 +39,9 @@
 }
 .bowl {
   text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .bowl:hover {
   cursor: pointer;
