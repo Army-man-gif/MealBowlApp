@@ -25,10 +25,14 @@
   display: inline-block;
   transform: rotate(90deg);
 }
+/*
+  top: 42%;
+  left: 19%;
+*/
 .center {
   position: absolute;
-  top: 42%;
-  left: 18%;
+  top: 12.5rem;
+  left: 4.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
