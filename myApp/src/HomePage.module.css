@@ -155,7 +155,7 @@
     --BowlContainerFontSize: 20rem;
   }
   .center {
-    font-size: calc(var(--BowlContainerFontSize) / 13);
+    font-size: calc(var(--BowlContainerFontSize) / 15);
   }
   .contactPlacement {
     font-size: 0.6em;
