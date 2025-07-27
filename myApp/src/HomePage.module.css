@@ -171,6 +171,7 @@
   }
   .arrangeBowls > * {
     width: 100%;
+    flex: 1 1 20rem;
   }
   .contactPlacement {
     font-size: 0.6em;
