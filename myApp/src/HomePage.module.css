@@ -6,6 +6,9 @@
     transform: rotate(360deg);
   }
 }
+.bowlTextContainer {
+  position: relative;
+}
 .styleBowlTextSymbolToBeaContainingImage {
   z-index: -5;
   pointer-events: none;

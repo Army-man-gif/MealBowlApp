@@ -143,7 +143,7 @@ function RenderBowls() {
         </div>
       </div>
 
-      <div>
+      <div className="bowlTextContainer">
         <a
           href="#Bowls"
           className={`${HomepageStyles.center} ${HomepageStyles.link}`}
