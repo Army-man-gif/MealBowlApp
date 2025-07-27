@@ -66,11 +66,11 @@ function RenderBowls() {
       <p
         className={`${HomepageStyles.caption} ${HomepageStyles.captionSecond}`}
       >
-        Do you want to want to be healthy, fit and energetic? Are you dieting
-        and struggling to find time to make healthy, balanced <br></br> meals?
-        Do you need a nourishing office lunch box? Eating well doesn't have to
-        mean bland food. Jyoti's superbowls brings <br></br> you balanced meals,
-        with lots of options, all bursting with flavours
+        Do you want to want to be healthy, fit and energetic? <br></br> Are you
+        dieting and struggling to find time to make healthy, balanced meals? Do
+        you need a nourishing office lunch box? <br></br> Eating well doesn't
+        have to mean bland food. <br></br> Jyoti's superbowls brings you
+        balanced meals, with lots of options, all bursting with flavours
       </p>
       <div className={HomepageStyles.container}>
         <div className={HomepageStyles.flexedLogin}>
