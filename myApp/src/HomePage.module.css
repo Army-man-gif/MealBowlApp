@@ -150,6 +150,12 @@
   margin-top: 10px;
 }
 @media screen and (max-width: 480px) {
+  .logo {
+    width: 50px;
+    height: 50px;
+  }
+  .logoText {
+  }
   .html {
     font-size: 60%;
   }
@@ -183,11 +189,14 @@
     font-size: 1.4em;
   }
   .caption {
-    font-size: 0.7em;
+    font-size: 0.5em;
     margin-top: 0.2em;
   }
+  .captionSecond {
+    font-size: 1.3em;
+  }
   .slogan {
-    font-size: 1em;
+    font-size: 0.8em;
     margin-top: 0.5em;
   }
 }
