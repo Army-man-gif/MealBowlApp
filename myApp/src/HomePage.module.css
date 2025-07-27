@@ -155,7 +155,7 @@
     --BowlContainerFontSize: 20rem;
   }
   .center {
-    font-size: calc(var(--BowlContainerFontSize) / 15);
+    font-size: calc(var(--BowlContainerFontSize) / 16);
     top: 12.2rem;
     left: 1.5rem;
   }
