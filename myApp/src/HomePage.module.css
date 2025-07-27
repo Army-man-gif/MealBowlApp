@@ -160,7 +160,7 @@
     left: 1rem;
   }
   .arrangeBowls {
-    margin-top: 10px;
+    margin-top: -10px;
   }
   .contactPlacement {
     font-size: 0.6em;
