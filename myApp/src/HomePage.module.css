@@ -150,6 +150,9 @@
   :root {
     --BowlContainerFontSize: 20rem;
   }
+  .center {
+    font-size: (var(--BowlContainerFontSize) / 12);
+  }
   .contactPlacement {
     font-size: 0.6em;
     left: 60%;
