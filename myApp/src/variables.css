@@ -1,0 +1,5 @@
+/* Homepage styles' variables */
+.spin {
+  --spinAngleStart: 0deg;
+  --spinAngleEnd: 360deg;
+}

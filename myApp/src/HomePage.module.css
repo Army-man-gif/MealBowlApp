@@ -1,13 +1,9 @@
-:root {
-  --pushToRight: 100px;
-  --spinAngle: 360deg;
-}
 @keyframes spin {
   0% {
-    transform: rotate(0deg);
+    transform: rotate(var(--spinAngleStart));
   }
   100% {
-    transform: rotate(var(--spinAngle));
+    transform: rotate(var(--spinAngleEnd));
   }
 }
 .styleBowlTextSymbolToBeaContainingImage {
