@@ -151,11 +151,13 @@
 }
 @media screen and (max-width: 480px) {
   .Logo {
+    top: 5px;
     width: 80px;
     height: 80px;
   }
   .logoText {
     left: 6.5%;
+    font-size: 10px;
   }
   .html {
     font-size: 6%;
