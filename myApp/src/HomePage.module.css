@@ -194,6 +194,7 @@
   }
   .captionSecond {
     font-size: 1.3em;
+    background-image: linear-gradient(135deg, #a8edea, #fed6e3);
   }
   .slogan {
     font-size: 0.8em;
