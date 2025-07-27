@@ -147,6 +147,9 @@
   .bowlTextContainer {
     width: 30rem;
   }
+  :root {
+    --BowlContainerFontSize: 20rem;
+  }
   .contactPlacement {
     font-size: 0.6em;
     left: 60%;
