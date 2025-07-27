@@ -1,19 +1,19 @@
 @keyframes spin {
   0% {
-    transform: rotate(var(--spinAngleStart));
+    transform: rotate(0deg);
   }
   100% {
-    transform: rotate(var(--spinAngleEnd));
+    transform: rotate(360deg);
   }
 }
 .styleBowlTextSymbolToBeaContainingImage {
   z-index: -5;
   pointer-events: none;
-  top: -6%;
-  left: 41%;
+  top: -0.1em;
+  left: 2.07em;
   position: absolute;
   transform: rotate(90deg);
-  font-size: 250px;
+  font-size: 15.6rem;
   color: rgb(170, 219, 20);
 }
 .Logo {

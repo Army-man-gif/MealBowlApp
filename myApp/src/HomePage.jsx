@@ -46,10 +46,10 @@ function RenderBowls() {
     }
     if (param === "login") {
       setloginClicked(!loginClicked);
-      const use = JSON.parse(localStorage.getItem("Details")).username;
-      const pass = JSON.parse(localStorage.getItem("Details")).password;
-      setusername(use ? use : "");
-      setpassword(pass ? pass : "");
+      const use = localStorage.getItem("Details").username;
+      const pass = localStorage.getItem("Details").password;
+      setusername(use ? JSON.parse(use) : "");
+      setpassword(pass ? JSON.parse(pass) : "");
     }
   }
 
