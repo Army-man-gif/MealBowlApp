@@ -159,6 +159,9 @@
     top: 12.2rem;
     left: 1rem;
   }
+  .arrangeBowls {
+    margin-top: 50px;
+  }
   .contactPlacement {
     font-size: 0.6em;
     left: 60%;
