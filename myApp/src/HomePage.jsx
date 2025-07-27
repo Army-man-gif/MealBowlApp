@@ -1,7 +1,7 @@
 import BowlImage from "./BowlImage.jsx";
 import HomepageStyles from "./HomePage.module.css";
 import { useState, useRef } from "react";
-import bowl2 from "./assets/bowl2.jpg";
+import bowl from "./assets/bowl.png";
 import bowl3 from "./assets/bowl3.jpg";
 import bowl4 from "./assets/bowl4.jpg";
 import bowl5 from "./assets/bowl5.jpg";
@@ -155,12 +155,12 @@ function RenderBowls() {
         </p>
       </div>
       <div id="Bowls" className={HomepageStyles.arrangeBowls}>
-        <BowlImage name="Paneer Power Bowl" price="₹ 300" picture={bowl2} />
+        <BowlImage name="Paneer Power Bowl" price="₹ 300" picture={bowl} />
         <BowlImage
           css="red"
           name="Chicken Tikka Macro Bowl"
           price="₹ 500"
-          picture={bowl2}
+          picture={bowl}
         />
         <BowlImage
           css="blue"
