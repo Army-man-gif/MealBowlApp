@@ -166,6 +166,11 @@
   }
   .arrangeBowls {
     margin-top: -30px;
+    flex-direction: column;
+    margin-left: 0px;
+  }
+  .arrangeBowls > * {
+    width: 100%;
   }
   .contactPlacement {
     font-size: 0.6em;
