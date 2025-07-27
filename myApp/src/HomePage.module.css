@@ -130,6 +130,9 @@
   border-radius: 20px;
 }
 @media screen and (max-width: 480px) {
+  .html {
+    font-size: 60%;
+  }
   .contactPlacement {
     font-size: 0.6em;
     left: 60%;
