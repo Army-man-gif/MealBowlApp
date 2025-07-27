@@ -157,7 +157,7 @@
   .center {
     font-size: calc(var(--BowlContainerFontSize) / 16);
     top: 12.2rem;
-    left: 1.5rem;
+    left: 1rem;
   }
   .contactPlacement {
     font-size: 0.6em;
