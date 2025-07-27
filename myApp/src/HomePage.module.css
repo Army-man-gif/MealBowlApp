@@ -9,12 +9,21 @@
 .styleBowlTextSymbolToBeaContainingImage {
   z-index: -5;
   pointer-events: none;
-  top: -0.1em;
-  left: 2.07em;
+  top: -48%;
+  left: 35%;
   position: absolute;
   transform: rotate(90deg);
-  font-size: 15.6rem;
+  font-size: var(--BowlContainerFontSize);
   color: rgb(170, 219, 20);
+}
+.center {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px auto;
+  text-decoration: none;
+  font-size: calc(var(--BowlContainerFontSize) / 10);
 }
 .Logo {
   position: absolute;
@@ -37,14 +46,6 @@
   justify-content: space-between;
   align-items: flex-start;
   margin: 30px auto;
-}
-.center {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 50px auto;
-  text-decoration: none;
 }
 .arrangeBowls {
   margin-left: var(--pushToRight);
@@ -162,9 +163,6 @@
   font-size: 1.2em;
   gap: 0.1px;
   margin-top: 10px;
-}
-.link {
-  font-size: 1.4em;
 }
 .link:link {
   color: blue;
