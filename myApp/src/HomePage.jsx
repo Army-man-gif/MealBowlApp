@@ -154,7 +154,7 @@ function RenderBowls() {
           ◗
         </p>
       </div>
-      <div id="Bowls" className={HomepageStyles.flex}>
+      <div id="Bowls" className={HomepageStyles.arrangeBowls}>
         <BowlImage name="Paneer Power Bowl" price="₹ 300" picture={bowl2} />
         <BowlImage
           css="red"

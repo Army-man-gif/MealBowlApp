@@ -49,7 +49,7 @@
   margin: 50px auto;
   text-decoration: none;
 }
-.flex {
+.arrangeBowls {
   margin-left: var(--pushToRight);
   margin-top: 0px;
   display: flex;
