@@ -16,7 +16,6 @@
   top: 0px;
   left: 20px;
 }
-
 @keyframes steaming {
   0% {
     opacity: 0%;
@@ -31,7 +30,6 @@
     transform: translateY(-70px);
   }
 }
-
 .positionBowlinCenter {
   position: relative;
   font-size: 20em;
@@ -56,11 +54,6 @@
   pointer-events: none;
   z-index: -1;
 }
-
-.clickable {
-  cursor: pointer;
-}
-
 .macrosContainerPositiononPage {
   position: absolute;
   top: 0px;
@@ -81,26 +74,18 @@
 }
 @media screen and (max-width: 480px) {
   .ingredientsFlextheContentsVertically {
-    font-size: 0.7em;
-  }
-  .moveAndAdjust {
     font-size: 0.5em;
   }
-  .centerAndEnlarge {
-    font-size: 4em;
-    margin: 60% auto;
+  .ingredientsContainerPositiononPage {
+    left: 10px;
   }
-  .adjust {
-    font-size: 0.55em;
-    margin: 30px 40px;
+  .positionBowlinCenter {
+    font-size: 10em;
   }
-  .positioning {
-    left: 60%;
+  .macrosContainerPositiononPage {
+    left: 70%;
   }
-  .positionHotImage {
-    background-size: 50px 50px;
-    left: 27%;
-    top: 0%;
-    bottom: 0%;
+  .macrosFlextheContentsVertically {
+    font-size: 0.6em;
   }
 }
