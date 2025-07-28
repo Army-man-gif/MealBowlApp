@@ -81,12 +81,15 @@
   }
   .positionBowlinCenter {
     font-size: 10em;
-    margin: 50px auto;
+    margin: 80px auto;
   }
   .macrosContainerPositiononPage {
     left: 70%;
   }
   .macrosFlextheContentsVertically {
     font-size: 0.6em;
+  }
+  .positionSteam {
+    left: 0%;
   }
 }
