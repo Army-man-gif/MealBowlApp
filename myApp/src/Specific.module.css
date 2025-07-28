@@ -90,7 +90,8 @@
     font-size: 0.6em;
   }
   .positionSteam {
-    left: 0%;
+    left: 80px;
+    top: 50px;
   }
 }
 
