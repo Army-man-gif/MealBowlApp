@@ -80,6 +80,9 @@
   font-size: 1.1em;
 }
 @media screen and (max-width: 480px) {
+  .ingredientsFlextheContentsVertically {
+    font-size: 0.7em;
+  }
   .moveAndAdjust {
     font-size: 0.5em;
   }
