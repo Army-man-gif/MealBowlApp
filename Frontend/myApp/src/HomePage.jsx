@@ -1,6 +1,7 @@
 import BowlImage from "./BowlImage.jsx";
 import HomepageStyles from "./HomePage.module.css";
 import { useState, useRef } from "react";
+import React from "react";
 import bowl from "./assets/bowl.png";
 import bowl3 from "./assets/bowl3.jpg";
 import bowl4 from "./assets/bowl4.jpg";

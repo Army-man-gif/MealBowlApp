@@ -4,10 +4,11 @@ import "./globalStyles.css";
 import "./variables.css";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+const basename = import.meta.env.DEV ? "/" : "/MealBowlApp/docs";
 function App() {
   return (
     <>
-      <BrowserRouter basename="/MealBowlApp/docs/">
+      <BrowserRouter basename={basename}>
         <Routes>
           <Route path="/" element={<RenderBowls />} />
           <Route path="/contents/:bowlID" element={<Contents />} />
