@@ -75,10 +75,7 @@ function RenderBowls() {
       </p>
       <div className={HomepageStyles.container}>
         <div className={HomepageStyles.flexedLogin}>
-          <h2
-            onClick={() => pressed("login")}
-            className={HomepageStyles.clickable}
-          >
+          <h2 onClick={() => pressed("login")} className="clickable">
             Login/Sign up
           </h2>
           {loginClicked &&

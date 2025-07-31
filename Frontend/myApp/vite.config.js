@@ -1,8 +1,13 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-console.log("Vite configuration loaded");
+
+const isProduction = process.env.NODE_ENV === "production";
+
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/MealBowlApp/docs/",
+  base: isProduction ? "/MealBowlApp/docs/" : "/",
   plugins: [react()],
+  server: {
+    open: true,
+  },
 });

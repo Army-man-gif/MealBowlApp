@@ -12,7 +12,6 @@ function App() {
         <Routes>
           <Route path="/" element={<RenderBowls />} />
           <Route path="/contents/:bowlID" element={<Contents />} />
-          <Route />
         </Routes>
       </BrowserRouter>
     </>
