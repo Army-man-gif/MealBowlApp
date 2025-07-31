@@ -18,13 +18,15 @@
     "clean-dist": "rimraf dist",
     "move-build": "npm run clean-buildfiles && npm run make-buildfiles && npm run copy-build && npm run clean-dist",
     "build-and-move": "npm run build && npm run move-build",
-    "deployCustom": "npm run build && npm run move-build && npm run format && npm run git && clear && npm run dev ",
+    "deployCustom": "npm run build && npm run move-build && npm run format && npm run git && cls && npm run dev ",
     "pushToGit": "npm run format && npm run git",
-    "git": "cd ../../MealBowlApp && git add . && git commit -m '.' && git push"
+    "git": "cd ../../../MealBowlApp && git add . && git commit -m '.' && git push"
   },
   "dependencies": {
+    "cpx": "^1.5.0",
     "firebase": "^12.0.0",
     "gh-pages": "^6.3.0",
+    "npx": "^10.2.2",
     "prettier": "^3.6.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

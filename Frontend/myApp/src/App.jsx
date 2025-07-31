@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
   return (
     <>
-      <BrowserRouter basename="/MealBowlApp/docs">
+      <BrowserRouter basename="/MealBowlApp/Frontend/docs">
         <Routes>
           <Route path="/" element={<RenderBowls />} />
           <Route path="/contents/:bowlID" element={<Contents />} />
