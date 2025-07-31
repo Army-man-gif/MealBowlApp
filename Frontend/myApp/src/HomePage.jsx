@@ -20,7 +20,6 @@ function RenderBowls() {
   const [validLogin, setValidLogin] = useState(false);
   const userRef = useRef("");
   const passRef = useRef("");
-
   function set() {
     const data = { username: enteredUsername, password: enteredPassowrd };
     const dataStringified = JSON.stringify(data);
