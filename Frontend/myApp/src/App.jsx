@@ -2,11 +2,12 @@ import RenderBowls from "./HomePage.jsx";
 import Contents from "./SpecificBowlContents.jsx";
 import "./globalStyles.css";
 import "./variables.css";
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
   return (
     <>
-      <BrowserRouter basename="MealBowlApp/docs/">
+      <BrowserRouter basename="/MealBowlApp/docs/">
         <Routes>
           <Route path="/" element={<RenderBowls />} />
           <Route path="/contents/:bowlID" element={<Contents />} />
