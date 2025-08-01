@@ -10,7 +10,7 @@ def landingPage(request):
 def addData(request,value):
     try:
         Data.objects.get(name=value)
-    except:
+    except Data.DoesNotExist:
         Data.objects.create(name=value)
     return redirect("getData",value=value)
     
