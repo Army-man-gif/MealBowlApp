@@ -16,8 +16,10 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
-
+from django.urls import path,include
+from testDB.views import landingPage
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("databaseTesting/",include('testDB.urls')),
+    path("", landingPage),
 ]
