@@ -73,20 +73,21 @@ WSGI_APPLICATION = "PostgreTest.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
+import dj_database_url
 DATABASES = {
     "sqliteConfig": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     },
-    "default": {
+    "locallyHosted": {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'MealBowlDB',
         'USER': 'developer',
         'PASSWORD': 'Toothless15.55',
         'HOST': 'localhost',
         'PORT': '5432',
-    }
+    },
+    "default": dj_database_url.parse("postgresql://developer:YtTEHTCU9VLVrYxOcUjQ10RtY5peTth8@dpg-d26iafbe5dus73b4ri0g-a.singapore-postgres.render.com/meal_bowl_db")
 }
 
 
