@@ -91,7 +91,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '5432',
     },
-    "default": dj_database_url.parse("postgresql://postgres:Toothless1.2.3.4@aws-0-eu-west-2.pooler.supabase.com:5432/postgres")
+    "default": dj_database_url.parse("postgresql://postgres:Toothless1.2.3.4@db.qfmnqshhouwerdicukwq.supabase.co:5432/postgres")
 }
 
 
