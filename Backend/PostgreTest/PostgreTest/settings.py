@@ -81,9 +81,9 @@ DATABASES = {
     },
     "default": {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'myDB',
-        'USER': 'newUser',
-        'PASSWORD': 'testPass',
+        'NAME': 'MealBowlDB',
+        'USER': 'developer',
+        'PASSWORD': 'Toothless15.55',
         'HOST': 'localhost',
         'PORT': '5432',
     }
