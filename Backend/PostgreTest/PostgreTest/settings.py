@@ -91,7 +91,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '5432',
     },
-    "default": dj_database_url.parse("postgresql://developer:YtTEHTCU9VLVrYxOcUjQ10RtY5peTth8@dpg-d26iafbe5dus73b4ri0g-a.singapore-postgres.render.com/meal_bowl_db")
+    "default": dj_database_url.parse("postgresql://postgres:Toothless1.2.3.4@db.qfmnqshhouwerdicukwq.supabase.co:5432/postgres")
 }
 
 
