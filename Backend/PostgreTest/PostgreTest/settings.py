@@ -53,7 +53,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:3000","https://army-man-gif.github.io/MealBowlApp/docs/"]
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000","https://army-man-gif.github.io"]
 
 ROOT_URLCONF = "PostgreTest.urls"
 
