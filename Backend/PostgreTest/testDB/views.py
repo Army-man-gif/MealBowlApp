@@ -1,7 +1,12 @@
 from django.shortcuts import render,redirect
 from .models import Data
 from django.http import HttpResponse
+from django.contrib.auth.models import User
 
+def UserLogic(request,username,password,email):
+    user = User.objects.create_user(username=username, email=email)
+    user.set_password(password)
+    user.save()
 def DatabaseLandingPage(request):
     return HttpResponse("Welcome to database testing")
 def landingPage(request):
