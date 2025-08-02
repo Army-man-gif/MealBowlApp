@@ -14,7 +14,7 @@ def createUser(request,username,password,email):
         name = "Admin access granted",
         content_type=content_type,
     )
-    user = User.objects.create_user(username=username,password=password email=email)
+    user = User.objects.create_user(username=username,password=password,email=email)
     user.user_permissions.add(permission)
     user.save()
 # user._perm_cache  = None (permission cache clearing)
