@@ -1,6 +1,6 @@
 import BowlImage from "./BowlImage.jsx";
 import HomepageStyles from "./HomePage.module.css";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import React from "react";
 import bowl from "./assets/bowl.png";
 import bowl3 from "./assets/bowl3.jpg";
@@ -10,6 +10,7 @@ import bowl6 from "./assets/bowl6.jpg";
 import bowl7 from "./assets/bowl7.jpg";
 import bowl8 from "./assets/bowl8.jpg";
 import logo from "./assets/logo.png";
+
 function RenderBowls() {
   const [contactClicked, setcontactClicked] = useState(false);
   const [loginClicked, setloginClicked] = useState(false);
@@ -20,6 +21,16 @@ function RenderBowls() {
   const [validLogin, setValidLogin] = useState(false);
   const userRef = useRef("");
   const passRef = useRef("");
+  const fetchFromBackend = async () => {
+    const data = await fetch(
+      "https://mealbowlapp.onrender.com/databaseTesting/",
+    );
+    if (data) {
+      console.log("Page fetched", data);
+    } else {
+      console.log("not fetched");
+    }
+  };
   function set() {
     const data = { username: enteredUsername, password: enteredPassowrd };
     const dataStringified = JSON.stringify(data);
@@ -52,6 +63,9 @@ function RenderBowls() {
       setpassword(pass ? JSON.parse(pass) : "");
     }
   }
+  useEffect(() => {
+    fetchFromBackend();
+  }, []);
 
   return (
     <>
