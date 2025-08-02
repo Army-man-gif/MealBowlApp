@@ -23,6 +23,10 @@ def deleteUser(request,username,password,email):
     if(validateUser(request,username,password,email)):
         user = User.objects.get(username=username,email=email)
         user.delete()
+        
+        
+        
+        
 def DatabaseLandingPage(request):
     return HttpResponse("Welcome to database testing")
 def landingPage(request):
