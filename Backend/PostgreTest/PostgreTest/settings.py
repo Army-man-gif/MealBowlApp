@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-ty#)4xji9edd_5%eva8%%ipo1z5hti1&%$mw+8(0z!o8(fjvhr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["mealbowlapp.onrender.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["mealbowlapp.onrender.com", "localhost", "127.0.0.1","http://127.0.0.1:8000/"]
 
 
 # Application definition
