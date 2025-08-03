@@ -31,6 +31,52 @@ function RenderBowls() {
       console.log("not fetched");
     }
   };
+  const setCookie = async () => {
+    await fetch("https://mealbowlapp.onrender.com/databaseTesting/setToken", {
+      credentials: "include",
+    });
+  };
+  function getCookieFromBrowser(name) {
+    let cookie = null;
+    let startIndex = 0;
+    if (document.cookie && document.cookie !== "") {
+      const allCookies = document.cookie.split(";");
+      for (let curCookie of allCookies) {
+        curCookie = curCookie.trim();
+        if (curCookie.startsWith(name + "=")) {
+          startIndex = curCookie.substring(name.length + 1);
+          cookie = decodeURIComponent(startIndex);
+          break;
+        }
+      }
+    }
+    return cookie;
+  }
+  async function handleSendData(data) {
+    const CSRFToken = getCookieFromBrowser("csrftoken");
+    try {
+      const sendData = await fetch(
+        "https://mealbowlapp.onrender.com/databaseTesting/createUser",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": CSRFToken,
+          },
+          credentials: "include",
+          body: JSON.stringify(data),
+        },
+      );
+      if (sendData.ok) {
+        const response = await sendData.json();
+        console.log("Server responded with: ", response);
+      } else {
+        console.log("Server threw an error");
+      }
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+  }
   function set() {
     const data = { username: enteredUsername, password: enteredPassowrd };
     const dataStringified = JSON.stringify(data);
@@ -64,7 +110,7 @@ function RenderBowls() {
     }
   }
   useEffect(() => {
-    fetchFromBackend();
+    setCookie();
   }, []);
 
   return (

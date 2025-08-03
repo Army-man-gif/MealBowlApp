@@ -3,20 +3,37 @@ from .models import Data
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
-
+import json
+from django.http import JsonResponse
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 
-def createUser(request,username,password,email):
-    content_type = ContentType.objects.get_for_model(User)
-    permission = Permission.objects.create(
-        codename = "admin",
-        name = "Admin access granted",
-        content_type=content_type,
-    )
-    user = User.objects.create_user(username=username,password=password,email=email)
-    user.user_permissions.add(permission)
-    user.save()
+
+def setToken(request):
+    # Sets the cookie on the frontend device
+    return JsonResponse({"detail":"CSRF token set"})
+
+def createUser(request):
+    if(request.method == "POST"):
+        try:
+            data = json.loads(request.body)
+            username = data.get("username")
+            password = data.get("password")
+            email = data.get("email")
+            content_type = ContentType.objects.get_for_model(User)
+            permission = Permission.objects.create(
+                codename = "admin",
+                name = "Admin access granted",
+                content_type=content_type,
+            )
+            user = User.objects.create_user(username=username,password=password,email=email)
+            user.user_permissions.add(permission)
+            user.save()
+            return JsonResponse({"message","Created user"})
+        except Exception as e:
+            return JsonResponse({"error":str(e)},status=400)
+    return JsonResponse({"error": "Only POST allowed"}, status=405)
+
 # user._perm_cache  = None (permission cache clearing)
 def validateUser(request,username,password,email):
     try:
