@@ -56,7 +56,7 @@ function RenderBowls() {
     let cookie = null;
     if (document.cookie && document.cookie !== "") {
       const allCookies = document.cookie.split(";");
-      console.log(allCookies);
+      console.log("All cookies", allCookies);
       for (let curCookie of allCookies) {
         curCookie = curCookie.trim();
         const index = curCookie.indexOf("=");
