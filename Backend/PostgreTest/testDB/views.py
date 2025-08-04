@@ -21,10 +21,12 @@ def createUser(request):
             password = data.get("password")
             email = data.get("email")
             content_type = ContentType.objects.get_for_model(User)
-            permission = Permission.objects.create(
+            permission = Permission.objects.get_or_create(
                 codename = "admin",
-                name = "Admin access granted",
-                content_type=content_type,
+                default={
+                    "name" : "Admin access granted",
+                    "content_type" :content_type,
+                }
             )
             user = User.objects.create_user(username=username,password=password,email=email)
             user.user_permissions.add(permission)
