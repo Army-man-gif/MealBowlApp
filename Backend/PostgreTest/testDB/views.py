@@ -7,7 +7,7 @@ import json
 from django.http import JsonResponse
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
-
+import traceback
 
 def setToken(request):
     # Sets the cookie on the frontend device
@@ -34,6 +34,7 @@ def createUser(request):
             user.save()
             return JsonResponse({"message":"Created user"})
         except Exception as e:
+            traceback.print_exc()
             return JsonResponse({"error":str(e)},status=400)
     return JsonResponse({"error": "Only POST allowed"}, status=405)
 
