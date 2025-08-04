@@ -33,7 +33,10 @@ function RenderBowls() {
 
   function updateRegisterData(e, inputField) {
     if (inputField) {
-      const { name, value } = e.target;
+      let { name, value } = e.target;
+      if (value.includes("@")) {
+        name = "email";
+      }
       setRegisterData((fillIn) => ({
         ...fillIn,
         [name]: value,
