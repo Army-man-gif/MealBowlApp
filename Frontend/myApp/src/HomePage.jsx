@@ -88,7 +88,13 @@ function RenderBowls() {
           body: JSON.stringify(registerData),
         },
       );
-      const response = await sendData.json();
+      const contentType = sendData.headers["Content-Type"];
+      let response;
+      if (contentType && contentType.includes("application/json")) {
+        response = await sendData.json();
+      } else {
+        response = await sendData.text();
+      }
       if (sendData.ok) {
         console.log("Server responded with: ", response);
         updateRegisterData({ name: "username", value: "" }, false);
