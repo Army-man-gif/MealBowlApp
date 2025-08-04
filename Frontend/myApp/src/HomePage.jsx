@@ -56,6 +56,7 @@ function RenderBowls() {
     let cookie = null;
     if (document.cookie && document.cookie !== "") {
       const allCookies = document.cookie.split(";");
+      console.log(allCookies);
       for (let curCookie of allCookies) {
         curCookie = curCookie.trim();
         const index = curCookie.indexOf("=");
@@ -72,7 +73,6 @@ function RenderBowls() {
     console.log(`Found cookie "${name}":`, cookie);
     return cookie;
   }
-  //             "X-CSRFToken": CSRFToken,
   async function SendData() {
     const dataStringified = JSON.stringify(registerData);
     localStorage.setItem("Details", dataStringified);
@@ -89,6 +89,7 @@ function RenderBowls() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "X-CSRFToken": CSRFToken,
           },
           credentials: "include",
           body: JSON.stringify(registerData),
