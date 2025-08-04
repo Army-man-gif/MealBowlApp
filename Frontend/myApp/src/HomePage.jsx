@@ -34,9 +34,6 @@ function RenderBowls() {
   function updateRegisterData(e, inputField) {
     if (inputField) {
       let { name, value } = e.target;
-      if (value.includes("@")) {
-        name = "email";
-      }
       setRegisterData((fillIn) => ({
         ...fillIn,
         [name]: value,
@@ -174,6 +171,15 @@ function RenderBowls() {
                   placeholder="username"
                   onChange={(e) => updateRegisterData(e, true)}
                 />
+                <label htmlFor="email">Enter email: </label>
+                <input
+                  className={HomepageStyles.rounded}
+                  value={registerData.email || ""}
+                  id="email"
+                  name="email"
+                  type="email"
+                  onChange={(e) => updateRegisterData(e, true)}
+                />
                 <label htmlFor="password">Enter password: </label>
                 <input
                   className={HomepageStyles.rounded}
@@ -191,13 +197,22 @@ function RenderBowls() {
             ) : (
               <>
                 <br></br>
-                <label htmlFor="username">Enter username or email: </label>
+                <label htmlFor="username">Enter username: </label>
                 <input
                   className={HomepageStyles.rounded}
                   value={registerData.username || ""}
                   id="username"
                   name="username"
                   type="text"
+                  onChange={(e) => updateRegisterData(e, true)}
+                />
+                <label htmlFor="email">Enter email: </label>
+                <input
+                  className={HomepageStyles.rounded}
+                  value={registerData.email || ""}
+                  id="email"
+                  name="email"
+                  type="email"
                   onChange={(e) => updateRegisterData(e, true)}
                 />
                 <label htmlFor="password">Enter password: </label>
@@ -209,6 +224,7 @@ function RenderBowls() {
                   type="text"
                   onChange={(e) => updateRegisterData(e, true)}
                 />
+
                 <button type="button" onClick={SendData}>
                   Signup
                 </button>
