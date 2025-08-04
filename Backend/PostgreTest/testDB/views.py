@@ -9,8 +9,11 @@ from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 import traceback
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.http import require_GET
+
 
 @ensure_csrf_cookie
+@require_GET
 def setToken(request):
     # Sets the cookie on the frontend device
     return JsonResponse({"detail":"CSRF token set"})

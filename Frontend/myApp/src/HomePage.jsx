@@ -48,6 +48,7 @@ function RenderBowls() {
 
   const setCookie = async () => {
     await fetch("https://mealbowlapp.onrender.com/databaseTesting/setToken/", {
+      method: "GET",
       credentials: "include",
     });
   };
