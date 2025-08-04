@@ -88,7 +88,7 @@ function RenderBowls() {
           body: JSON.stringify(registerData),
         },
       );
-      const contentType = sendData.headers["Content-Type"];
+      const contentType = sendData.headers.get("content-type");
       let response;
       if (contentType && contentType.includes("application/json")) {
         response = await sendData.json();
@@ -101,7 +101,7 @@ function RenderBowls() {
         updateRegisterData({ name: "password", value: "" }, false);
         setloginClicked(false);
       } else {
-        console.log("Server threw an error", response.error);
+        console.log("Server threw an error", response);
       }
     } catch (error) {
       console.log("Error: ", error);
