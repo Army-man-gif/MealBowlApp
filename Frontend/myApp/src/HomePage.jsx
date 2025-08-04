@@ -58,13 +58,18 @@ function RenderBowls() {
       const allCookies = document.cookie.split(";");
       for (let curCookie of allCookies) {
         curCookie = curCookie.trim();
-        const [label, value] = curCookie.split("=");
-        if (label == name) {
-          cookie = decodeURIComponent(value);
-          break;
+        const index = curCookie.indexOf("=");
+        if (index > -1) {
+          const label = curCookie.substring(0, index).trim();
+          const value = curCookie.substring(index + 1);
+          if (label === name) {
+            cookie = decodeURIComponent(value);
+            break;
+          }
         }
       }
     }
+    console.log(`Found cookie "${name}":`, cookie);
     return cookie;
   }
   async function SendData() {
