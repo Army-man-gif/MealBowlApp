@@ -14,6 +14,7 @@ def setToken(request):
     return JsonResponse({"detail":"CSRF token set"})
 
 def createUser(request):
+    print("Method: ",request.method,"Body: ",request.body)
     if(request.method == "POST"):
         try:
             data = json.loads(request.body)

@@ -84,14 +84,14 @@ function RenderBowls() {
           body: JSON.stringify(registerData),
         },
       );
+      const response = await sendData.json();
       if (sendData.ok) {
-        const response = await sendData.json();
         console.log("Server responded with: ", response);
         updateRegisterData({ name: "username", value: "" }, false);
         updateRegisterData({ name: "password", value: "" }, false);
         setloginClicked(false);
       } else {
-        console.log("Server threw an error");
+        console.log("Server threw an error", response.error);
       }
     } catch (error) {
       console.log("Error: ", error);
