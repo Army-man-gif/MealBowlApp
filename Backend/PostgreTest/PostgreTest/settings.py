@@ -64,7 +64,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
     "https://mealbowlapp.onrender.com",
-    "http://localhost:5174",
+    "http://localhost:5173",
     "https://army-man-gif.github.io"]
 ROOT_URLCONF = "PostgreTest.urls"
 
