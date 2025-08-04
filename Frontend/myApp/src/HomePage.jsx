@@ -16,8 +16,6 @@ function RenderBowls() {
   const [loginClicked, setloginClicked] = useState(false);
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
-  const [enteredUsername, setenteredUsername] = useState("");
-  const [enteredPassword, setenteredPassword] = useState("");
   const [validLogin, setValidLogin] = useState(false);
 
   const [registerData, setRegisterData] = useState({});
@@ -33,12 +31,19 @@ function RenderBowls() {
     }
   };
 
-  function updateRegisterData(e) {
-    const { name, value } = e.target;
-    setRegisterData((fillIn) => ({
-      ...fillIn,
-      [name]: value,
-    }));
+  function updateRegisterData(e, inputField) {
+    if (inputField) {
+      const { name, value } = e.target;
+      setRegisterData((fillIn) => ({
+        ...fillIn,
+        [name]: value,
+      }));
+    } else {
+      setRegisterData((fillIn) => ({
+        ...fillIn,
+        [e.name]: e.value,
+      }));
+    }
   }
 
   const setCookie = async () => {
@@ -64,6 +69,7 @@ function RenderBowls() {
   async function SendData() {
     const dataStringified = JSON.stringify(registerData);
     localStorage.setItem("Details", dataStringified);
+    console.log(JSON.parse(localStorage.getItem("Details") || "{}"));
     const CSRFToken = getCookieFromBrowser("csrftoken");
     try {
       const sendData = await fetch(
@@ -81,8 +87,8 @@ function RenderBowls() {
       if (sendData.ok) {
         const response = await sendData.json();
         console.log("Server responded with: ", response);
-        setenteredUsername("");
-        setenteredPassword("");
+        updateRegisterData({ name: "username", value: "" }, false);
+        updateRegisterData({ name: "password", value: "" }, false);
         setloginClicked(false);
       } else {
         console.log("Server threw an error");
@@ -96,12 +102,15 @@ function RenderBowls() {
       username === registerData.username &&
       password === registerData.password
     ) {
-      setenteredUsername("");
-      setenteredPassword("");
+      updateRegisterData({ name: "username", value: "" }, false);
+      updateRegisterData({ name: "password", value: "" }, false);
       setValidLogin(true);
     } else {
-      setenteredUsername("Incorrect details");
-      setenteredPassword("");
+      updateRegisterData(
+        { name: "username", value: "Incorrect details" },
+        false,
+      );
+      updateRegisterData({ name: "password", value: "" }, false);
       console.log("Username: " + username + " Password: " + password);
       setValidLogin(false);
     }
@@ -112,7 +121,7 @@ function RenderBowls() {
     }
     if (param === "login") {
       setloginClicked(!loginClicked);
-      const details = JSON.parse(localStorage.getItem("Details") || {});
+      const details = JSON.parse(localStorage.getItem("Details") || "{}");
       const use = details.username || "";
       const pass = details.password || "";
       setusername(use);
@@ -155,22 +164,22 @@ function RenderBowls() {
                 <label htmlFor="username">Enter username or email: </label>
                 <input
                   className={HomepageStyles.rounded}
-                  value={enteredUsername}
+                  value={registerData.username || ""}
                   id="username"
                   type="text"
                   name="username"
                   placeholder="username"
-                  onChange={(e) => updateRegisterData(e)}
+                  onChange={(e) => updateRegisterData(e, true)}
                 />
                 <label htmlFor="password">Enter password: </label>
                 <input
                   className={HomepageStyles.rounded}
-                  value={enteredPassword}
+                  value={registerData.password || ""}
                   id="password"
                   type="password"
                   name="password"
                   placeholder="password"
-                  onChange={(e) => updateRegisterData(e)}
+                  onChange={(e) => updateRegisterData(e, true)}
                 />
                 <button type="button" onClick={verify}>
                   Login
@@ -182,20 +191,20 @@ function RenderBowls() {
                 <label htmlFor="username">Enter username or email: </label>
                 <input
                   className={HomepageStyles.rounded}
-                  value={enteredUsername}
+                  value={registerData.username || ""}
                   id="username"
                   name="username"
                   type="text"
-                  onChange={(e) => updateRegisterData(e)}
+                  onChange={(e) => updateRegisterData(e, true)}
                 />
                 <label htmlFor="password">Enter password: </label>
                 <input
                   className={HomepageStyles.rounded}
-                  value={enteredPassword}
+                  value={registerData.password || ""}
                   id="password"
                   name="password"
                   type="text"
-                  onChange={(e) => updateRegisterData(e)}
+                  onChange={(e) => updateRegisterData(e, true)}
                 />
                 <button type="button" onClick={SendData}>
                   Signup

@@ -14,6 +14,7 @@ def setToken(request):
     return JsonResponse({"detail":"CSRF token set"})
 
 def createUser(request):
+    print("Request method",request.method)
     if(request.method == "POST"):
         try:
             data = json.loads(request.body)
@@ -72,12 +73,13 @@ def getUser(request):
             return JsonResponse({"error":str(e)},status=400)
     return JsonResponse({"error": "Only POST allowed"}, status=405)
 
-def deleteUser(request,username,password,email):
-    if(validateUser(request,username,password,email)):
-        user = User.objects.get(username=username,email=email)
+def deleteUser(request,username):
+    try:
+        user = User.objects.get(username=username)
         user.delete()
         return JsonResponse({"message","Deleted user"})
-    return JsonResponse({"error": "User does not exist"}, status=405)
+    except User.DoesNotExist:
+        return JsonResponse({"error": "User does not exist"}, status=405)
         
 # ---------------------------------------------------------------------------------------------------------------   
 
