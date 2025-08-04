@@ -71,10 +71,10 @@ function RenderBowls() {
     localStorage.setItem("Details", dataStringified);
     console.log(JSON.parse(localStorage.getItem("Details") || "{}"));
     let CSRFToken = getCookieFromBrowser("csrftoken");
-    if (CSRFToken == null) {
-      setCookie();
+    if (!CSRFToken) {
+      await setCookie();
+      CSRFToken = getCookieFromBrowser("csrftoken");
     }
-    CSRFToken = getCookieFromBrowser("csrftoken");
     try {
       const sendData = await fetch(
         "https://mealbowlapp.onrender.com/databaseTesting/createUser",
