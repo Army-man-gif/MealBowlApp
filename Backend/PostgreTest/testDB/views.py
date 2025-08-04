@@ -23,16 +23,16 @@ def createUser(request):
             email = data.get("email")
             content_type = ContentType.objects.get_for_model(User)
             permission = Permission.objects.get_or_create(
-                codename = "admin",
-                default={
+                codename = "admin",                    
+                content_type = content_type,
+                defaults={
                     "name" : "Admin access granted",
-                    "content_type" :content_type,
                 }
             )
             user = User.objects.create_user(username=username,password=password,email=email)
             user.user_permissions.add(permission)
             user.save()
-            return JsonResponse({"message","Created user"})
+            return JsonResponse({"message":"Created user"})
         except Exception as e:
             return JsonResponse({"error":str(e)},status=400)
     return JsonResponse({"error": "Only POST allowed"}, status=405)
@@ -47,7 +47,7 @@ def validateUser(request,username="",password="",email=""):
             email = data.get("email","")
             user = authenticate(request,username=username,password=password)
             if(user is not None and user.email==email):
-                return JsonResponse({"message","User validated"})
+                return JsonResponse({"message":"User validated"})
         except User.DoesNotExist:
             return JsonResponse({"error": "User does not exist"}, status=405)
         except Exception as e:
