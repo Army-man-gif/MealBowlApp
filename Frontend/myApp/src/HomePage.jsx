@@ -72,6 +72,7 @@ function RenderBowls() {
     console.log(`Found cookie "${name}":`, cookie);
     return cookie;
   }
+  //             "X-CSRFToken": CSRFToken,
   async function SendData() {
     const dataStringified = JSON.stringify(registerData);
     localStorage.setItem("Details", dataStringified);
