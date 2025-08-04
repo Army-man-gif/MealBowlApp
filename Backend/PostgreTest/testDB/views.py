@@ -35,25 +35,49 @@ def createUser(request):
     return JsonResponse({"error": "Only POST allowed"}, status=405)
 
 # user._perm_cache  = None (permission cache clearing)
-def validateUser(request,username,password,email):
-    try:
-        user = authenticate(request,username=username,password=password)
-        if(user is not None and user.email==email):
-            return True
-    except User.DoesNotExist:
-        pass
-    return False
-def getUser(request,username,password,email):
-    if(validateUser(request,username,password,email)):
-        user = User.objects.get(username=username,email=email)
-        return user
-    return None
+def validateUser(request,username="",password="",email=""):
+    if(request.method == "POST"):
+        try:
+            data = json.loads(request.body)
+            username = data.get("username","")
+            password = data.get("password","")
+            email = data.get("email","")
+            user = authenticate(request,username=username,password=password)
+            if(user is not None and user.email==email):
+                return JsonResponse({"message","User validated"})
+        except User.DoesNotExist:
+            return JsonResponse({"error": "User does not exist"}, status=405)
+        except Exception as e:
+            return JsonResponse({"error":str(e)},status=400)
+    else:
+        try:
+            user = authenticate(request,username=username,password=password)
+            if(user is not None and user.email==email):
+                return True
+        except Exception:
+            return False
+def getUser(request):
+    if(request.method == "POST"):
+        try:
+            data = json.loads(request.body)
+            username = data.get("username","")
+            password = data.get("password","")
+            email = data.get("email","")
+            if(validateUser(request,username,password,email)):
+                user = User.objects.get(username=username,email=email)
+                userDataToReturn = {"username":user.username,"password":user.password,"email":user.email}
+                return JsonResponse(userDataToReturn)
+            return JsonResponse({"error": "User does not exist"}, status=405)
+        except Exception as e:
+            return JsonResponse({"error":str(e)},status=400)
+    return JsonResponse({"error": "Only POST allowed"}, status=405)
+
 def deleteUser(request,username,password,email):
     if(validateUser(request,username,password,email)):
         user = User.objects.get(username=username,email=email)
         user.delete()
-        return HttpResponse("User deleted")
-    return HttpResponse("Invalid credentials")
+        return JsonResponse({"message","Deleted user"})
+    return JsonResponse({"error": "User does not exist"}, status=405)
         
 # ---------------------------------------------------------------------------------------------------------------   
 

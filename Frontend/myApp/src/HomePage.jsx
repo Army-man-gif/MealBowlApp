@@ -17,10 +17,11 @@ function RenderBowls() {
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
   const [enteredUsername, setenteredUsername] = useState("");
-  const [enteredPassowrd, setenteredPassowrd] = useState("");
+  const [enteredPassword, setenteredPassword] = useState("");
   const [validLogin, setValidLogin] = useState(false);
-  const userRef = useRef("");
-  const passRef = useRef("");
+
+  const [registerData, setRegisterData] = useState({});
+
   const fetchFromBackend = async () => {
     const data = await fetch(
       "https://mealbowlapp.onrender.com/databaseTesting/",
@@ -31,6 +32,15 @@ function RenderBowls() {
       console.log("not fetched");
     }
   };
+
+  function updateRegisterData(e) {
+    const { name, value } = e.target;
+    setRegisterData((fillIn) => ({
+      ...fillIn,
+      [name]: value,
+    }));
+  }
+
   const setCookie = async () => {
     await fetch("https://mealbowlapp.onrender.com/databaseTesting/setToken", {
       credentials: "include",
@@ -38,21 +48,22 @@ function RenderBowls() {
   };
   function getCookieFromBrowser(name) {
     let cookie = null;
-    let startIndex = 0;
     if (document.cookie && document.cookie !== "") {
       const allCookies = document.cookie.split(";");
       for (let curCookie of allCookies) {
         curCookie = curCookie.trim();
-        if (curCookie.startsWith(name + "=")) {
-          startIndex = curCookie.substring(name.length + 1);
-          cookie = decodeURIComponent(startIndex);
+        const [label, value] = curCookie.split("=");
+        if (label == name) {
+          cookie = decodeURIComponent(value);
           break;
         }
       }
     }
     return cookie;
   }
-  async function handleSendData(data) {
+  async function SendData() {
+    const dataStringified = JSON.stringify(registerData);
+    localStorage.setItem("Details", dataStringified);
     const CSRFToken = getCookieFromBrowser("csrftoken");
     try {
       const sendData = await fetch(
@@ -64,12 +75,15 @@ function RenderBowls() {
             "X-CSRFToken": CSRFToken,
           },
           credentials: "include",
-          body: JSON.stringify(data),
+          body: JSON.stringify(registerData),
         },
       );
       if (sendData.ok) {
         const response = await sendData.json();
         console.log("Server responded with: ", response);
+        setenteredUsername("");
+        setenteredPassword("");
+        setloginClicked(false);
       } else {
         console.log("Server threw an error");
       }
@@ -77,22 +91,17 @@ function RenderBowls() {
       console.log("Error: ", error);
     }
   }
-  function set() {
-    const data = { username: enteredUsername, password: enteredPassowrd };
-    const dataStringified = JSON.stringify(data);
-    localStorage.setItem("Details", dataStringified);
-    userRef.current.value = "";
-    passRef.current.value = "";
-    setloginClicked(false);
-  }
   function verify() {
-    if (username === enteredUsername && password === enteredPassowrd) {
-      userRef.current.value = "";
-      passRef.current.value = "";
+    if (
+      username === registerData.username &&
+      password === registerData.password
+    ) {
+      setenteredUsername("");
+      setenteredPassword("");
       setValidLogin(true);
     } else {
-      userRef.current.value = "Incorrect details";
-      passRef.current.value = "";
+      setenteredUsername("Incorrect details");
+      setenteredPassword("");
       console.log("Username: " + username + " Password: " + password);
       setValidLogin(false);
     }
@@ -103,10 +112,11 @@ function RenderBowls() {
     }
     if (param === "login") {
       setloginClicked(!loginClicked);
-      const use = localStorage.getItem("Details").username;
-      const pass = localStorage.getItem("Details").password;
-      setusername(use ? JSON.parse(use) : "");
-      setpassword(pass ? JSON.parse(pass) : "");
+      const details = JSON.parse(localStorage.getItem("Details") || {});
+      const use = details.username || "";
+      const pass = details.password || "";
+      setusername(use);
+      setpassword(pass);
     }
   }
   useEffect(() => {
@@ -142,21 +152,25 @@ function RenderBowls() {
             (localStorage.getItem("Details") ? (
               <>
                 <br></br>
-                <label htmlFor="username">Enter username: </label>
+                <label htmlFor="username">Enter username or email: </label>
                 <input
                   className={HomepageStyles.rounded}
-                  ref={userRef}
+                  value={enteredUsername}
                   id="username"
                   type="text"
-                  onChange={(e) => setenteredUsername(e.target.value)}
+                  name="username"
+                  placeholder="username"
+                  onChange={(e) => updateRegisterData(e)}
                 />
                 <label htmlFor="password">Enter password: </label>
                 <input
                   className={HomepageStyles.rounded}
-                  ref={passRef}
+                  value={enteredPassword}
                   id="password"
                   type="password"
-                  onChange={(e) => setenteredPassowrd(e.target.value)}
+                  name="password"
+                  placeholder="password"
+                  onChange={(e) => updateRegisterData(e)}
                 />
                 <button type="button" onClick={verify}>
                   Login
@@ -165,23 +179,25 @@ function RenderBowls() {
             ) : (
               <>
                 <br></br>
-                <label htmlFor="username">Enter username: </label>
+                <label htmlFor="username">Enter username or email: </label>
                 <input
                   className={HomepageStyles.rounded}
-                  ref={userRef}
+                  value={enteredUsername}
                   id="username"
+                  name="username"
                   type="text"
-                  onChange={(e) => setenteredUsername(e.target.value)}
+                  onChange={(e) => updateRegisterData(e)}
                 />
                 <label htmlFor="password">Enter password: </label>
                 <input
                   className={HomepageStyles.rounded}
-                  ref={passRef}
+                  value={enteredPassword}
                   id="password"
+                  name="password"
                   type="text"
-                  onChange={(e) => setenteredPassowrd(e.target.value)}
+                  onChange={(e) => updateRegisterData(e)}
                 />
-                <button type="button" onClick={set}>
+                <button type="button" onClick={SendData}>
                   Signup
                 </button>
               </>
