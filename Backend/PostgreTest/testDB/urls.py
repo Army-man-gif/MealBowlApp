@@ -6,6 +6,6 @@ urlpatterns = [
     path("getData/<str:value>/", views.displayData,name="getData"),
     path("addData/<str:value>/", views.addData, name="addData"),
     path("setToken/",views.setToken,name="setToken"),
-    path("deleteUser/<str:value>/", views.deleteUser,name="deleteUser"),
+    path("deleteUser/<str:username>/", views.deleteUser,name="deleteUser"),
 
 ]
