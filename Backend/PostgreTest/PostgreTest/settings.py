@@ -55,6 +55,9 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = ["http://localhost:5173","https://army-man-gif.github.io"]
 
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5173","https://army-man-gif.github.io"]
 ROOT_URLCONF = "PostgreTest.urls"
 
 TEMPLATES = [
