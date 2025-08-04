@@ -88,7 +88,6 @@ function RenderBowls() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "X-CSRFToken": CSRFToken,
           },
           credentials: "include",
           body: JSON.stringify(registerData),
