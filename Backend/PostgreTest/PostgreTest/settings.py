@@ -52,6 +52,12 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+CSRF_COOKIE_SECURE = True      
+CSRF_COOKIE_SAMESITE = "None"
+
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = "None"
+
 CORS_ALLOWED_ORIGINS = ["http://localhost:5173","https://army-man-gif.github.io"]
 
 CORS_ALLOW_CREDENTIALS = True
