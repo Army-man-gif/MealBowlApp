@@ -161,7 +161,7 @@ function RenderBowls() {
             (localStorage.getItem("Details") ? (
               <>
                 <br></br>
-                <label htmlFor="username">Enter username or email: </label>
+                <label htmlFor="username">Enter username: </label>
                 <input
                   className={HomepageStyles.rounded}
                   value={registerData.username || ""}
