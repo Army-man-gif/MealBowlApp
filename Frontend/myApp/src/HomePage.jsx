@@ -47,7 +47,7 @@ function RenderBowls() {
   }
 
   const setCookie = async () => {
-    await fetch("https://mealbowlapp.onrender.com/databaseTesting/setToken", {
+    await fetch("https://mealbowlapp.onrender.com/databaseTesting/setToken/", {
       credentials: "include",
     });
   };
@@ -77,7 +77,7 @@ function RenderBowls() {
     }
     try {
       const sendData = await fetch(
-        "https://mealbowlapp.onrender.com/databaseTesting/createUser",
+        "https://mealbowlapp.onrender.com/databaseTesting/createUser/",
         {
           method: "POST",
           headers: {
