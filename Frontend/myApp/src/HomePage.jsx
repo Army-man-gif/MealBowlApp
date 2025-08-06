@@ -51,6 +51,7 @@ function RenderBowls() {
       method: "GET",
       credentials: "include",
     });
+    return new Promise((resolve) => setTimeout(resolve, 100));
   };
   function getCookieFromBrowser(name) {
     let cookie = null;
@@ -70,7 +71,11 @@ function RenderBowls() {
         }
       }
     }
-    console.log(`Found cookie "${name}":`, cookie);
+    if (cookie !== null) {
+      console.log(`Found cookie "${name}":`, cookie);
+    } else {
+      console.log("Cookie not found");
+    }
     return cookie;
   }
   async function SendData() {
@@ -145,6 +150,11 @@ function RenderBowls() {
       setpassword(pass);
     }
   }
+  useEffect(() => {
+    (async () => {
+      await setCookie();
+    })();
+  }, []);
   return (
     <>
       <div className={HomepageStyles.banner}>
@@ -203,6 +213,15 @@ function RenderBowls() {
                   placeholder="password"
                   onChange={(e) => updateRegisterData(e, true)}
                 />
+                <input
+                  className={HomepageStyles.rounded}
+                  type="hidden"
+                  name="_csrf"
+                  value="<%= _csrf %>"
+                  id="TOKEN"
+                  onChange={(e) => updateRegisterData(e, true)}
+                />
+
                 <button type="button" onClick={verify}>
                   Login
                 </button>
@@ -235,6 +254,14 @@ function RenderBowls() {
                   id="password"
                   name="password"
                   type="text"
+                  onChange={(e) => updateRegisterData(e, true)}
+                />
+                <input
+                  className={HomepageStyles.rounded}
+                  type="hidden"
+                  name="_csrf"
+                  value="<%= _csrf %>"
+                  id="TOKEN"
                   onChange={(e) => updateRegisterData(e, true)}
                 />
 
