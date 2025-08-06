@@ -55,8 +55,8 @@ function RenderBowls() {
   };
   function getCookieFromBrowser(name) {
     let cookie = null;
-    if (document.cookie && document.cookie !== "") {
-      const allCookies = document.cookie.split(";");
+    const allCookies = document.cookie.split(";");
+    if (allCookies && allCookies !== "") {
       console.log("All cookies", allCookies);
       for (let curCookie of allCookies) {
         curCookie = curCookie.trim();
@@ -213,15 +213,6 @@ function RenderBowls() {
                   placeholder="password"
                   onChange={(e) => updateRegisterData(e, true)}
                 />
-                <input
-                  className={HomepageStyles.rounded}
-                  type="hidden"
-                  name="_csrf"
-                  value="<%= _csrf %>"
-                  id="TOKEN"
-                  onChange={(e) => updateRegisterData(e, true)}
-                />
-
                 <button type="button" onClick={verify}>
                   Login
                 </button>
@@ -254,14 +245,6 @@ function RenderBowls() {
                   id="password"
                   name="password"
                   type="text"
-                  onChange={(e) => updateRegisterData(e, true)}
-                />
-                <input
-                  className={HomepageStyles.rounded}
-                  type="hidden"
-                  name="_csrf"
-                  value="<%= _csrf %>"
-                  id="TOKEN"
                   onChange={(e) => updateRegisterData(e, true)}
                 />
 
