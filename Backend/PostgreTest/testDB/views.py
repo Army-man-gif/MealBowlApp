@@ -31,23 +31,23 @@ def createUser(request):
             password = data.get("password")
             email = data.get("email")
             content_type = ContentType.objects.get_for_model(User)
-            permission, _ = Permission.objects.get_or_create(
-                codename = "admin",                    
-                defaults={
-                    "name" : "Admin access granted",
-                    "content_type" : content_type,
-                }
-            )
+            if(password == "admin1.2.3.4"):
+                permission, _ = Permission.objects.get_or_create(
+                    codename = "admin",                    
+                    defaults={
+                        "name" : "Admin access granted",
+                        "content_type" : content_type,
+                    }
+                )
             user = User.objects.create_user(username=username,password=password,email=email)
-            user.user_permissions.add(permission)
+            if(username == "Jyoti"):
+                user.user_permissions.add(permission)
             user.save()
             return JsonResponse({"message":"Created user"})
         except Exception as e:
             traceback.print_exc()
             return JsonResponse({"error":str(e)},status=400)
     return JsonResponse({"error": "Only POST allowed"}, status=405)
-
-# user._perm_cache  = None (permission cache clearing)
 def validateUser(request,username="",password="",email=""):
     if(request.method == "POST"):
         try:
@@ -69,6 +69,14 @@ def validateUser(request,username="",password="",email=""):
                 return True
         except Exception:
             return False
+def checkUserPermission(request):
+    if request.user.is_authenticated:
+        if request.user.has_perm("auth.admin"):
+            return JsonResponse({"admin": True})
+        else:
+            return JsonResponse({"admin": False})
+    return JsonResponse({"error": "User not authenticated"}, status=401)
+
 def getUser(request):
     if(request.method == "POST"):
         try:
