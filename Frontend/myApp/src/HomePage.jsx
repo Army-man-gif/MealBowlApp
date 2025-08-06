@@ -66,7 +66,8 @@ function RenderBowls() {
     const cookiesData = await fetchTheData.json();
     return cookiesData.csrftoken;
   }
-  async function SendData() {
+  async function SendData(url) {
+    let response;
     const dataStringified = JSON.stringify(registerData);
     localStorage.setItem("Details", dataStringified);
     console.log(JSON.parse(localStorage.getItem("Details") || "{}"));
@@ -76,20 +77,16 @@ function RenderBowls() {
       CSRFToken = await getCookieFromBrowser("csrftoken");
     }
     try {
-      const sendData = await fetch(
-        "https://mealbowlapp.onrender.com/databaseTesting/createUser/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": CSRFToken,
-          },
-          credentials: "include",
-          body: JSON.stringify(registerData),
+      const sendData = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": CSRFToken,
         },
-      );
+        credentials: "include",
+        body: JSON.stringify(registerData),
+      });
       const contentType = sendData.headers.get("content-type");
-      let response;
       if (contentType && contentType.includes("application/json")) {
         response = await sendData.json();
       } else {
@@ -107,8 +104,9 @@ function RenderBowls() {
     } catch (error) {
       console.log("Error: ", error);
     }
+    return response;
   }
-  function verify() {
+  async function verify() {
     if (
       username === registerData.username &&
       password === registerData.password
@@ -243,7 +241,14 @@ function RenderBowls() {
                   onChange={(e) => updateRegisterData(e, true)}
                 />
 
-                <button type="button" onClick={SendData}>
+                <button
+                  type="button"
+                  onClick={() =>
+                    SendData(
+                      "https://mealbowlapp.onrender.com/databaseTesting/createUser/",
+                    )
+                  }
+                >
                   Signup
                 </button>
               </>
