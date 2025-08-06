@@ -65,31 +65,6 @@ function RenderBowls() {
     );
     const cookiesData = await fetchTheData.json();
     return cookiesData.csrftoken;
-    /*
-    let cookie = null;
-    const allCookies = document.cookie.split(";");
-    if (allCookies && allCookies !== "") {
-      console.log("All cookies", allCookies);
-      for (let curCookie of allCookies) {
-        curCookie = curCookie.trim();
-        const index = curCookie.indexOf("=");
-        if (index > -1) {
-          const label = curCookie.substring(0, index).trim();
-          const value = curCookie.substring(index + 1);
-          if (label === name) {
-            cookie = decodeURIComponent(value);
-            break;
-          }
-        }
-      }
-    }
-    if (cookie !== null) {
-      console.log(`Found cookie "${name}":`, cookie);
-    } else {
-      console.log("Cookie not found");
-    }
-    return cookie;
-    */
   }
   async function SendData() {
     const dataStringified = JSON.stringify(registerData);
