@@ -89,7 +89,7 @@ def deleteUser(request,username):
     try:
         user = User.objects.get(username=username)
         user.delete()
-        return JsonResponse({"message","Deleted user"})
+        return JsonResponse({"message":"Deleted user"})
     except User.DoesNotExist:
         return JsonResponse({"error": "User does not exist"}, status=405)
         
