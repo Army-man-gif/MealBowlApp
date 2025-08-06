@@ -106,6 +106,26 @@ function RenderBowls() {
     }
     return response;
   }
+  async function verifyUsingDatabase() {
+    const check = await SendData(
+      "https://mealbowlapp.onrender.com/databaseTesting/validateUser/",
+    );
+    if (check.message) {
+      updateRegisterData({ name: "username", value: "" }, false);
+      updateRegisterData({ name: "email", value: "" }, false);
+      updateRegisterData({ name: "password", value: "" }, false);
+      setValidLogin(true);
+    } else {
+      updateRegisterData(
+        { name: "username", value: "Incorrect details" },
+        false,
+      );
+      updateRegisterData({ name: "email", value: "" }, false);
+      updateRegisterData({ name: "password", value: "" }, false);
+      console.log("Username: " + username + " Password: " + password);
+      setValidLogin(false);
+    }
+  }
   async function verify() {
     if (
       username === registerData.username &&
@@ -203,7 +223,7 @@ function RenderBowls() {
                   placeholder="Enter password here"
                   onChange={(e) => updateRegisterData(e, true)}
                 />
-                <button type="button" onClick={verify}>
+                <button type="button" onClick={verifyUsingDatabase}>
                   Login
                 </button>
               </>
