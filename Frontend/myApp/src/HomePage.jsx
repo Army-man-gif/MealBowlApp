@@ -98,6 +98,7 @@ function RenderBowls() {
       if (sendData.ok) {
         console.log("Server responded with: ", response);
         updateRegisterData({ name: "username", value: "" }, false);
+        updateRegisterData({ name: "email", value: "" }, false);
         updateRegisterData({ name: "password", value: "" }, false);
         setloginClicked(false);
       } else {
@@ -113,6 +114,7 @@ function RenderBowls() {
       password === registerData.password
     ) {
       updateRegisterData({ name: "username", value: "" }, false);
+      updateRegisterData({ name: "email", value: "" }, false);
       updateRegisterData({ name: "password", value: "" }, false);
       setValidLogin(true);
     } else {
@@ -120,6 +122,7 @@ function RenderBowls() {
         { name: "username", value: "Incorrect details" },
         false,
       );
+      updateRegisterData({ name: "email", value: "" }, false);
       updateRegisterData({ name: "password", value: "" }, false);
       console.log("Username: " + username + " Password: " + password);
       setValidLogin(false);
