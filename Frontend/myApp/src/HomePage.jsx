@@ -11,6 +11,8 @@ import bowl7 from "./assets/bowl7.jpg";
 import bowl8 from "./assets/bowl8.jpg";
 import logo from "./assets/logo.png";
 
+import Cookies from "js-cookie";
+
 function RenderBowls() {
   const [contactClicked, setcontactClicked] = useState(false);
   const [loginClicked, setloginClicked] = useState(false);
@@ -53,7 +55,17 @@ function RenderBowls() {
     });
     return new Promise((resolve) => setTimeout(resolve, 100));
   };
-  function getCookieFromBrowser(name) {
+  async function getCookieFromBrowser(name) {
+    const fetchTheData = await fetch(
+      "https://mealbowlapp.onrender.com/databaseTesting/getToken/",
+      {
+        method: "GET",
+        credentials: "include",
+      },
+    );
+    const cookiesData = await fetchTheData.json();
+    return cookiesData.csrftoken;
+    /*
     let cookie = null;
     const allCookies = document.cookie.split(";");
     if (allCookies && allCookies !== "") {
@@ -77,6 +89,7 @@ function RenderBowls() {
       console.log("Cookie not found");
     }
     return cookie;
+    */
   }
   async function SendData() {
     const dataStringified = JSON.stringify(registerData);
