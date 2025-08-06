@@ -8,5 +8,6 @@ urlpatterns = [
     path("setToken/",views.setToken,name="setToken"),
     path("getToken/",views.get_csrf_token,name="getToken"),
     path("deleteUser/<str:username>/", views.deleteUser,name="deleteUser"),
+    path("validateUser/", views.validateUser,name="validateUser"),
 
 ]
