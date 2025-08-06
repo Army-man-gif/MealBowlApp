@@ -182,7 +182,7 @@ function RenderBowls() {
                   id="username"
                   type="text"
                   name="username"
-                  placeholder="username"
+                  placeholder="Enter username here"
                   onChange={(e) => updateRegisterData(e, true)}
                 />
                 <label htmlFor="email">Enter email: </label>
@@ -192,6 +192,7 @@ function RenderBowls() {
                   id="email"
                   name="email"
                   type="email"
+                  placeholder="Enter email here"
                   onChange={(e) => updateRegisterData(e, true)}
                 />
                 <label htmlFor="password">Enter password: </label>
@@ -201,7 +202,7 @@ function RenderBowls() {
                   id="password"
                   type="password"
                   name="password"
-                  placeholder="password"
+                  placeholder="Enter password here"
                   onChange={(e) => updateRegisterData(e, true)}
                 />
                 <button type="button" onClick={verify}>
@@ -218,6 +219,7 @@ function RenderBowls() {
                   id="username"
                   name="username"
                   type="text"
+                  placeholder="Enter username here"
                   onChange={(e) => updateRegisterData(e, true)}
                 />
                 <label htmlFor="email">Enter email: </label>
@@ -227,6 +229,7 @@ function RenderBowls() {
                   id="email"
                   name="email"
                   type="email"
+                  placeholder="Enter email here"
                   onChange={(e) => updateRegisterData(e, true)}
                 />
                 <label htmlFor="password">Enter password: </label>
@@ -236,6 +239,7 @@ function RenderBowls() {
                   id="password"
                   name="password"
                   type="text"
+                  placeholder="Enter password here"
                   onChange={(e) => updateRegisterData(e, true)}
                 />
 
