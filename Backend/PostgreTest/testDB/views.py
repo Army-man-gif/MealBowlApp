@@ -49,7 +49,7 @@ def createUser(request):
 
 # user._perm_cache  = None (permission cache clearing)
 def validateUser(request,username="",password="",email=""):
-    if(request.method == "POST"):
+    if(request.method == "GET"):
         try:
             data = json.loads(request.body)
             username = data.get("username","")
