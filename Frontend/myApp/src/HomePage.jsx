@@ -95,10 +95,10 @@ function RenderBowls() {
     const dataStringified = JSON.stringify(registerData);
     localStorage.setItem("Details", dataStringified);
     console.log(JSON.parse(localStorage.getItem("Details") || "{}"));
-    let CSRFToken = getCookieFromBrowser("csrftoken");
+    let CSRFToken = await getCookieFromBrowser("csrftoken");
     if (!CSRFToken) {
       await setCookie();
-      CSRFToken = getCookieFromBrowser("csrftoken");
+      CSRFToken = await getCookieFromBrowser("csrftoken");
     }
     try {
       const sendData = await fetch(
