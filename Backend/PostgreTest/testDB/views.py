@@ -104,7 +104,6 @@ def deleteUser(request,username):
 # ---------------------------------------------------------------------------------------------------------------   
 
 def login(request,username,password,email):
-    user = authenticate(request, username=username, password=password)
     if(user is not None and user.email==email):
         login(request, user)
 

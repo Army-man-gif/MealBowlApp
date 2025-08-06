@@ -22,7 +22,7 @@ function RenderBowls() {
 
   const [registerData, setRegisterData] = useState({});
 
-  const fetchFromBackend = async () => {
+  const fetchPermissionFromBackend = async () => {
     const data = await fetch(
       "https://mealbowlapp.onrender.com/databaseTesting/",
     );
