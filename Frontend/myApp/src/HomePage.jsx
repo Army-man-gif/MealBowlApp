@@ -147,6 +147,27 @@ function RenderBowls() {
       setDontSkipLogin(true);
     }
   }
+  async function checkAdmin() {
+    const adminCheck = await fetch(
+      "https://mealbowlapp.onrender.com/databaseTesting/logout/",
+      {
+        credentials: "include",
+      },
+    );
+    const contentType = adminCheck.headers.get("content-type");
+    let result;
+    if (contentType && contentType.includes("application/json")) {
+      result = await adminCheck.json();
+    } else {
+      result = await adminCheck.text();
+    }
+    if (result.admin) {
+      console.log("Admin granted");
+    } else {
+      setlogout(true);
+      console.log("Admin restricted");
+    }
+  }
   async function logoutfunction() {
     const logoutCall = await fetch(
       "https://mealbowlapp.onrender.com/databaseTesting/logout/",
@@ -182,7 +203,7 @@ function RenderBowls() {
       logoutfunction();
     }
     if (param === "admin") {
-      //pass
+      checkAdmin();
     }
   }
   function redirectToLogin() {
@@ -340,11 +361,15 @@ function RenderBowls() {
           )}
         </div>
       </div>
-      <div className={`${HomepageStyles.contactPlacement} ${admin}`}>
-        <h2 onClick={() => pressed("admin")} className="clickable">
-          👑 Access admin page
-        </h2>
-      </div>
+      {logout && (
+        <div
+          className={`${HomepageStyles.contactPlacement} ${HomepageStyles.admin}`}
+        >
+          <h2 onClick={() => pressed("admin")} className="clickable">
+            👑 Access admin page
+          </h2>
+        </div>
+      )}
       <div className={HomepageStyles.bowlTextContainer}>
         <p className={HomepageStyles.styleBowlTextSymbolToBeaContainingImage}>
           <span className={HomepageStyles.rotate}>◗</span>
