@@ -219,7 +219,7 @@ function RenderBowls() {
               Signup
             </h2>
           )}
-          {!logout && (
+          {logout && (
             <h2 onClick={() => pressed("logout")} className="clickable">
               Logout
             </h2>
