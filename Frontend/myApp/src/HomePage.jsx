@@ -97,6 +97,7 @@ function RenderBowls() {
         updateRegisterData({ name: "email", value: "" }, false);
         updateRegisterData({ name: "password", value: "" }, false);
         setloginClicked(false);
+        setlogout(true);
       } else {
         console.log("Server threw an error", response);
       }
