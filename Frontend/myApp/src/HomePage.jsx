@@ -189,6 +189,10 @@ function RenderBowls() {
       logoutfunction();
     }
   }
+  function redirectToLogin() {
+    setDontSkipLogin(true);
+    setlogout(false);
+  }
   function redirectToRegister() {
     setDontSkipLogin(false);
     setlogout(false);
@@ -221,7 +225,7 @@ function RenderBowls() {
       <div className={HomepageStyles.container}>
         <div className={HomepageStyles.flexedLogin}>
           {!logout ? (
-            localStorage.getItem("Details") ? (
+            DontSkipLogin ? (
               <h2 onClick={() => pressed("login")} className="clickable">
                 Login
               </h2>
@@ -237,7 +241,7 @@ function RenderBowls() {
           )}
           {!logout &&
             loginClicked &&
-            (localStorage.getItem("Details") || DontSkipLogin ? (
+            (DontSkipLogin ? (
               <>
                 <br></br>
                 <label htmlFor="username">Enter username: </label>
@@ -320,6 +324,9 @@ function RenderBowls() {
                   }
                 >
                   Signup
+                </button>
+                <button type="button" onClick={redirectToLogin}>
+                  Login to account
                 </button>
               </>
             ))}
