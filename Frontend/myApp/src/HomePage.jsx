@@ -190,7 +190,8 @@ function RenderBowls() {
     }
   }
   function redirectToRegister() {
-    //sadfdfs
+    setDontSkipLogin(false);
+    setlogout(false);
   }
   useEffect(() => {
     (async () => {
