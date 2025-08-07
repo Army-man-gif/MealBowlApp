@@ -152,7 +152,7 @@ function RenderBowls() {
   }
   async function logoutfunction() {
     const logoutCall = await fetch(
-      "https://mealbowlapp.onrender.com/databaseTesting/getToken/",
+      "https://mealbowlapp.onrender.com/databaseTesting/logout/",
       {
         credentials: "include",
       },
