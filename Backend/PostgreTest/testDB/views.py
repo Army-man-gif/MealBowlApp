@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from .models import Data
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login,logout
 import json
 from django.http import JsonResponse
 from django.contrib.auth.models import Permission
@@ -105,7 +105,7 @@ def deleteUser(request,username):
         
 # ---------------------------------------------------------------------------------------------------------------   
 
-def login(request):
+def loginView(request):
     print(request.method);
     if(request.method == "POST"):
         try:
@@ -114,7 +114,7 @@ def login(request):
             password = data.get("password")
             email = data.get("email")
             if(validateUser(request,username,password,email)):
-                user = User.objects.get(username=username,password=password,email=email)
+                user = User.objects.get(username=username,email=email)
                 login(request, user)
                 return JsonResponse({"message":"User logged in"})
             return JsonResponse({"error": "User does not exist"}, status=405)
@@ -123,7 +123,7 @@ def login(request):
     return JsonResponse({"error": "Only POST allowed"}, status=405)
 
 
-def logout(request):
+def logoutView(request):
     if request.user.is_authenticated:
         logout(request)
         return JsonResponse({"message": "User logged out"})
