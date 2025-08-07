@@ -181,6 +181,9 @@ function RenderBowls() {
     if (param === "logout") {
       logoutfunction();
     }
+    if (param === "admin") {
+      //pass
+    }
   }
   function redirectToLogin() {
     setDontSkipLogin(true);
@@ -337,7 +340,11 @@ function RenderBowls() {
           )}
         </div>
       </div>
-
+      <div className={`${HomepageStyles.contactPlacement} ${admin}`}>
+        <h2 onClick={() => pressed("admin")} className="clickable">
+          👑 Access admin page
+        </h2>
+      </div>
       <div className={HomepageStyles.bowlTextContainer}>
         <p className={HomepageStyles.styleBowlTextSymbolToBeaContainingImage}>
           <span className={HomepageStyles.rotate}>◗</span>
