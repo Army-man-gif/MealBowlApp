@@ -17,7 +17,7 @@ function RenderBowls() {
   const [contactClicked, setcontactClicked] = useState(false);
   const [loginClicked, setloginClicked] = useState(false);
   const [logout, setlogout] = useState(false);
-  const [DontSkipLogin, setDontSkipLogin] = useState(false);
+  const [DontSkipLogin, setDontSkipLogin] = useState(true);
 
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
@@ -126,7 +126,7 @@ function RenderBowls() {
       updateRegisterData({ name: "password", value: "" }, false);
       console.log("Username: " + username + " Password: " + password);
       setlogout(false);
-      setDontSkipLogin(false);
+      setDontSkipLogin(true);
     }
   }
   async function verify() {
@@ -147,7 +147,7 @@ function RenderBowls() {
       updateRegisterData({ name: "password", value: "" }, false);
       console.log("Username: " + username + " Password: " + password);
       setlogout(false);
-      setDontSkipLogin(false);
+      setDontSkipLogin(true);
     }
   }
   async function logoutfunction() {
@@ -165,7 +165,7 @@ function RenderBowls() {
       result = await logoutCall.text();
     }
     if (result.message) {
-      setDontSkipLogin(false);
+      setDontSkipLogin(true);
       setlogout(false);
       console.log(result.message);
     } else {
@@ -188,6 +188,9 @@ function RenderBowls() {
     if (param === "logout") {
       logoutfunction();
     }
+  }
+  function redirectToRegister() {
+    //sadfdfs
   }
   useEffect(() => {
     (async () => {
@@ -268,6 +271,9 @@ function RenderBowls() {
                 />
                 <button type="button" onClick={verifyUsingDatabase}>
                   Login
+                </button>
+                <button type="button" onClick={redirectToRegister}>
+                  Create account
                 </button>
               </>
             ) : (
