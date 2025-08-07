@@ -19,9 +19,6 @@ function RenderBowls() {
   const [logout, setlogout] = useState(false);
   const [DontSkipLogin, setDontSkipLogin] = useState(true);
 
-  const [username, setusername] = useState("");
-  const [password, setpassword] = useState("");
-
   const [registerData, setRegisterData] = useState({});
 
   const fetchPermissionFromBackend = async () => {
@@ -179,11 +176,6 @@ function RenderBowls() {
     }
     if (param === "login") {
       setloginClicked(!loginClicked);
-      const details = JSON.parse(localStorage.getItem("Details") || "{}");
-      const use = details.username || "";
-      const pass = details.password || "";
-      setusername(use);
-      setpassword(pass);
     }
     if (param === "logout") {
       logoutfunction();
