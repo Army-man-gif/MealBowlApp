@@ -157,7 +157,13 @@ function RenderBowls() {
         credentials: "include",
       },
     );
-    const result = logoutCall.json();
+    const contentType = logoutCall.headers.get("content-type");
+    let result;
+    if (contentType && contentType.includes("application/json")) {
+      result = await logoutCall.json();
+    } else {
+      result = await logoutCall.text();
+    }
     if (result.message) {
       setDontSkipLogin(false);
       setlogout(false);
