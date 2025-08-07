@@ -164,6 +164,7 @@ function RenderBowls() {
     if (result.message) {
       setDontSkipLogin(true);
       setlogout(false);
+      setloginClicked(!loginClicked);
       console.log(result.message);
     } else {
       setlogout(true);
