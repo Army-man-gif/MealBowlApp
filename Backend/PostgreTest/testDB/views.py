@@ -106,6 +106,7 @@ def deleteUser(request,username):
 # ---------------------------------------------------------------------------------------------------------------   
 
 def login(request):
+    print(request.method);
     if(request.method == "POST"):
         try:
             data = json.loads(request.body)
