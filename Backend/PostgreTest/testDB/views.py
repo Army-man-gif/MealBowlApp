@@ -22,6 +22,8 @@ def setToken(request):
     # Sets the cookie on the frontend device
     return JsonResponse({"detail":"CSRF token set"})
 
+# ---------------------------------------------------------------------------------------------------------------   
+
 def createUser(request):
     print("Method: ",request.method,"Body: ",request.body)
     if(request.method == "POST"):
@@ -75,7 +77,7 @@ def checkUserPermission(request):
             return JsonResponse({"admin": True})
         else:
             return JsonResponse({"admin": False})
-    return JsonResponse({"error": "User not authenticated"}, status=401)
+    return JsonResponse({"error": "User not logged in"}, status=401)
 
 def getUser(request):
     if(request.method == "POST"):
@@ -103,12 +105,28 @@ def deleteUser(request,username):
         
 # ---------------------------------------------------------------------------------------------------------------   
 
-def login(request,username,password,email):
-    if(user is not None and user.email==email):
-        login(request, user)
+def login(request):
+    if(request.method == "POST"):
+        try:
+            data = json.loads(request.body)
+            username = data.get("username")
+            password = data.get("password")
+            email = data.get("email")
+            if(validateUser(request,username,password,email)):
+                user = User.objects.get(username=username,password=password,email=email)
+                login(request, user)
+                return JsonResponse({"message":"User logged in"})
+            return JsonResponse({"error": "User does not exist"}, status=405)
+        except Exception as e:
+            return JsonResponse({"error":str(e)},status=400)
+    return JsonResponse({"error": "Only POST allowed"}, status=405)
+
 
 def logout(request):
-    logout(request)
+    if request.user.is_authenticated:
+        logout(request)
+        return JsonResponse({"message": "User logged out"})
+    return JsonResponse({"error":"User not logged in yet"})
 
 # ---------------------------------------------------------------------------------------------------------------   
 

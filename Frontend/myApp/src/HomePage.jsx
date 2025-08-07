@@ -108,7 +108,7 @@ function RenderBowls() {
   }
   async function verifyUsingDatabase() {
     const check = await SendData(
-      "https://mealbowlapp.onrender.com/databaseTesting/validateUser/",
+      "https://mealbowlapp.onrender.com/databaseTesting/login/",
     );
     if (check.message) {
       updateRegisterData({ name: "username", value: "" }, false);
