@@ -16,9 +16,11 @@ import Cookies from "js-cookie";
 function RenderBowls() {
   const [contactClicked, setcontactClicked] = useState(false);
   const [loginClicked, setloginClicked] = useState(false);
+  const [logout, setlogout] = useState(false);
+  const [DontSkipLogin, setDontSkipLogin] = useState(false);
+
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
-  const [validLogin, setValidLogin] = useState(false);
 
   const [registerData, setRegisterData] = useState({});
 
@@ -114,7 +116,7 @@ function RenderBowls() {
       updateRegisterData({ name: "username", value: "" }, false);
       updateRegisterData({ name: "email", value: "" }, false);
       updateRegisterData({ name: "password", value: "" }, false);
-      setValidLogin(true);
+      setlogout(true);
     } else {
       updateRegisterData(
         { name: "username", value: "Incorrect details" },
@@ -123,7 +125,8 @@ function RenderBowls() {
       updateRegisterData({ name: "email", value: "" }, false);
       updateRegisterData({ name: "password", value: "" }, false);
       console.log("Username: " + username + " Password: " + password);
-      setValidLogin(false);
+      setlogout(false);
+      setDontSkipLogin(false);
     }
   }
   async function verify() {
@@ -134,7 +137,7 @@ function RenderBowls() {
       updateRegisterData({ name: "username", value: "" }, false);
       updateRegisterData({ name: "email", value: "" }, false);
       updateRegisterData({ name: "password", value: "" }, false);
-      setValidLogin(true);
+      setlogout(true);
     } else {
       updateRegisterData(
         { name: "username", value: "Incorrect details" },
@@ -143,7 +146,25 @@ function RenderBowls() {
       updateRegisterData({ name: "email", value: "" }, false);
       updateRegisterData({ name: "password", value: "" }, false);
       console.log("Username: " + username + " Password: " + password);
-      setValidLogin(false);
+      setlogout(false);
+      setDontSkipLogin(false);
+    }
+  }
+  async function logoutfunction() {
+    const logoutCall = await fetch(
+      "https://mealbowlapp.onrender.com/databaseTesting/getToken/",
+      {
+        credentials: "include",
+      },
+    );
+    const result = logoutCall.json();
+    if (result.message) {
+      setDontSkipLogin(false);
+      setlogout(false);
+      console.log(result.message);
+    } else {
+      setlogout(true);
+      console.log(result.error);
     }
   }
   function pressed(param) {
@@ -157,6 +178,9 @@ function RenderBowls() {
       const pass = details.password || "";
       setusername(use);
       setpassword(pass);
+    }
+    if (param === "logout") {
+      logoutfunction();
     }
   }
   useEffect(() => {
@@ -186,11 +210,23 @@ function RenderBowls() {
       </p>
       <div className={HomepageStyles.container}>
         <div className={HomepageStyles.flexedLogin}>
-          <h2 onClick={() => pressed("login")} className="clickable">
-            Login/Sign up
-          </h2>
-          {loginClicked &&
-            (localStorage.getItem("Details") ? (
+          {!logout && localStorage.getItem("Details") ? (
+            <h2 onClick={() => pressed("login")} className="clickable">
+              Login
+            </h2>
+          ) : (
+            <h2 onClick={() => pressed("login")} className="clickable">
+              Signup
+            </h2>
+          )}
+          {!logout && (
+            <h2 onClick={() => pressed("logout")} className="clickable">
+              Logout
+            </h2>
+          )}
+          {!logout &&
+            loginClicked &&
+            (localStorage.getItem("Details") || DontSkipLogin ? (
               <>
                 <br></br>
                 <label htmlFor="username">Enter username: </label>

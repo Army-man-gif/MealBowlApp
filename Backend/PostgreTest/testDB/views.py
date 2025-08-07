@@ -1,16 +1,26 @@
 from django.shortcuts import render,redirect
+# -----------------------------------------------------------
 from .models import Data
+# -----------------------------------------------------------
 from django.http import HttpResponse
+# -----------------------------------------------------------
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
-import json
-from django.http import JsonResponse
 from django.contrib.auth.models import Permission
+from django.contrib.auth.decorators import login_required
+# -----------------------------------------------------------
 from django.contrib.contenttypes.models import ContentType
-import traceback
+# -----------------------------------------------------------
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET
+# -----------------------------------------------------------
+import json
+from django.http import JsonResponse
+# -----------------------------------------------------------
+import traceback
+# -----------------------------------------------------------
 from django.middleware.csrf import get_token
+# -----------------------------------------------------------
 
 def get_csrf_token(request):
     token = get_token(request)
@@ -122,7 +132,7 @@ def loginView(request):
             return JsonResponse({"error":str(e)},status=400)
     return JsonResponse({"error": "Only POST allowed"}, status=405)
 
-
+@login_required()
 def logoutView(request):
     if request.user.is_authenticated:
         logout(request)
