@@ -210,20 +210,19 @@ function RenderBowls() {
       </p>
       <div className={HomepageStyles.container}>
         <div className={HomepageStyles.flexedLogin}>
-          {!logout && localStorage.getItem("Details") ? (
-            <h2 onClick={() => pressed("login")} className="clickable">
-              Login
-            </h2>
-          ) : (
-            <h2 onClick={() => pressed("login")} className="clickable">
-              Signup
-            </h2>
-          )}
-          {logout && (
-            <h2 onClick={() => pressed("logout")} className="clickable">
-              Logout
-            </h2>
-          )}
+          (!logout ? ( (localStorage.getItem("Details")? (
+          <h2 onClick={() => pressed("login")} className="clickable">
+            Login
+          </h2>
+          ):(
+          <h2 onClick={() => pressed("login")} className="clickable">
+            Signup
+          </h2>
+          )) ) : (
+          <h2 onClick={() => pressed("logout")} className="clickable">
+            Logout
+          </h2>
+          ))
           {!logout &&
             loginClicked &&
             (localStorage.getItem("Details") || DontSkipLogin ? (
