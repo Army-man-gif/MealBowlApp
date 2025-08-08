@@ -91,7 +91,7 @@
 .contactPlacement {
   position: relative;
   z-index: 2000;
-  left: 50%;
+  left: 0%;
   display: block;
   font-size: 1.5em;
   background-image: linear-gradient(to right, pink, purple, yellow);
@@ -225,7 +225,6 @@
   }
   .contactPlacement {
     font-size: 0.6em;
-    left: 50%;
     top: -50px;
   }
   .flexedLogin {
