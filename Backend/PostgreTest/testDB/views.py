@@ -52,10 +52,12 @@ def createUser(request):
                         "content_type" : content_type,
                     }
                 )
-            user = User.objects.create_user(username=username,password=password,email=email)
-            if(username == "Jyoti"):
+                user = User.objects.create_user(username=username,password=password,email=email)
                 user.user_permissions.add(permission)
-            user.save()
+                user.save()
+            else:
+                user = User.objects.create_user(username=username,password=password,email=email)
+                user.save()
             return JsonResponse({"message":"Created user"})
         except Exception as e:
             traceback.print_exc()
