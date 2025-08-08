@@ -162,6 +162,7 @@ function RenderBowls() {
     } else {
       result = await adminCheck.text();
     }
+    console.log(result, ":", result.admin);
     if (result.admin) {
       console.log("Admin granted");
     } else {
