@@ -1,6 +1,6 @@
 import BowlImage from "./BowlImage.jsx";
 import HomepageStyles from "./HomePage.module.css";
-import { useState, useRef, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
 import bowl from "./assets/bowl.png";
 import bowl3 from "./assets/bowl3.jpg";
@@ -354,9 +354,7 @@ function RenderBowls() {
         </div>
       </div>
       {logout && (
-        <div
-          className={`${HomepageStyles.contactPlacement} ${HomepageStyles.admin}`}
-        >
+        <div className={HomepageStyles.admin}>
           <h2 onClick={() => pressed("admin")} className="clickable">
             👑 Access admin page
           </h2>
