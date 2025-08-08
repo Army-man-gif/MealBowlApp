@@ -352,14 +352,15 @@ function RenderBowls() {
             </div>
           )}
         </div>
+        {logout && (
+          <div className={HomepageStyles.admin}>
+            <h2 onClick={() => pressed("admin")} className="clickable">
+              👑 Access admin page
+            </h2>
+          </div>
+        )}
       </div>
-      {logout && (
-        <div className={HomepageStyles.admin}>
-          <h2 onClick={() => pressed("admin")} className="clickable">
-            👑 Access admin page
-          </h2>
-        </div>
-      )}
+
       <div className={HomepageStyles.bowlTextContainer}>
         <p className={HomepageStyles.styleBowlTextSymbolToBeaContainingImage}>
           <span className={HomepageStyles.rotate}>◗</span>
