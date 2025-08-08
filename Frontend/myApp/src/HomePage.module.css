@@ -90,7 +90,6 @@
 }
 .contactPlacement {
   position: absolute;
-  z-index: 2000;
   left: 75%;
   top: -120px;
   display: block;
