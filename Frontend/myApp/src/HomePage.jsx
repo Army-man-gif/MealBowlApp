@@ -17,7 +17,7 @@ function RenderBowls() {
   const [contactClicked, setcontactClicked] = useState(false);
   const [loginClicked, setloginClicked] = useState(false);
   const [logout, setlogout] = useState(false);
-  const [DontSkipLogin, setDontSkipLogin] = useState(true);
+  const [DontSkipLogin, setDontSkipLogin] = useState(false);
   const [processing, setprocessing] = useState(false);
   const [registerData, setRegisterData] = useState({});
 
