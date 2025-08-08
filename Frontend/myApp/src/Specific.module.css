@@ -41,10 +41,10 @@
 }
 .positionSteam {
   position: absolute;
-  width: 170px;
-  height: 150px;
-  bottom: 100%;
-  left: 30%;
+  width: 200px;
+  height: 170px;
+  bottom: 44.5%;
+  left: 42%;
   background-image: url("/assets/smoke.png");
   background-size: 170px 150px;
   background-repeat: no-repeat;
