@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 # -----------------------------------------------------------
-from .models import Data
+from .models import Data,IndividualBowlOrder,Basket
 # -----------------------------------------------------------
 from django.http import HttpResponse
 # -----------------------------------------------------------
@@ -21,7 +21,6 @@ import traceback
 # -----------------------------------------------------------
 from django.middleware.csrf import get_token
 # -----------------------------------------------------------
-
 def get_csrf_token(request):
     token = get_token(request)
     return JsonResponse({"csrftoken": token})
@@ -148,5 +147,103 @@ def DatabaseLandingPage(request):
     return HttpResponse("Welcome to database testing")
 def landingPage(request):
     return HttpResponse("Welcome to home")
-# Create your views here.
 
+# ---------------------------------------------------------------------------------------------------------------   
+
+def addOrder(request):
+    if(request.method == "POST"):
+        try:
+            data = json.loads(request.body)
+            bowlName = data.get("bowlName")
+            number = data.get("numberofBowls")
+            price = data.get("bowlTotal")
+            if request.user.is_authenticated:
+                user = request.user
+                Bowl = IndividualBowlOrder(user=user, bowlName=bowlName,quantity=number, price=price)
+                Bowl.save()
+                return JsonResponse({"message":"Order created"})
+            return JsonResponse({"error": "User not logged in"}, status=405)
+        except Exception as e:
+            return JsonResponse({"error":str(e)},status=400)
+    return JsonResponse({"error": "Only POST allowed"}, status=405)
+    
+def updateOrder(request):
+    if(request.method == "POST"):
+        try:
+            data = json.loads(request.body)
+            bowlName = data.get("bowlName")
+            number = data.get("numberofBowls")
+            price = data.get("bowlTotal")
+            if request.user.is_authenticated:
+                user = request.user
+                Bowl = IndividualBowlOrder.objects.get(user=user, bowlName=bowlName)
+                Bowl.quantity = number
+                Bowl.price = price
+                Bowl.save()
+                return JsonResponse({"message":"Order updated"})
+            return JsonResponse({"error": "User not logged in"}, status=405)
+        except Bowl.DoesNotExist:
+            redirect("addOrder")
+        except Exception as e:
+            return JsonResponse({"error":str(e)},status=400)
+    return JsonResponse({"error": "Only POST allowed"}, status=405)    
+def deleteOrder(request):
+    if(request.method == "POST"):
+        try:
+            data = json.loads(request.body)
+            bowlName = data.get("bowlName")
+            if request.user.is_authenticated:
+                user = request.user
+                Bowl = IndividualBowlOrder.objects.get(user=user, bowlName=bowlName)
+                Bowl.delete()
+                return JsonResponse({"message":"Order deleted"})
+            return JsonResponse({"error": "User not logged in"}, status=405)
+        except Bowl.DoesNotExist:
+            return JsonResponse({"error": "No such order exists, therefore nothing to delete"}, status=405)
+        except Exception as e:
+            return JsonResponse({"error":str(e)},status=400)
+    return JsonResponse({"error": "Only POST allowed"}, status=405) 
+def makeBasket(request):
+    if(request.method == "POST"):
+        try:
+            data = json.loads(request.body)
+            price = data.get("basketTotal")
+            if request.user.is_authenticated:
+                user = request.user
+                totalOrder = Basket(user=user, totalPrice=price)
+                totalOrder.save()
+                return JsonResponse({"message":"Basket created"})
+            return JsonResponse({"error": "User not logged in"}, status=405)
+        except Exception as e:
+            return JsonResponse({"error":str(e)},status=400)
+    return JsonResponse({"error": "Only POST allowed"}, status=405)  
+
+def updateBasket(request):
+    if(request.method == "POST"):
+        try:
+            data = json.loads(request.body)
+            price = data.get("basketTotal")
+            if request.user.is_authenticated:
+                user = request.user
+                totalOrder = Basket.objects.get(user=user)
+                totalOrder.totalPrice = price
+                totalOrder.save()
+                return JsonResponse({"message":"Basket updated"})
+            return JsonResponse({"error": "User not logged in"}, status=405)
+        except Basket.DoesNotExist:
+            redirect("makeBasket")
+        except Exception as e:
+            return JsonResponse({"error":str(e)},status=400)
+    return JsonResponse({"error": "Only POST allowed"}, status=405)  
+def clearBasket(request):
+    try:
+        if request.user.is_authenticated:
+            user = request.user
+            totalOrder = Basket.objects.get(user=user)
+            totalOrder.delete()
+            return JsonResponse({"message":"Order deleted"})
+        return JsonResponse({"error": "User not logged in"}, status=405)
+    except Basket.DoesNotExist:
+        return JsonResponse({"error": "No such basket exists, therefore nothing to clear"}, status=405)
+    except Exception as e:
+        return JsonResponse({"error":str(e)},status=400)

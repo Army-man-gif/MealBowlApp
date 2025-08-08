@@ -10,5 +10,10 @@ urlpatterns = [
     path("login/", views.loginView,name="login"),
     path("logout/", views.logoutView,name="logout"),
     path("checkUserperm/", views.checkUserPermission,name="checkUserperm"),
+    path("addOrder/", views.addOrder,name="addOrder"),
+    path("updateOrder/", views.updateOrder,name="updateOrder"),
+    path("deleteOrder/", views.deleteOrder,name="deleteOrder"),
+    path("makeBasket/", views.makeBasket,name="makeBasket"),
+    path("updateBasket/", views.updateBasket,name="updateBasket"),
 
 ]
