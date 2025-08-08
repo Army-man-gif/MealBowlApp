@@ -106,6 +106,19 @@ function RenderBowls() {
     }
     return response;
   }
+  async function register() {
+    const make = await SendData(
+      "https://mealbowlapp.onrender.com/databaseTesting/craeteUser/",
+    );
+    const loginToAccount = await SendData(
+      "https://mealbowlapp.onrender.com/databaseTesting/login/",
+    );
+    if (loginToAccount.message) {
+      console.log("Logged in");
+    } else {
+      console.log("error");
+    }
+  }
   async function verifyUsingDatabase() {
     const check = await SendData(
       "https://mealbowlapp.onrender.com/databaseTesting/login/",
@@ -122,28 +135,6 @@ function RenderBowls() {
       );
       updateRegisterData({ name: "email", value: "" }, false);
       updateRegisterData({ name: "password", value: "" }, false);
-      console.log("Username: " + username + " Password: " + password);
-      setlogout(false);
-      setDontSkipLogin(true);
-    }
-  }
-  async function verify() {
-    if (
-      username === registerData.username &&
-      password === registerData.password
-    ) {
-      updateRegisterData({ name: "username", value: "" }, false);
-      updateRegisterData({ name: "email", value: "" }, false);
-      updateRegisterData({ name: "password", value: "" }, false);
-      setlogout(true);
-    } else {
-      updateRegisterData(
-        { name: "username", value: "Incorrect details" },
-        false,
-      );
-      updateRegisterData({ name: "email", value: "" }, false);
-      updateRegisterData({ name: "password", value: "" }, false);
-      console.log("Username: " + username + " Password: " + password);
       setlogout(false);
       setDontSkipLogin(true);
     }
@@ -334,14 +325,7 @@ function RenderBowls() {
                   onChange={(e) => updateRegisterData(e, true)}
                 />
 
-                <button
-                  type="button"
-                  onClick={() =>
-                    SendData(
-                      "https://mealbowlapp.onrender.com/databaseTesting/createUser/",
-                    )
-                  }
-                >
+                <button type="button" onClick={() => register()}>
                   Signup
                 </button>
                 <button type="button" onClick={redirectToLogin}>
