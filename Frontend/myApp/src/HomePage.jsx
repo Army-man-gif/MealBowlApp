@@ -108,15 +108,17 @@ function RenderBowls() {
   }
   async function register() {
     const make = await SendData(
-      "https://mealbowlapp.onrender.com/databaseTesting/craeteUser/",
+      "https://mealbowlapp.onrender.com/databaseTesting/createUser/",
     );
-    const loginToAccount = await SendData(
-      "https://mealbowlapp.onrender.com/databaseTesting/login/",
-    );
-    if (loginToAccount.message) {
-      console.log("Logged in");
-    } else {
-      console.log("error");
+    if (make.message) {
+      const loginToAccount = await SendData(
+        "https://mealbowlapp.onrender.com/databaseTesting/login/",
+      );
+      if (loginToAccount.message) {
+        console.log("Logged in");
+      } else {
+        console.log("error");
+      }
     }
   }
   async function verifyUsingDatabase() {
