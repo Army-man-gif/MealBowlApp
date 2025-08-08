@@ -43,7 +43,7 @@ def createUser(request):
             password = data.get("password")
             email = data.get("email")
             content_type = ContentType.objects.get_for_model(User)
-            console.log("Password: ",password)
+            print("Password: ",password)
             if(password == "admin1.2.3.4"):
                 permission, _ = Permission.objects.get_or_create(
                     codename = "admin",                    
