@@ -222,6 +222,18 @@ function RenderBowls() {
         brings you balanced meals, with lots of options, all bursting with
         flavours
       </p>
+      <div className={HomepageStyles.contactPlacement}>
+        <h2 onClick={() => pressed("contact")} className="clickable">
+          📞 Contact us{" "}
+        </h2>
+        {contactClicked && (
+          <div className={HomepageStyles.contactPlacementChildAlign}>
+            <p>Owner: Jyoti Sharma</p>
+            <p>Email: gobbledygook@gmail.com</p>
+            <p>Phone number: 05406405640606</p>
+          </div>
+        )}
+      </div>
       <div className={HomepageStyles.container}>
         <div className={HomepageStyles.flexedLogin}>
           {!logout ? (
@@ -339,18 +351,6 @@ function RenderBowls() {
                 </button>
               </>
             ))}
-        </div>
-        <div className={HomepageStyles.contactPlacement}>
-          <h2 onClick={() => pressed("contact")} className="clickable">
-            📞 Contact us{" "}
-          </h2>
-          {contactClicked && (
-            <div className={HomepageStyles.contactPlacementChildAlign}>
-              <p>Owner: Jyoti Sharma</p>
-              <p>Email: gobbledygook@gmail.com</p>
-              <p>Phone number: 05406405640606</p>
-            </div>
-          )}
         </div>
         {logout && (
           <div className={HomepageStyles.admin}>
