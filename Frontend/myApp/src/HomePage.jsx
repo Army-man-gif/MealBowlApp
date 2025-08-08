@@ -18,7 +18,7 @@ function RenderBowls() {
   const [loginClicked, setloginClicked] = useState(false);
   const [logout, setlogout] = useState(false);
   const [DontSkipLogin, setDontSkipLogin] = useState(true);
-
+  const [processing, setprocessing] = useState(false);
   const [registerData, setRegisterData] = useState({});
 
   const fetchPermissionFromBackend = async () => {
@@ -107,6 +107,7 @@ function RenderBowls() {
     return response;
   }
   async function register() {
+    setprocessing(true);
     const make = await SendData(
       "https://mealbowlapp.onrender.com/databaseTesting/createUser/",
     );
@@ -116,12 +117,15 @@ function RenderBowls() {
       );
       if (loginToAccount.message) {
         console.log("Logged in");
+        setprocessing(false);
       } else {
         console.log("error");
+        setprocessing(true);
       }
     }
   }
   async function verifyUsingDatabase() {
+    setprocessing(true);
     const check = await SendData(
       "https://mealbowlapp.onrender.com/databaseTesting/login/",
     );
@@ -129,6 +133,7 @@ function RenderBowls() {
       updateRegisterData({ name: "username", value: "" }, false);
       updateRegisterData({ name: "email", value: "" }, false);
       updateRegisterData({ name: "password", value: "" }, false);
+      setprocessing(false);
       setlogout(true);
     } else {
       updateRegisterData(
@@ -137,6 +142,7 @@ function RenderBowls() {
       );
       updateRegisterData({ name: "email", value: "" }, false);
       updateRegisterData({ name: "password", value: "" }, false);
+      setprocessing(true);
       setlogout(false);
       setDontSkipLogin(true);
     }
@@ -286,10 +292,18 @@ function RenderBowls() {
                   placeholder="Enter password here"
                   onChange={(e) => updateRegisterData(e, true)}
                 />
-                <button type="button" onClick={verifyUsingDatabase}>
-                  Login
+                <button
+                  type="button"
+                  onClick={verifyUsingDatabase}
+                  disabled={processing}
+                >
+                  {processing ? "Please wait...." : "Login"}
                 </button>
-                <button type="button" onClick={redirectToRegister}>
+                <button
+                  type="button"
+                  onClick={redirectToRegister}
+                  disabled={processing}
+                >
                   Create account
                 </button>
               </>
@@ -327,10 +341,18 @@ function RenderBowls() {
                   onChange={(e) => updateRegisterData(e, true)}
                 />
 
-                <button type="button" onClick={() => register()}>
-                  Signup
+                <button
+                  type="button"
+                  onClick={() => register()}
+                  disabled={processing}
+                >
+                  {processing ? "Please wait...." : "Signup"}
                 </button>
-                <button type="button" onClick={redirectToLogin}>
+                <button
+                  type="button"
+                  onClick={redirectToLogin}
+                  disabled={processing}
+                >
                   Login to account
                 </button>
               </>
