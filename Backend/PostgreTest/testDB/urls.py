@@ -11,6 +11,6 @@ urlpatterns = [
     path("validateUser/", views.validateUser,name="validateUser"),
     path("login/", views.loginView,name="login"),
     path("logout/", views.logoutView,name="logout"),
-    path("checkUserperm/<str:username>/", views.checkUserPermission,name="checkUserperm"),
+    path("checkUserperm/", views.checkUserPermission,name="checkUserperm"),
 
 ]

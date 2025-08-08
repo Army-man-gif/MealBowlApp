@@ -54,7 +54,7 @@ function RenderBowls() {
     });
     return new Promise((resolve) => setTimeout(resolve, 100));
   };
-  async function getCookieFromBrowser(name) {
+  async function getCookieFromBrowser() {
     const fetchTheData = await fetch(
       "https://mealbowlapp.onrender.com/databaseTesting/getToken/",
       {
@@ -150,7 +150,7 @@ function RenderBowls() {
   }
   async function checkAdmin() {
     const adminCheck = await fetch(
-      "https://mealbowlapp.onrender.com/databaseTesting/logout/",
+      "https://mealbowlapp.onrender.com/databaseTesting/checkUserperm/",
       {
         credentials: "include",
       },
