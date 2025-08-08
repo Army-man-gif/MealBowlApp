@@ -124,7 +124,7 @@ function RenderBowls() {
       );
       updateRegisterData({ name: "email", value: "" }, false);
       updateRegisterData({ name: "password", value: "" }, false);
-      setprocessing(true);
+      setprocessing(false);
       setlogout(false);
       setDontSkipLogin(true);
     }
