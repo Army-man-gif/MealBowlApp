@@ -20,6 +20,7 @@ function RenderBowls() {
   const [DontSkipLogin, setDontSkipLogin] = useState(false);
   const [processing, setprocessing] = useState(false);
   const [registerData, setRegisterData] = useState({});
+  const [cookieSet, setCookieSet] = useState(false);
 
   const fetchPermissionFromBackend = async () => {
     const data = await fetch(
@@ -49,42 +50,47 @@ function RenderBowls() {
 
   async function SendData(url) {
     let response;
-    const dataStringified = JSON.stringify(registerData);
-    localStorage.setItem("Details", dataStringified);
-    console.log(JSON.parse(localStorage.getItem("Details") || "{}"));
-    let CSRFToken = await getCookieFromBrowser("csrftoken");
-    if (!CSRFToken) {
+    if (cookieSet) {
+      const dataStringified = JSON.stringify(registerData);
+      localStorage.setItem("Details", dataStringified);
+      console.log(JSON.parse(localStorage.getItem("Details") || "{}"));
+      let CSRFToken = await getCookieFromBrowser("csrftoken");
+      if (!CSRFToken) {
+        await setCookie();
+        CSRFToken = await getCookieFromBrowser("csrftoken");
+      }
+      try {
+        const sendData = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": CSRFToken,
+          },
+          credentials: "include",
+          body: JSON.stringify(registerData),
+        });
+        const contentType = sendData.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          response = await sendData.json();
+        } else {
+          response = await sendData.text();
+        }
+        if (sendData.ok) {
+          console.log("Server responded with: ", response);
+          updateRegisterData({ name: "username", value: "" }, false);
+          updateRegisterData({ name: "email", value: "" }, false);
+          updateRegisterData({ name: "password", value: "" }, false);
+          setloginClicked(false);
+          setlogout(true);
+        } else {
+          console.log("Server threw an error", response);
+        }
+      } catch (error) {
+        console.log("Error: ", error);
+      }
+    } else {
       await setCookie();
-      CSRFToken = await getCookieFromBrowser("csrftoken");
-    }
-    try {
-      const sendData = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": CSRFToken,
-        },
-        credentials: "include",
-        body: JSON.stringify(registerData),
-      });
-      const contentType = sendData.headers.get("content-type");
-      if (contentType && contentType.includes("application/json")) {
-        response = await sendData.json();
-      } else {
-        response = await sendData.text();
-      }
-      if (sendData.ok) {
-        console.log("Server responded with: ", response);
-        updateRegisterData({ name: "username", value: "" }, false);
-        updateRegisterData({ name: "email", value: "" }, false);
-        updateRegisterData({ name: "password", value: "" }, false);
-        setloginClicked(false);
-        setlogout(true);
-      } else {
-        console.log("Server threw an error", response);
-      }
-    } catch (error) {
-      console.log("Error: ", error);
+      setCookieSet(true);
     }
     return response;
   }
@@ -200,6 +206,7 @@ function RenderBowls() {
   useEffect(() => {
     (async () => {
       await setCookie();
+      setCookieSet(true);
     })();
   }, []);
   return (
