@@ -369,7 +369,7 @@ function RenderBowls() {
       </div>
 
       <div className={HomepageStyles.bowlTextContainer}>
-        <a href="#Bowls" className={HomepageStyles.formatExploreBowls}>
+        <div href="#Bowls" className={HomepageStyles.formatExploreBowls}>
           <span>E</span>
           <span>x</span>
           <span>p</span>
@@ -383,7 +383,7 @@ function RenderBowls() {
           <span>w</span>
           <span>l</span>
           <span>s</span>
-        </a>
+        </div>
       </div>
       <div id="Bowls" className={HomepageStyles.arrangeBowls}>
         <BowlImage name="Paneer Power Bowl" price="₹ 300" picture={bowl} />
