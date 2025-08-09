@@ -1,3 +1,28 @@
+body {
+  background:
+    linear-gradient(
+      120deg,
+      rgba(255, 0, 150, 0.1),
+      rgba(0, 204, 255, 0.1),
+      rgba(255, 255, 0, 0.1),
+      rgba(0, 255, 128, 0.1)
+    ),
+    #ffffff;
+  background-size: 400% 400%;
+  animation: gradientMove 20s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -211,8 +236,9 @@
   align-items: center;
   color: black;
   font-size: 1.5em;
-  margin-top: 20px;
+  margin-top: 0px;
   margin-bottom: 100px;
+  background-image: linear-gradient(135deg, #a8edea, #fed6e3);
 }
 .contactPlacementChildAlign {
   display: flex;
@@ -296,7 +322,6 @@
   }
   .caption {
     font-size: 0.5em;
-    margin-top: 0.2em;
   }
   .captionSecond {
     font-size: 1.3em;
