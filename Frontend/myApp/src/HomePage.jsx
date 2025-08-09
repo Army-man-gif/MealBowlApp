@@ -369,15 +369,21 @@ function RenderBowls() {
       </div>
 
       <div className={HomepageStyles.bowlTextContainer}>
-        <p className={HomepageStyles.styleBowlTextSymbolToBeaContainingImage}>
-          <span className={HomepageStyles.rotate}>◗</span>
-          <a
-            href="#Bowls"
-            className={`${HomepageStyles.center} ${HomepageStyles.link}`}
-          >
-            Explore bowls
-          </a>
-        </p>
+        <a href="#Bowls" className={HomepageStyles.formatExploreBowls}>
+          <span>E</span>
+          <span>x</span>
+          <span>p</span>
+          <span>l</span>
+          <span>o</span>
+          <span>r</span>
+          <span>e</span>
+          <span> </span>
+          <span>B</span>
+          <span>o</span>
+          <span>w</span>
+          <span>l</span>
+          <span>s</span>
+        </a>
       </div>
       <div id="Bowls" className={HomepageStyles.arrangeBowls}>
         <BowlImage name="Paneer Power Bowl" price="₹ 300" picture={bowl} />
