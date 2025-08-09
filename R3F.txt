@@ -1,0 +1,41 @@
+Core React Three Fiber Basics
+<Canvas> setup – how to create the 3D scene in React.
+
+Meshes & geometry – making shapes (boxGeometry, sphereGeometry, planeGeometry, circleGeometry, cylinderGeometry).
+
+Materials – coloring objects and using textures (meshStandardMaterial, meshBasicMaterial, transparency).
+
+Position, rotation, scale – moving and sizing objects in 3D space.
+
+Interaction & Animation
+Pointer events – onClick, onPointerOver, onPointerOut to detect hover/clicks on objects.
+
+State-based movement – using React state (useState) to trigger changes.
+
+useFrame animations – frame-by-frame movement for smooth transitions.
+
+Curved paths – THREE.QuadraticBezierCurve3 or THREE.CatmullRomCurve3 for arcs and curves.
+
+Tweening libraries – GSAP or React Spring for smooth easing animations.
+
+Images & Models
+Loading textures – useLoader(TextureLoader, "image.jpg") to put an image on an object.
+
+Custom shapes for images – mapping textures to a plane, circle, or cylinder.
+
+Loading 3D models – useGLTF for importing .glb / .gltf models (optional, for complex shapes like a realistic pan lid).
+
+Scene Enhancements
+Lighting – ambientLight, directionalLight, etc., so textures and shapes are visible.
+
+OrbitControls – from @react-three/drei for rotating and zooming the camera.
+
+If you learn 1–10, you can already make:
+
+Multiple 3D objects close together
+
+Clickable/hoverable objects
+
+Smooth or curved movement
+
+Custom images (like your pan lid) in 3D space
