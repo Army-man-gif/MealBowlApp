@@ -275,6 +275,7 @@
   }
   .formatExploreBowls {
     font-size: 2em;
+    left: 50%;
   }
   .arrangeBowls {
     margin-top: -30px;
