@@ -166,9 +166,6 @@ function RenderBowls() {
       return false;
     }
   }
-  function adminPage() {
-    <Link to="/Admin"></Link>;
-  }
   async function logoutfunction() {
     setAdmin(false);
     const logoutCall = await fetch(
@@ -203,9 +200,6 @@ function RenderBowls() {
     }
     if (param === "logout") {
       logoutfunction();
-    }
-    if (param === "admin") {
-      adminPage();
     }
   }
   function redirectToLogin() {
@@ -374,9 +368,9 @@ function RenderBowls() {
         </div>
         {admin && (
           <div className={HomepageStyles.admin}>
-            <h2 onClick={() => pressed("admin")} className="clickable">
-              👑 Access admin page
-            </h2>
+            <Link to="/Admin">
+              <h2 className="clickable">👑 Access admin page</h2>
+            </Link>
           </div>
         )}
       </div>
