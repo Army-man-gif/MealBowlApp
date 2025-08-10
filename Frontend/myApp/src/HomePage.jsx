@@ -296,6 +296,7 @@ function RenderBowls() {
                   type="text"
                   name="username"
                   placeholder="Enter username here"
+                  disabled={processing}
                   onChange={(e) => updateRegisterData(e, true)}
                 />
                 <label htmlFor="email">Enter email: </label>
@@ -306,6 +307,7 @@ function RenderBowls() {
                   name="email"
                   type="email"
                   placeholder="Enter email here"
+                  disabled={processing}
                   onChange={(e) => updateRegisterData(e, true)}
                 />
                 <label htmlFor="password">Enter password: </label>
@@ -316,6 +318,7 @@ function RenderBowls() {
                   type="password"
                   name="password"
                   placeholder="Enter password here"
+                  disabled={processing}
                   onChange={(e) => updateRegisterData(e, true)}
                 />
                 <button
@@ -344,6 +347,7 @@ function RenderBowls() {
                   name="username"
                   type="text"
                   placeholder="Enter username here"
+                  disabled={processing}
                   onChange={(e) => updateRegisterData(e, true)}
                 />
                 <label htmlFor="email">Enter email: </label>
@@ -354,6 +358,7 @@ function RenderBowls() {
                   name="email"
                   type="email"
                   placeholder="Enter email here"
+                  disabled={processing}
                   onChange={(e) => updateRegisterData(e, true)}
                 />
                 <label htmlFor="password">Enter password: </label>
@@ -364,6 +369,7 @@ function RenderBowls() {
                   name="password"
                   type="text"
                   placeholder="Enter password here"
+                  disabled={processing}
                   onChange={(e) => updateRegisterData(e, true)}
                 />
 
