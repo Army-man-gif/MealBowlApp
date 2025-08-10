@@ -23,6 +23,7 @@ function RenderBowls() {
   const [registerData, setRegisterData] = useState({});
   const [cookieSet, setCookieSet] = useState(false);
   const [admin, setAdmin] = useState(false);
+  const [name, setName] = useState("");
   const fetchPermissionFromBackend = async () => {
     const data = await fetch(
       "https://mealbowlapp.onrender.com/databaseTesting/",
@@ -49,49 +50,48 @@ function RenderBowls() {
     }
   }
 
-  async function SendData(url) {
+  async function SendData(url, data = {}) {
     let response;
-    if (cookieSet) {
-      const dataStringified = JSON.stringify(registerData);
-      localStorage.setItem("Details", dataStringified);
-      console.log(JSON.parse(localStorage.getItem("Details") || "{}"));
-      let CSRFToken = await getCookieFromBrowser("csrftoken");
-      if (!CSRFToken) {
-        await setCookie();
-        CSRFToken = await getCookieFromBrowser("csrftoken");
-      }
-      try {
-        const sendData = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": CSRFToken,
-          },
-          credentials: "include",
-          body: JSON.stringify(registerData),
-        });
-        const contentType = sendData.headers.get("content-type");
-        if (contentType && contentType.includes("application/json")) {
-          response = await sendData.json();
-        } else {
-          response = await sendData.text();
-        }
-        if (sendData.ok) {
-          console.log("Server responded with: ", response);
-          updateRegisterData({ name: "username", value: "" }, false);
-          updateRegisterData({ name: "email", value: "" }, false);
-          updateRegisterData({ name: "password", value: "" }, false);
-          setloginClicked(false);
-          setlogout(true);
-        } else {
-          console.log("Server threw an error", response);
-        }
-      } catch (error) {
-        console.log("Error: ", error);
-      }
+    let dataToUse;
+    if (Object.keys(data).length !== 0) {
+      dataToUse = data;
     } else {
+      dataToUse = registerData;
+    }
+    let CSRFToken = await getCookieFromBrowser("csrftoken");
+    if (!CSRFToken) {
       await setCookie();
-      setCookieSet(true);
+      CSRFToken = await getCookieFromBrowser("csrftoken");
+    }
+    console.log("dsgf", dataToUse);
+    try {
+      const sendData = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": CSRFToken,
+        },
+        credentials: "include",
+        body: JSON.stringify(dataToUse),
+      });
+      const contentType = sendData.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        response = await sendData.json();
+      } else {
+        response = await sendData.text();
+      }
+      if (sendData.ok) {
+        console.log("Server responded with: ", response);
+        updateRegisterData({ name: "username", value: "" }, false);
+        updateRegisterData({ name: "email", value: "" }, false);
+        updateRegisterData({ name: "password", value: "" }, false);
+        setloginClicked(false);
+        setlogout(true);
+      } else {
+        console.log("Server threw an error", response);
+      }
+    } catch (error) {
+      console.log("Error: ", error);
     }
     return response;
   }
@@ -122,13 +122,19 @@ function RenderBowls() {
       }
     }
   }
-  async function verifyUsingDatabase() {
+  async function verifyUsingDatabase(data = {}) {
+    let dataToUse;
+    if (Object.keys(data).length !== 0) {
+      dataToUse = data;
+    } else {
+      dataToUse = registerData;
+    }
     setprocessing(true);
     let CSRFToken = await getCookieFromBrowser("csrftoken");
     const check = await SendData(
       "https://mealbowlapp.onrender.com/databaseTesting/login/",
+      dataToUse,
     );
-    console.log(registerData);
     if (check.message) {
       const admin = await checkAdmin();
       if (admin) {
@@ -136,12 +142,13 @@ function RenderBowls() {
       } else {
         setAdmin(false);
       }
-      updateRegisterData({ name: "username", value: check.message }, false);
+      setName(registerData.username);
+      updateRegisterData({ name: "username", value: "" }, false);
       updateRegisterData({ name: "email", value: "" }, false);
       updateRegisterData({ name: "password", value: "" }, false);
       localStorage.setItem(
-        "User-" + registerData.username,
-        JSON.stringify(registerData),
+        "User-" + dataToUse.username,
+        JSON.stringify(dataToUse),
       );
       setprocessing(false);
       setlogout(true);
@@ -224,18 +231,19 @@ function RenderBowls() {
     (async () => {
       await setCookie();
       setCookieSet(true);
-      let lastIndex;
+      let lastIndex = -1;
       for (let i = 0; i < localStorage.length; i++) {
         const Currentkey = localStorage.key(i);
         if (Currentkey.includes("User-")) {
           lastIndex = i;
         }
       }
-      const key = localStorage.key(lastIndex);
-      const value = JSON.parse(localStorage.getItem(key));
-      console.log(localStorage.length);
-      setRegisterData(value);
-      await verifyUsingDatabase();
+      if (lastIndex != -1) {
+        const key = localStorage.key(lastIndex);
+        const value = JSON.parse(localStorage.getItem(key));
+        setRegisterData(value);
+        await verifyUsingDatabase(value);
+      }
     })();
   }, []);
   return (
@@ -284,7 +292,7 @@ function RenderBowls() {
             )
           ) : (
             <h2 onClick={() => pressed("logout")} className="clickable">
-              Logout {registerData.username}
+              Logout {name}
             </h2>
           )}
           {!logout &&
