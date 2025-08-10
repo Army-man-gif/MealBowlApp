@@ -131,6 +131,7 @@ function RenderBowls() {
     }
     setprocessing(true);
     let CSRFToken = await getCookieFromBrowser("csrftoken");
+    console.log(dataToUse);
     const check = await SendData(
       "https://mealbowlapp.onrender.com/databaseTesting/login/",
       dataToUse,
