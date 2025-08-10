@@ -105,7 +105,10 @@ function RenderBowls() {
         "https://mealbowlapp.onrender.com/databaseTesting/login/",
       );
       if (loginToAccount.message) {
-        localStorage.setItem(registerData.username, registerData);
+        localStorage.setItem(
+          registerData.username,
+          JSON.stringify(registerData),
+        );
         const admin = await checkAdmin();
         if (admin) {
           setAdmin(true);
@@ -135,7 +138,7 @@ function RenderBowls() {
       updateRegisterData({ name: "username", value: check.message }, false);
       updateRegisterData({ name: "email", value: "" }, false);
       updateRegisterData({ name: "password", value: "" }, false);
-      localStorage.setItem(registerData.username, registerData);
+      localStorage.setItem(registerData.username, JSON.stringify(registerData));
       setprocessing(false);
       setlogout(true);
     } else {
@@ -225,7 +228,7 @@ function RenderBowls() {
           lastIndex = 0;
         }
         const key = localStorage.key(lastIndex);
-        const value = localStorage.getItem(key);
+        const value = JSON.parse(localStorage.getItem(key));
         setRegisterData(value);
         await verifyUsingDatabase();
       }
