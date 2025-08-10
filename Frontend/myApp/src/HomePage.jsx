@@ -169,6 +169,7 @@ function RenderBowls() {
     }
   }
   async function logoutfunction() {
+    setAdmin(false);
     const logoutCall = await fetch(
       "https://mealbowlapp.onrender.com/databaseTesting/logout/",
       {
