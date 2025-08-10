@@ -120,6 +120,7 @@ function RenderBowls() {
   }
   async function verifyUsingDatabase() {
     setprocessing(true);
+    let CSRFToken = await getCookieFromBrowser("csrftoken");
     const check = await SendData(
       "https://mealbowlapp.onrender.com/databaseTesting/login/",
     );
@@ -137,7 +138,7 @@ function RenderBowls() {
       setlogout(true);
     } else {
       updateRegisterData({ name: "username", value: check.error }, false);
-      updateRegisterData({ name: "email", value: "" }, false);
+      updateRegisterData({ name: "email", value: CSRFToken }, false);
       updateRegisterData({ name: "password", value: "" }, false);
       setprocessing(false);
       setlogout(false);
