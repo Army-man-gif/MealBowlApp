@@ -55,6 +55,7 @@ function RenderBowls() {
     let dataToUse;
     if (Object.keys(registerData).length !== 0) {
       dataToUse = registerData;
+    } else {
       if (Object.keys(data).length !== 0) {
         dataToUse = data;
       }
@@ -127,6 +128,7 @@ function RenderBowls() {
     let dataToUse;
     if (Object.keys(registerData).length !== 0) {
       dataToUse = registerData;
+    } else {
       if (Object.keys(data).length !== 0) {
         dataToUse = data;
       }
