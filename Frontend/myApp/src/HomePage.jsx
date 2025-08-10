@@ -12,6 +12,7 @@ import bowl8 from "./assets/bowl8.jpg";
 import logo from "./assets/logo.png";
 
 import { setCookie, getCookieFromBrowser } from "./auth.js";
+import { Link } from "react-router-dom";
 
 function RenderBowls() {
   const [contactClicked, setcontactClicked] = useState(false);
@@ -165,6 +166,9 @@ function RenderBowls() {
       return false;
     }
   }
+  function adminPage() {
+    <Link to="/Admin"></Link>;
+  }
   async function logoutfunction() {
     setAdmin(false);
     const logoutCall = await fetch(
@@ -201,7 +205,7 @@ function RenderBowls() {
       logoutfunction();
     }
     if (param === "admin") {
-      checkAdmin();
+      adminPage();
     }
   }
   function redirectToLogin() {
