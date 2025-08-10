@@ -123,7 +123,7 @@ function RenderBowls() {
   }
   async function verifyUsingDatabase(data = {}) {
     let dataToUse;
-    if (registerData === "{}") {
+    if (Object.keys(registerData).length !== 0) {
       dataToUse = data;
     } else {
       dataToUse = registerData;
