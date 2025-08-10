@@ -122,12 +122,13 @@ function RenderBowls() {
     }
   }
   async function verifyUsingDatabase(data = {}) {
-    console.log(data.length);
+    console.log("length", Object.keys(data).length);
     let dataToUse;
-    if (Object.keys(data).length !== 0) {
-      dataToUse = data;
-    } else {
+    if (Object.keys(registerData).length !== 0) {
       dataToUse = registerData;
+      if (Object.keys(data).length !== 0) {
+        dataToUse = data;
+      }
     }
     setprocessing(true);
     let CSRFToken = await getCookieFromBrowser("csrftoken");
