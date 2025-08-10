@@ -21,7 +21,7 @@ function RenderBowls() {
   const [processing, setprocessing] = useState(false);
   const [registerData, setRegisterData] = useState({});
   const [cookieSet, setCookieSet] = useState(false);
-
+  const [admin, setAdmin] = useState(false);
   const fetchPermissionFromBackend = async () => {
     const data = await fetch(
       "https://mealbowlapp.onrender.com/databaseTesting/",
@@ -104,7 +104,12 @@ function RenderBowls() {
         "https://mealbowlapp.onrender.com/databaseTesting/login/",
       );
       if (loginToAccount.message) {
-        console.log("Logged in");
+        const admin = await checkAdmin();
+        if (admin) {
+          setAdmin(true);
+        } else {
+          setAdmin(false);
+        }
         setprocessing(false);
       } else {
         console.log("error");
@@ -118,6 +123,12 @@ function RenderBowls() {
       "https://mealbowlapp.onrender.com/databaseTesting/login/",
     );
     if (check.message) {
+      const admin = await checkAdmin();
+      if (admin) {
+        setAdmin(true);
+      } else {
+        setAdmin(false);
+      }
       updateRegisterData({ name: "username", value: "" }, false);
       updateRegisterData({ name: "email", value: "" }, false);
       updateRegisterData({ name: "password", value: "" }, false);
@@ -151,10 +162,10 @@ function RenderBowls() {
     }
     console.log(result, ":", result.admin);
     if (result.admin) {
-      console.log("Admin granted");
+      return true;
     } else {
       setlogout(true);
-      console.log("Admin restricted");
+      return false;
     }
   }
   async function logoutfunction() {
@@ -359,7 +370,7 @@ function RenderBowls() {
               </>
             ))}
         </div>
-        {logout && (
+        {admin && (
           <div className={HomepageStyles.admin}>
             <h2 onClick={() => pressed("admin")} className="clickable">
               👑 Access admin page
