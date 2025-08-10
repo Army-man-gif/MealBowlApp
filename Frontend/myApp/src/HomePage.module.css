@@ -11,6 +11,16 @@ body {
   background-size: 400% 400%;
   animation: gradientMove 20s ease infinite;
 }
+html,
+body {
+  width: 100vw !important;
+  overflow-x: hidden !important;
+}
+
+* {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
 
 @keyframes gradientMove {
   0% {
