@@ -53,10 +53,11 @@ function RenderBowls() {
   async function SendData(url, data = {}) {
     let response;
     let dataToUse;
-    if (Object.keys(data).length !== 0) {
-      dataToUse = data;
-    } else {
+    if (Object.keys(registerData).length !== 0) {
       dataToUse = registerData;
+      if (Object.keys(data).length !== 0) {
+        dataToUse = data;
+      }
     }
     let CSRFToken = await getCookieFromBrowser("csrftoken");
     if (!CSRFToken) {
