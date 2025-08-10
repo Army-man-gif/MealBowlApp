@@ -106,7 +106,7 @@ function RenderBowls() {
       );
       if (loginToAccount.message) {
         localStorage.setItem(
-          registerData.username,
+          "User-" + registerData.username,
           JSON.stringify(registerData),
         );
         const admin = await checkAdmin();
@@ -128,6 +128,7 @@ function RenderBowls() {
     const check = await SendData(
       "https://mealbowlapp.onrender.com/databaseTesting/login/",
     );
+    console.log(registerData);
     if (check.message) {
       const admin = await checkAdmin();
       if (admin) {
@@ -138,7 +139,10 @@ function RenderBowls() {
       updateRegisterData({ name: "username", value: check.message }, false);
       updateRegisterData({ name: "email", value: "" }, false);
       updateRegisterData({ name: "password", value: "" }, false);
-      localStorage.setItem(registerData.username, JSON.stringify(registerData));
+      localStorage.setItem(
+        "User-" + registerData.username,
+        JSON.stringify(registerData),
+      );
       setprocessing(false);
       setlogout(true);
     } else {
@@ -221,17 +225,17 @@ function RenderBowls() {
       await setCookie();
       setCookieSet(true);
       let lastIndex;
-      if (localStorage.length > 0) {
-        if (localStorage.length > 1) {
-          lastIndex = localStorage.length - 1;
-        } else {
-          lastIndex = 0;
+      for (let i = 0; i < localStorage.length; i++) {
+        const Currentkey = localStorage.key(i);
+        if (Currentkey.includes("User-")) {
+          lastIndex = i;
         }
-        const key = localStorage.key(lastIndex);
-        const value = JSON.parse(localStorage.getItem(key));
-        setRegisterData(value);
-        await verifyUsingDatabase();
       }
+      const key = localStorage.key(lastIndex);
+      const value = JSON.parse(localStorage.getItem(key));
+      console.log(localStorage.length);
+      setRegisterData(value);
+      await verifyUsingDatabase();
     })();
   }, []);
   return (
