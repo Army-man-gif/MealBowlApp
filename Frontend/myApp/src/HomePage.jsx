@@ -130,7 +130,7 @@ function RenderBowls() {
       } else {
         setAdmin(false);
       }
-      updateRegisterData({ name: "username", value: "" }, false);
+      updateRegisterData({ name: "username", value: check.message }, false);
       updateRegisterData({ name: "email", value: "" }, false);
       updateRegisterData({ name: "password", value: "" }, false);
       setprocessing(false);
