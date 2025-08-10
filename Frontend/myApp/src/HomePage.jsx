@@ -63,7 +63,6 @@ function RenderBowls() {
       await setCookie();
       CSRFToken = await getCookieFromBrowser("csrftoken");
     }
-    console.log("dsgf", dataToUse);
     try {
       const sendData = await fetch(url, {
         method: "POST",
@@ -124,7 +123,7 @@ function RenderBowls() {
   }
   async function verifyUsingDatabase(data = {}) {
     let dataToUse;
-    if (Object.keys(data).length !== 0) {
+    if (registerData === "{}") {
       dataToUse = data;
     } else {
       dataToUse = registerData;
