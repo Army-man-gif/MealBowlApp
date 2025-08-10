@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 # -----------------------------------------------------------
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_GET, require_POST
 # -----------------------------------------------------------
 import json
 from django.http import JsonResponse
@@ -116,7 +116,7 @@ def deleteUser(request,username):
         return JsonResponse({"error": "User does not exist"}, status=405)
         
 # ---------------------------------------------------------------------------------------------------------------   
-
+@require_POST
 def loginView(request):
     print(request.method);
     if(request.method == "POST"):
