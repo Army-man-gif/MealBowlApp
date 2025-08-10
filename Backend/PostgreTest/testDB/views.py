@@ -125,7 +125,8 @@ def loginView(request):
             username = data.get("username")
             password = data.get("password")
             email = data.get("email")
-            if(validateUser(request,username,password,email)):
+            user = authenticate(request,username=username,password=password)
+            if(user is not None and user.email == email):
                 user = User.objects.get(username=username,email=email)
                 login(request, user)
                 return JsonResponse({"message":"User logged in"})
