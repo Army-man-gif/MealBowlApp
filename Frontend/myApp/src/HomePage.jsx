@@ -122,6 +122,7 @@ function RenderBowls() {
     }
   }
   async function verifyUsingDatabase(data = {}) {
+    console.log(data.length);
     let dataToUse;
     if (Object.keys(data).length !== 0) {
       dataToUse = data;
@@ -130,7 +131,6 @@ function RenderBowls() {
     }
     setprocessing(true);
     let CSRFToken = await getCookieFromBrowser("csrftoken");
-    console.log(dataToUse);
     const check = await SendData(
       "https://mealbowlapp.onrender.com/databaseTesting/login/",
       dataToUse,
