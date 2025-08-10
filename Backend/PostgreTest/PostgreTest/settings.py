@@ -61,6 +61,7 @@ SESSION_COOKIE_SAMESITE = "None"
 CORS_ALLOWED_ORIGINS = ["http://localhost:5173","https://army-man-gif.github.io"]
 
 CORS_ALLOW_CREDENTIALS = True
+SECURE_SSL_REDIRECT = True
 
 CSRF_TRUSTED_ORIGINS = [
     "https://mealbowlapp.onrender.com",
