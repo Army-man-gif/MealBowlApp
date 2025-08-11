@@ -80,7 +80,7 @@ def validateUser(request,username="",password="",email=""):
             return False
 def checkUserPermission(request):
     if request.user.is_authenticated:
-        permTable = Permission.objects.get(user=request.user)
+        permTable = Perms.objects.get(user=request.user)
         permVal = permTable.adminPerm
         if permVal:
             return JsonResponse({"admin": True})
@@ -180,7 +180,7 @@ def updateOrder(request):
                 Bowl.save()
                 return JsonResponse({"message":"Order updated"})
             return JsonResponse({"error": "User not logged in"}, status=405)
-        except Bowl.DoesNotExist:
+        except IndividualBowlOrder.DoesNotExist:
             redirect("addOrder")
         except Exception as e:
             return JsonResponse({"error":str(e)},status=400)
