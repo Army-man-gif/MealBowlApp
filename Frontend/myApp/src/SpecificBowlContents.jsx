@@ -159,6 +159,7 @@ function Contents() {
             ))}
         </div>
       </div>
+      <button>Add to order</button>
     </>
   );
 }
