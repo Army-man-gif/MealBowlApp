@@ -6,7 +6,6 @@ from django.http import HttpResponse
 # -----------------------------------------------------------
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth.models import Permission
 from django.contrib.auth.decorators import login_required
 # -----------------------------------------------------------
 from django.contrib.contenttypes.models import ContentType
@@ -42,17 +41,16 @@ def createUser(request):
             username = data.get("username")
             password = data.get("password")
             email = data.get("email")
-            content_type = ContentType.objects.get_for_model(User)
             print("Password: ",password)
             if(password == "admin1.2.3.4"):
                 user = User.objects.create_user(username=username,password=password,email=email)
-                Permission = Perms(user=user,adminPerm=True)
-                Permission.save()
+                permission = Perms(user=user,adminPerm=True)
+                permission.save()
                 user.save()
             else:
                 user = User.objects.create_user(username=username,password=password,email=email)
-                Permission = Perms(user=user,adminPerm=False)
-                Permission.save()
+                permission = Perms(user=user,adminPerm=False)
+                permission.save()
                 user.save()
             return JsonResponse({"message":"Created user"})
         except Exception as e:
