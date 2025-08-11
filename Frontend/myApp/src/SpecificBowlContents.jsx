@@ -156,6 +156,7 @@ function Contents() {
           <div>
             {bowlHot && (
               <>
+                <div className={BowlContentsStyles.positionSteam}></div>
                 <p className={BowlContentsStyles.Bowl}>𓎩</p>
               </>
             )}
@@ -165,7 +166,7 @@ function Contents() {
               </>
             )}
           </div>
-          <button>Add to order</button>
+          <button className={BowlContentsStyles.Button}>Add to order</button>
         </div>
       </div>
     </>

@@ -6,6 +6,7 @@
   text-align: center;
   align-items: start;
   margin: 0;
+  gap: 100px;
 }
 .flexTheRightChildrenVertically {
   position: relative;
@@ -14,7 +15,7 @@
   text-align: center;
   align-items: center;
   flex-direction: column;
-  gap: 0px;
+  gap: 10px;
 }
 .flexIngreAndMacros {
   display: flex;
@@ -72,15 +73,16 @@
   }
 }
 .Bowl {
+  margin: 10px;
   font-size: 20em;
-  height: 100px;
+  height: 400px;
 }
 .positionSteam {
   position: absolute;
   width: 200px;
   height: 170px;
-  top: 40%;
-  left: 10%;
+  top: 25%;
+  left: 6%;
   background-image: url("/assets/smoke.png");
   background-size: 170px 150px;
   background-repeat: no-repeat;
@@ -90,10 +92,14 @@
   pointer-events: none;
   z-index: -1;
 }
-
+.Button {
+  position: absolute;
+  top: 110%;
+  background-image: linear-gradient(to right, pink, lightgreen);
+  font-size: 1.5em;
+  border-radius: 15px;
+}
 @media screen and (max-width: 480px) {
-  .flexIngreAndMacros {
-  }
   .ingredientsFlextheContentsVertically {
     font-size: 0.5em;
   }
@@ -102,7 +108,6 @@
   }
   .positionBowlinCenter {
     font-size: 10em;
-    margin: 160px auto;
   }
   .positionSteam {
     left: 85px;
