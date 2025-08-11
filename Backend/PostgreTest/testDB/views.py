@@ -118,7 +118,6 @@ def deleteUser(request,username):
 # ---------------------------------------------------------------------------------------------------------------   
 @require_POST
 def loginView(request):
-    print(request.method);
     if(request.method == "POST"):
         try:
             data = json.loads(request.body)

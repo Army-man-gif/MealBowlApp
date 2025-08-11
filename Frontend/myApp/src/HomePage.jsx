@@ -296,7 +296,7 @@ function RenderBowls() {
             )
           ) : (
             <h2 onClick={() => pressed("logout")} className="clickable">
-              Logout {name}
+              Logout
             </h2>
           )}
           {!logout &&
