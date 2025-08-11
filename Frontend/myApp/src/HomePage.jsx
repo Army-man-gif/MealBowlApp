@@ -157,8 +157,11 @@ function RenderBowls() {
       setprocessing(false);
       setlogout(true);
     } else {
-      updateRegisterData({ name: "username", value: check.error }, false);
-      updateRegisterData({ name: "email", value: CSRFToken }, false);
+      updateRegisterData(
+        { name: "username", value: "Invalid credentials" },
+        false,
+      );
+      updateRegisterData({ name: "email", value: "" }, false);
       updateRegisterData({ name: "password", value: "" }, false);
       setprocessing(false);
       setlogout(false);
