@@ -104,8 +104,8 @@ function Contents() {
   }
   return (
     <>
-      <div className={BowlContentsStyles.flexIngreAndMacros}>
-        <div>
+      <div className={BowlContentsStyles.flexitAll}>
+        <div className={BowlContentsStyles.flexIngreAndMacros}>
           <div
             className={BowlContentsStyles.ingredientsFlextheContentsVertically}
           >
@@ -122,50 +122,52 @@ function Contents() {
                 </React.Fragment>
               ))}
           </div>
-        </div>
-
-        <div>
-          <div className={BowlContentsStyles.includeTitleinMacros}>
-            <div
-              className={BowlContentsStyles.macrosFlextheContentsHorizontally}
-            >
-              {macrosClicked &&
-                bowlMacros.map((value, index) => (
-                  <React.Fragment key={index}>
-                    {index === 0 && (
-                      <>
-                        <p>{labels[index] + ": " + value + "kcal"}</p>
-                        <span className={BowlContentsStyles.addSpacing}></span>
-                      </>
-                    )}
-                    {index > 0 && (
-                      <>
-                        <p>{labels[index] + ": " + value + "g"}</p>
-                        <span className={BowlContentsStyles.addSpacing}></span>
-                      </>
-                    )}
-                  </React.Fragment>
-                ))}
+          <div>
+            <div className={BowlContentsStyles.includeTitleinMacros}>
+              <div
+                className={BowlContentsStyles.macrosFlextheContentsHorizontally}
+              >
+                {macrosClicked &&
+                  bowlMacros.map((value, index) => (
+                    <React.Fragment key={index}>
+                      {index === 0 && (
+                        <>
+                          <p>{labels[index] + ": " + value + "kcal"}</p>
+                          <span
+                            className={BowlContentsStyles.addSpacing}
+                          ></span>
+                        </>
+                      )}
+                      {index > 0 && (
+                        <>
+                          <p>{labels[index] + ": " + value + "g"}</p>
+                          <span
+                            className={BowlContentsStyles.addSpacing}
+                          ></span>
+                        </>
+                      )}
+                    </React.Fragment>
+                  ))}
+              </div>
             </div>
           </div>
         </div>
+        <div className={BowlContentsStyles.flexTheRightChildrenVertically}>
+          <div>
+            {bowlHot && (
+              <>
+                <p className={BowlContentsStyles.Bowl}>𓎩</p>
+              </>
+            )}
+            {!bowlHot && (
+              <>
+                <p className={BowlContentsStyles.Bowl}>𓎩</p>
+              </>
+            )}
+          </div>
+          <button>Add to order</button>
+        </div>
       </div>
-      <div className={BowlContentsStyles.positionBowlinCenter}>
-        {bowlHot && (
-          <>
-            <div className={BowlContentsStyles.positionSteam}></div>
-            <p>𓎩</p>
-          </>
-        )}
-        {!bowlHot && (
-          <>
-            <p>𓎩</p>
-          </>
-        )}
-      </div>
-      <button className={BowlContentsStyles.positionButton}>
-        Add to order
-      </button>
     </>
   );
 }
