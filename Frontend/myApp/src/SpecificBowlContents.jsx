@@ -104,28 +104,52 @@ function Contents() {
   }
   return (
     <>
-      <div className={BowlContentsStyles.ingredientsContainerPositiononPage}>
-        <div
-          className={BowlContentsStyles.ingredientsFlextheContentsVertically}
-        >
-          <h2
-            onClick={() => toggle("ingredients")}
-            className={BowlContentsStyles.clickable}
+      <div className={BowlContentsStyles.flexIngreAndMacros}>
+        <div>
+          <div
+            className={BowlContentsStyles.ingredientsFlextheContentsVertically}
           >
-            Ingredients
-          </h2>
-          {ingredientsClicked &&
-            bowlInfo.map((value, index) => (
-              <React.Fragment key={index}>
-                {!value.startsWith(stopCase) && <p>{value + "\n"}</p>}
-                {value.startsWith(stopCase) && (
-                  <p style={bold}>{value + "\n"}</p>
-                )}
-              </React.Fragment>
-            ))}
+            <h2 onClick={() => toggle("ingredients")} className="clickable">
+              Ingredients
+            </h2>
+            {ingredientsClicked &&
+              bowlInfo.map((value, index) => (
+                <React.Fragment key={index}>
+                  {!value.startsWith(stopCase) && <p>{value + "\n"}</p>}
+                  {value.startsWith(stopCase) && (
+                    <p style={bold}>{value + "\n"}</p>
+                  )}
+                </React.Fragment>
+              ))}
+          </div>
+        </div>
+
+        <div>
+          <div className={BowlContentsStyles.includeTitleinMacros}>
+            <div
+              className={BowlContentsStyles.macrosFlextheContentsHorizontally}
+            >
+              {macrosClicked &&
+                bowlMacros.map((value, index) => (
+                  <React.Fragment key={index}>
+                    {index === 0 && (
+                      <>
+                        <p>{labels[index] + ": " + value + "kcal"}</p>
+                        <span className={BowlContentsStyles.addSpacing}></span>
+                      </>
+                    )}
+                    {index > 0 && (
+                      <>
+                        <p>{labels[index] + ": " + value + "g"}</p>
+                        <span className={BowlContentsStyles.addSpacing}></span>
+                      </>
+                    )}
+                  </React.Fragment>
+                ))}
+            </div>
+          </div>
         </div>
       </div>
-
       <div className={BowlContentsStyles.positionBowlinCenter}>
         {bowlHot && (
           <>
@@ -139,27 +163,9 @@ function Contents() {
           </>
         )}
       </div>
-
-      <div className={BowlContentsStyles.macrosContainerPositiononPage}>
-        <div className={BowlContentsStyles.macrosFlextheContentsVertically}>
-          <h2
-            onClick={() => toggle("macros")}
-            className={BowlContentsStyles.clickable}
-          >
-            Macros
-          </h2>
-          {macrosClicked &&
-            bowlMacros.map((value, index) => (
-              <React.Fragment key={index}>
-                {index === 0 && (
-                  <p>{labels[index] + ": " + value + "kcal \n"}</p>
-                )}
-                {index > 0 && <p>{labels[index] + ": " + value + "g \n"}</p>}
-              </React.Fragment>
-            ))}
-        </div>
-      </div>
-      <button>Add to order</button>
+      <button className={BowlContentsStyles.positionButton}>
+        Add to order
+      </button>
     </>
   );
 }

@@ -1,9 +1,16 @@
+.flexIngreAndMacros {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  align-items: start;
+  flex-direction: column;
+}
 .ingredientsFlextheContentsVertically {
   background-image: linear-gradient(135deg, lightblue, lightgreen);
   width: max-content;
   padding: 0.05em 0.1em;
   text-align: center;
-  margin: 30px auto;
+  margin: 5px auto;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -11,11 +18,25 @@
   align-items: center;
   font-size: 1.1em;
 }
-.ingredientsContainerPositiononPage {
-  position: absolute;
-  top: 0px;
-  left: 20px;
+.includeTitleinMacros {
+  background-image: linear-gradient(to top, red, orange, yellow);
+  width: max-content;
+  padding: 0.05em 0.1em;
+  border-radius: 20px;
 }
+.macrosFlextheContentsHorizontally {
+  text-align: center;
+  margin: 30px auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.1em;
+}
+.addSpacing {
+  margin-left: 10px;
+}
+
 @keyframes steaming {
   0% {
     opacity: 0%;
@@ -54,40 +75,24 @@
   pointer-events: none;
   z-index: -1;
 }
-.macrosContainerPositiononPage {
-  position: absolute;
-  top: 0px;
-  left: 80%;
-}
-.macrosFlextheContentsVertically {
-  background-image: linear-gradient(to top, red, orange, yellow);
-  width: max-content;
-  padding: 0.05em 0.1em;
-  text-align: center;
-  margin: 30px auto;
+.positionButton {
   display: flex;
   justify-content: center;
-  flex-direction: column;
-  border-radius: 20px;
   align-items: center;
-  font-size: 1.1em;
+  text-align: center;
 }
+
 @media screen and (max-width: 480px) {
   .ingredientsFlextheContentsVertically {
     font-size: 0.5em;
   }
-  .ingredientsContainerPositiononPage {
-    left: 10px;
+
+  .macrosFlextheContentsHorizontally {
+    font-size: 0.6em;
   }
   .positionBowlinCenter {
     font-size: 10em;
     margin: 160px auto;
-  }
-  .macrosContainerPositiononPage {
-    left: 70%;
-  }
-  .macrosFlextheContentsVertically {
-    font-size: 0.6em;
   }
   .positionSteam {
     left: 85px;
