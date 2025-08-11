@@ -21,6 +21,9 @@ import traceback
 # -----------------------------------------------------------
 from django.middleware.csrf import get_token
 # -----------------------------------------------------------
+from django.contrib.auth.models import User
+# -----------------------------------------------------------
+
 def get_csrf_token(request):
     token = get_token(request)
     return JsonResponse({"csrftoken": token})
@@ -33,7 +36,7 @@ def setToken(request):
 
 # ---------------------------------------------------------------------------------------------------------------   
 
-def createUser(request):
+def createUser(request,models.Model):
     print("Method: ",request.method,"Body: ",request.body)
     if(request.method == "POST"):
         try:
@@ -50,9 +53,10 @@ def createUser(request):
                         "name" : "Admin access granted",
                         "content_type" : content_type,
                     }
+
                 )
                 user = User.objects.create_user(username=username,password=password,email=email)
-                user.user_permissions.add(permission)
+                user.user_permissions.add(permission,on_delete=models.CASCADE)
                 user.save()
             else:
                 user = User.objects.create_user(username=username,password=password,email=email)
