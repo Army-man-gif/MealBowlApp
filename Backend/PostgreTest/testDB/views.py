@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 # -----------------------------------------------------------
-from .models import Data,IndividualBowlOrder,Basket
+from .models import Data,IndividualBowlOrder,Basket,Perms
 # -----------------------------------------------------------
 from django.http import HttpResponse
 # -----------------------------------------------------------
@@ -21,8 +21,6 @@ import traceback
 # -----------------------------------------------------------
 from django.middleware.csrf import get_token
 # -----------------------------------------------------------
-from django.contrib.auth.models import User
-# -----------------------------------------------------------
 
 def get_csrf_token(request):
     token = get_token(request)
@@ -36,7 +34,7 @@ def setToken(request):
 
 # ---------------------------------------------------------------------------------------------------------------   
 
-def createUser(request,models.Model):
+def createUser(request):
     print("Method: ",request.method,"Body: ",request.body)
     if(request.method == "POST"):
         try:
@@ -47,19 +45,14 @@ def createUser(request,models.Model):
             content_type = ContentType.objects.get_for_model(User)
             print("Password: ",password)
             if(password == "admin1.2.3.4"):
-                permission, _ = Permission.objects.get_or_create(
-                    codename = "admin",                    
-                    defaults={
-                        "name" : "Admin access granted",
-                        "content_type" : content_type,
-                    }
-
-                )
                 user = User.objects.create_user(username=username,password=password,email=email)
-                user.user_permissions.add(permission,on_delete=models.CASCADE)
+                Permission = Perms(user=user,adminPerm=True)
+                Permission.save()
                 user.save()
             else:
                 user = User.objects.create_user(username=username,password=password,email=email)
+                Permission = Perms(user=user,adminPerm=False)
+                Permission.save()
                 user.save()
             return JsonResponse({"message":"Created user"})
         except Exception as e:
@@ -89,7 +82,9 @@ def validateUser(request,username="",password="",email=""):
             return False
 def checkUserPermission(request):
     if request.user.is_authenticated:
-        if request.user.has_perm("auth.admin"):
+        permTable = Permission.objects.get(user=request.user)
+        permVal = permTable.adminPerm
+        if permVal:
             return JsonResponse({"admin": True})
         else:
             return JsonResponse({"admin": False})

@@ -14,3 +14,8 @@ class IndividualBowlOrder(models.Model):
 class Basket(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     totalPrice = models.DecimalField(max_digits=8, decimal_places=2)
+    
+    
+class Perms(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    adminPerm = models.BooleanField(default=False)
