@@ -13,6 +13,7 @@ urlpatterns = [
     path("addOrder/", views.addOrder,name="addOrder"),
     path("updateOrder/", views.updateOrder,name="updateOrder"),
     path("deleteOrder/", views.deleteOrder,name="deleteOrder"),
+    path("currentNumberOfBowls/<str:bowlName>/", views.currentNumberOfBowls,name="currentNumberOfBowls"),
     path("makeBasket/", views.makeBasket,name="makeBasket"),
     path("updateBasket/", views.updateBasket,name="updateBasket"),
 

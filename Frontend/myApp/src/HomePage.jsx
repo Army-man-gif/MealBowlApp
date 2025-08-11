@@ -436,48 +436,34 @@ function RenderBowls() {
         </div>
       </div>
       <div id="Bowls" className={HomepageStyles.arrangeBowls}>
-        <BowlImage name="Paneer Power Bowl" price="₹ 300" picture={bowl} />
         <BowlImage
-          css="red"
-          name="Chicken Tikka Macro Bowl"
-          price="₹ 500"
-          picture={bowl}
-        />
-        <BowlImage
-          css="blue"
           name="Soya Chunk High-Protein Bowl"
           price="₹ 200"
-          picture={bowl3}
+          picture={bowl}
         />
+        <BowlImage name="Paneer Power Bowl" price="₹ 300" picture={bowl3} />
+        <BowlImage name="Tofu Stir-Fry Bowl" price="₹ 400" picture={bowl4} />
         <BowlImage
-          css="green"
-          name="Fish & Veggie Grain Bowl"
-          price="₹ 300"
-          picture={bowl4}
-        />
-        <BowlImage
-          css="orange"
-          name="Egg Bhurji Nutrition Bowl"
-          price="₹ 700"
+          name="Chicken Tikka Macro Bowl"
+          price="₹ 500"
           picture={bowl5}
         />
+
         <BowlImage
-          css="yellow"
-          name="Rajma Superfood Bowl"
+          name="Fish & Veggie Grain Bowl"
           price="₹ 600"
           picture={bowl6}
         />
         <BowlImage
-          css="purple"
-          name="Tofu Stir-Fry Bowl"
-          price="₹ 400"
+          name="Egg Bhurji Nutrition Bowl"
+          price="₹ 700"
           picture={bowl7}
         />
+        <BowlImage name="Rajma Superfood Bowl" price="₹ 800" picture={bowl8} />
         <BowlImage
-          css="pink"
           name="Eggless Bhurji & Oats Bowl"
-          price="₹ 800"
-          picture={bowl8}
+          price="₹ 900"
+          picture={bowl}
         />
       </div>
     </>

@@ -164,7 +164,22 @@ def addOrder(request):
         except Exception as e:
             return JsonResponse({"error":str(e)},status=400)
     return JsonResponse({"error": "Only POST allowed"}, status=405)
+def currentNumberOfBowls(request,bowlName):
+    if((request.method == "GET") and (request.user.is_authenticated)):
+        try:
+            user = request.user;
+            Bowl = IndividualBowlOrder.objects.get(user=user, bowlName=bowlName)
+            price = {"price":Bowl.price}
+            return JsonResponse(price)
+        except Exception as e:
+            return JsonResponse({"error":str(e)},status=400)
+    else:
+        if(request.method != "GET"):
+            return JsonResponse({"error":"Incorrect method"},status=405)
+        else:
+            return JsonResponse({"error":"User not logged in"},status=405)
     
+
 def updateOrder(request):
     if(request.method == "POST"):
         try:

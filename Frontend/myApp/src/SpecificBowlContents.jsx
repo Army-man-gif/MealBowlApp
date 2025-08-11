@@ -8,26 +8,43 @@ function Contents() {
   const [macrosClicked, setMacrosClicked] = useState(true);
   const labels = ["Calories", "Protein", "Carbs", "Fats"];
   const Hot = {
-    "Paneer-Power-Bowl": true,
     "Soya-Chunk-High-Protein-Bowl": true,
-    "Rajma-Superfood-Bowl": false,
+    "Paneer-Power-Bowl": true,
     "Tofu-Stir-Fry-Bowl": true,
-    "Eggless-Bhurji-&-Oats-Bowl": false,
-    "Egg-Bhurji-Nutrition-Bowl": true,
-    "Fish-&-Veggie-Grain-Bowl": false,
     "Chicken-Tikka-Macro-Bowl": false,
+    "Fish-&-Veggie-Grain-Bowl": false,
+    "Egg-Bhurji-Nutrition-Bowl": true,
+    "Rajma-Superfood-Bowl": false,
+    "Eggless-Bhurji-&-Oats-Bowl": false,
+  };
+  const Prices = {
+    "Soya-Chunk-High-Protein-Bowl": 200,
+    "Paneer-Power-Bowl": 300,
+    "Tofu-Stir-Fry-Bowl": 400,
+    "Chicken-Tikka-Macro-Bowl": 500,
+    "Fish-&-Veggie-Grain-Bowl": 600,
+    "Egg-Bhurji-Nutrition-Bowl": 700,
+    "Rajma-Superfood-Bowl": 800,
+    "Eggless-Bhurji-&-Oats-Bowl": 900,
   };
   const Macros = {
-    "Paneer-Power-Bowl": [480, 30, 35, 20],
     "Soya-Chunk-High-Protein-Bowl": [460, 32, 30, 18],
-    "Rajma-Superfood-Bowl": [470, 22, 38, 16],
+    "Paneer-Power-Bowl": [480, 30, 35, 20],
     "Tofu-Stir-Fry-Bowl": [480, 28, 30, 22],
-    "Eggless-Bhurji-&-Oats-Bowl": [440, 25, 35, 16],
-    "Egg-Bhurji-Nutrition-Bowl": [450, 28, 25, 20],
-    "Fish-&-Veggie-Grain-Bowl": [520, 36, 25, 28],
     "Chicken-Tikka-Macro-Bowl": [500, 38, 30, 22],
+    "Fish-&-Veggie-Grain-Bowl": [520, 36, 25, 28],
+    "Egg-Bhurji-Nutrition-Bowl": [450, 28, 25, 20],
+    "Rajma-Superfood-Bowl": [470, 22, 38, 16],
+    "Eggless-Bhurji-&-Oats-Bowl": [440, 25, 35, 16],
   };
   const information = {
+    "Soya-Chunk-High-Protein-Bowl": [
+      "100g cooked soya chunks (masala sautéed)",
+      "1/2 cup mashed sweet potato or mashed potato",
+      "1/4 cup steamed broccoli and beans",
+      "2 tbsp roasted peanuts",
+      "Sprinkle of chat masala and lemon juice",
+    ],
     "Paneer-Power-Bowl": [
       "150g Grilled paneer (cubes, tossed with spices)",
       "1/2 cup cooked brown rice or quinoa",
@@ -36,47 +53,12 @@ function Contents() {
       "1 tsp olive oil",
       "Toppings: Fresh coriander, lemon juice,black pepper",
     ],
-    "Soya-Chunk-High-Protein-Bowl": [
-      "100g cooked soya chunks (masala sautéed)",
-      "1/2 cup mashed sweet potato or mashed potato",
-      "1/4 cup steamed broccoli and beans",
-      "2 tbsp roasted peanuts",
-      "Sprinkle of chat masala and lemon juice",
-    ],
-    "Rajma-Superfood-Bowl": [
-      "3/4 cup boiled rajma (kidney beans)",
-      "1/2 cup cooked red rice or millets",
-      "1/2 cup mixed vegetables (carrot, peas, beans)",
-      "1 tsp mustard oil or ghee",
-      "Toppings: Fresh coriander, cumin powder, lemon juice",
-    ],
     "Tofu-Stir-Fry-Bowl": [
       "150g tofu (pan-grilled with turmeric, garlic, and pepper)",
       "1/2 cup cooked oats or barley",
       "1/4 cup capsicum, mushroom, and baby corn stir-fry",
       "1 tsp sesame oil",
       "Toppings: Toasted sesame seeds and soy sauce drizzle",
-    ],
-    "Eggless-Bhurji-&-Oats-Bowl": [
-      "1/2 cup moong dal chilla crumble (eggless bhurji style)",
-      "1/2 cup cooked masala oats",
-      "1/4 cup steamed peas and cauliflower",
-      "1 tsp ghee or coconut oil",
-      "Toppings: Mint, lemon, roasted cumin powder",
-    ],
-    "Egg-Bhurji-Nutrition-Bowl": [
-      "3 egg whites + 2 whole eggs (bhurji with onion, tomato, green chili)",
-      "1/2 cup cooked oats or rolled oats khichdi",
-      "1/4 cup steamed cauliflower or peas",
-      "1 tsp ghee or butter",
-      "Toppings: Mint, lemon, and flaxseed powder",
-    ],
-    "Fish-&-Veggie-Grain-Bowl": [
-      "150g grilled fish (pomfret or salmon, spiced with turmeric, garlic)",
-      "1/2 cup cooked red rice or foxtail millet",
-      "1/2 avocado or 1 tsp flaxseed oil",
-      "1/2 cup sautéed kale/spinach + carrots",
-      "Toppings: Roasted sesame seeds, green chutney drizzle",
     ],
     "Chicken-Tikka-Macro-Bowl": [
       "150g grilled chicken tikka (marinated in curd + spices)",
@@ -85,15 +67,44 @@ function Contents() {
       "1 tbsp hung curd mint dip",
       "1 tsp ghee for flavor",
     ],
+    "Fish-&-Veggie-Grain-Bowl": [
+      "150g grilled fish (pomfret or salmon, spiced with turmeric, garlic)",
+      "1/2 cup cooked red rice or foxtail millet",
+      "1/2 avocado or 1 tsp flaxseed oil",
+      "1/2 cup sautéed kale/spinach + carrots",
+      "Toppings: Roasted sesame seeds, green chutney drizzle",
+    ],
+    "Egg-Bhurji-Nutrition-Bowl": [
+      "3 egg whites + 2 whole eggs (bhurji with onion, tomato, green chili)",
+      "1/2 cup cooked oats or rolled oats khichdi",
+      "1/4 cup steamed cauliflower or peas",
+      "1 tsp ghee or butter",
+      "Toppings: Mint, lemon, and flaxseed powder",
+    ],
+    "Rajma-Superfood-Bowl": [
+      "3/4 cup boiled rajma (kidney beans)",
+      "1/2 cup cooked red rice or millets",
+      "1/2 cup mixed vegetables (carrot, peas, beans)",
+      "1 tsp mustard oil or ghee",
+      "Toppings: Fresh coriander, cumin powder, lemon juice",
+    ],
+    "Eggless-Bhurji-&-Oats-Bowl": [
+      "1/2 cup moong dal chilla crumble (eggless bhurji style)",
+      "1/2 cup cooked masala oats",
+      "1/4 cup steamed peas and cauliflower",
+      "1 tsp ghee or coconut oil",
+      "Toppings: Mint, lemon, roasted cumin powder",
+    ],
   };
   const bowlInfo = information[bowlID]
     ? information[bowlID]
     : ["No ingredients found"];
   const bowlMacros = Macros[bowlID] ? Macros[bowlID] : [];
   const bowlHot = Hot[bowlID] ? Hot[bowlID] : false;
-
+  const bowlPrice = Prices[bowlID] ? Prices[bowlID] : null;
   const stopCase = "Toppings";
   const bold = { fontWeight: "bold" };
+  function add() {}
   function toggle(toChange) {
     if (toChange == "ingredients") {
       setingredientsClicked(!ingredientsClicked);
@@ -166,7 +177,9 @@ function Contents() {
               </>
             )}
           </div>
-          <button className={BowlContentsStyles.Button}>Add to order</button>
+          <button onClick={() => add()} className={BowlContentsStyles.Button}>
+            Add to order
+          </button>
         </div>
       </div>
     </>
