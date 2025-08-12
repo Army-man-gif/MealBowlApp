@@ -135,8 +135,13 @@ function Contents() {
     urlforbasketData,
     orderData,
   ) {
-    await add(urlfororderData, orderData);
-    await add(urlforbasketData, orderData);
+    const totalData = {
+      ...orderData,
+      bowlName: bowlIDWithoutDashes,
+      bowlTotal: bowlPrice,
+    };
+    await add(urlfororderData, totalData);
+    await add(urlforbasketData, totalData);
   }
   async function add(url, data) {
     console.log(data);
@@ -188,10 +193,6 @@ function Contents() {
       setOrderClicked(!orderClicked);
     }
   }
-  useEffect(() => {
-    updateOrderData({ name: "bowlName", value: bowlIDWithoutDashes }, false);
-    updateOrderData({ name: "bowlTotal", value: bowlPrice }, false);
-  }, [bowlPrice, bowlIDWithoutDashes]);
   return (
     <>
       <div className={BowlContentsStyles.flexitAll}>
