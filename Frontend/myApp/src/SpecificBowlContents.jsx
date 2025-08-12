@@ -1,6 +1,6 @@
 import BowlContentsStyles from "./Specific.module.css";
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { data, useParams } from "react-router-dom";
 import { setCookie, getCookieFromBrowser } from "./auth.js";
 
 function Contents() {
@@ -129,8 +129,8 @@ function Contents() {
       }));
     }
   }
-
   async function add(url) {
+    console.log(dataToSend);
     setProcessing(true);
     let response;
     let CSRFToken = await getCookieFromBrowser("csrftoken");
@@ -179,6 +179,10 @@ function Contents() {
       setOrderClicked(!orderClicked);
     }
   }
+  useEffect(() => {
+    updateOrderData({ name: "bowlName", value: bowlIDWithoutDashes }, false);
+    updateOrderData({ name: "bowlTotal", value: bowlPrice }, false);
+  }, []);
   return (
     <>
       <div className={BowlContentsStyles.flexitAll}>
@@ -251,17 +255,25 @@ function Contents() {
           </button>
           {orderClicked && (
             <>
-              <label htmlFor="quantity">Quantity</label>
+              <label htmlFor="numberofBowls">Quantity</label>
               <input
-                value={dataToSend.quantity || ""}
-                id="quantity"
-                name="quantity"
+                value={dataToSend.numberofBowls || ""}
+                id="numberofBowls"
+                name="numberofBowls"
                 type="number"
                 placeholder="Enter the number of these bowls you want"
                 disabled={processing}
                 onChange={(e) => updateOrderData(e, true)}
               />
-              <button type="button" onClick={add} disabled={processing}>
+              <button
+                type="button"
+                onClick={() =>
+                  add(
+                    "https://mealbowlapp.onrender.com/databaseTesting/updateOrder/",
+                  )
+                }
+                disabled={processing}
+              >
                 Confirm
               </button>
             </>

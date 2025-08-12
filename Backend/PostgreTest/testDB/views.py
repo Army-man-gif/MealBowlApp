@@ -171,7 +171,7 @@ def updateOrder(request):
             data = json.loads(request.body)
             bowlName = data.get("bowlName")
             number = int(data.get("numberofBowls"))
-            price = float(data.get("bowlTotal"))
+            price = float(data.get("bowlTotal")) * number
             if request.user.is_authenticated:
                 user = request.user
                 Bowl = IndividualBowlOrder.objects.get(user=user, bowlName=bowlName)
@@ -183,7 +183,7 @@ def updateOrder(request):
                 return JsonResponse({"message":"Order updated"})
             return JsonResponse({"error": "User not logged in"}, status=405)
         except IndividualBowlOrder.DoesNotExist:
-            redirect("addOrder")
+            return addOrder(request)
         except Exception as e:
             return JsonResponse({"error":str(e)},status=400)
     return JsonResponse({"error": "Only POST allowed"}, status=405)    
@@ -231,7 +231,7 @@ def updateBasket(request):
                 return JsonResponse({"message":"Basket updated"})
             return JsonResponse({"error": "User not logged in"}, status=405)
         except Basket.DoesNotExist:
-            redirect("makeBasket")
+            return makeBasket(request)
         except Exception as e:
             return JsonResponse({"error":str(e)},status=400)
     return JsonResponse({"error": "Only POST allowed"}, status=405)  
