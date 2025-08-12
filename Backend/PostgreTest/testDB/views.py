@@ -235,7 +235,27 @@ def updateBasket(request):
             return makeBasket(request)
         except Exception as e:
             return JsonResponse({"error":str(e)},status=400)
-    return JsonResponse({"error": "Only POST allowed"}, status=405)  
+    return JsonResponse({"error": "Only POST allowed"}, status=405)
+def updateBasketForDeletedOrder(request):
+    if(request.method == "POST"):
+        try:
+            data = json.loads(request.body)
+            bowlName = data.get("bowlName")
+            if request.user.is_authenticated:
+                user = request.user
+                Bowl = IndividualBowlOrder.objects.get(user=user, bowlName=bowlName)
+                totalOrder = Basket.objects.get(user=user)
+                number = totalOrder.quantity
+                priceToSubtract = number * Bowl.price
+                totalOrder.totalPrice = max(0,totalOrder.totalPrice - priceToSubtract)
+                totalOrder.save()
+                return JsonResponse({"message":"Basket updated"})
+            return JsonResponse({"error": "User not logged in"}, status=405)
+        except Basket.DoesNotExist:
+            return makeBasket(request)
+        except Exception as e:
+            return JsonResponse({"error":str(e)},status=400)
+    return JsonResponse({"error": "Only POST allowed"}, status=405)    
 def clearBasket(request):
     try:
         if request.user.is_authenticated:
