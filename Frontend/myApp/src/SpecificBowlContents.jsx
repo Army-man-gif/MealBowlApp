@@ -1,12 +1,18 @@
 import BowlContentsStyles from "./Specific.module.css";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import { setCookie, getCookieFromBrowser } from "./auth.js";
+
 function Contents() {
   window.scrollTo(0, 0);
   const { bowlID } = useParams();
   const [ingredientsClicked, setingredientsClicked] = useState(true);
   const [macrosClicked, setMacrosClicked] = useState(true);
   const labels = ["Calories", "Protein", "Carbs", "Fats"];
+  const [orderClicked, setOrderClicked] = useState(false);
+  const [dataToSend, setDataToSend] = useState({});
+  const [processing, setProcessing] = useState(false);
+
   const Hot = {
     "Soya-Chunk-High-Protein-Bowl": true,
     "Paneer-Power-Bowl": true,
@@ -99,18 +105,78 @@ function Contents() {
   const bowlInfo = information[bowlID]
     ? information[bowlID]
     : ["No ingredients found"];
+  const bowlIDWithoutDashes = bowlID
+    .split("")
+    .map((char) => (char === "-" ? " " : char))
+    .join("");
   const bowlMacros = Macros[bowlID] ? Macros[bowlID] : [];
   const bowlHot = Hot[bowlID] ? Hot[bowlID] : false;
   const bowlPrice = Prices[bowlID] ? Prices[bowlID] : null;
   const stopCase = "Toppings";
   const bold = { fontWeight: "bold" };
-  function add() {}
+
+  function updateOrderData(e, inputField) {
+    if (inputField) {
+      let { name, value } = e.target;
+      setDataToSend((fillIn) => ({
+        ...fillIn,
+        [name]: value,
+      }));
+    } else {
+      setDataToSend((fillIn) => ({
+        ...fillIn,
+        [e.name]: e.value,
+      }));
+    }
+  }
+
+  async function add(url) {
+    setProcessing(true);
+    let response;
+    let CSRFToken = await getCookieFromBrowser("csrftoken");
+    if (!CSRFToken) {
+      await setCookie();
+      CSRFToken = await getCookieFromBrowser("csrftoken");
+    }
+    try {
+      const sendData = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": CSRFToken,
+        },
+        credentials: "include",
+        body: JSON.stringify(dataToSend),
+      });
+      const contentType = sendData.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        response = await sendData.json();
+      } else {
+        response = await sendData.text();
+      }
+      if (sendData.ok) {
+        console.log("Server responded with: ", response);
+        updateOrderData({ name: "quantity", value: "" }, false);
+        setProcessing(false);
+      } else {
+        console.log("Server threw an error", response);
+        setProcessing(false);
+      }
+    } catch (error) {
+      console.log("Error: ", error);
+      setProcessing(false);
+    }
+    return response;
+  }
   function toggle(toChange) {
     if (toChange == "ingredients") {
       setingredientsClicked(!ingredientsClicked);
     }
     if (toChange == "macros") {
       setMacrosClicked(!macrosClicked);
+    }
+    if (toChange == "order") {
+      setOrderClicked(!orderClicked);
     }
   }
   return (
@@ -177,9 +243,29 @@ function Contents() {
               </>
             )}
           </div>
-          <button onClick={() => add()} className={BowlContentsStyles.Button}>
+          <button
+            onClick={() => toggle("order")}
+            className={BowlContentsStyles.Button}
+          >
             Add to order
           </button>
+          {orderClicked && (
+            <>
+              <label htmlFor="quantity">Quantity</label>
+              <input
+                value={dataToSend.quantity || ""}
+                id="quantity"
+                name="quantity"
+                type="number"
+                placeholder="Enter the number of these bowls you want"
+                disabled={processing}
+                onChange={(e) => updateOrderData(e, true)}
+              />
+              <button type="button" onClick={add} disabled={processing}>
+                Confirm
+              </button>
+            </>
+          )}
         </div>
       </div>
     </>

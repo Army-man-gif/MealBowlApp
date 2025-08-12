@@ -153,8 +153,8 @@ def addOrder(request):
         try:
             data = json.loads(request.body)
             bowlName = data.get("bowlName")
-            number = data.get("numberofBowls")
-            price = data.get("bowlTotal")
+            number = int(data.get("numberofBowls"))
+            price = float(data.get("bowlTotal")) * number
             if request.user.is_authenticated:
                 user = request.user
                 Bowl = IndividualBowlOrder(user=user, bowlName=bowlName,quantity=number, price=price)
@@ -164,34 +164,21 @@ def addOrder(request):
         except Exception as e:
             return JsonResponse({"error":str(e)},status=400)
     return JsonResponse({"error": "Only POST allowed"}, status=405)
-def currentNumberOfBowls(request,bowlName):
-    if((request.method == "GET") and (request.user.is_authenticated)):
-        try:
-            user = request.user;
-            Bowl = IndividualBowlOrder.objects.get(user=user, bowlName=bowlName)
-            price = {"price":Bowl.price}
-            return JsonResponse(price)
-        except Exception as e:
-            return JsonResponse({"error":str(e)},status=400)
-    else:
-        if(request.method != "GET"):
-            return JsonResponse({"error":"Incorrect method"},status=405)
-        else:
-            return JsonResponse({"error":"User not logged in"},status=405)
-    
 
 def updateOrder(request):
     if(request.method == "POST"):
         try:
             data = json.loads(request.body)
             bowlName = data.get("bowlName")
-            number = data.get("numberofBowls")
-            price = data.get("bowlTotal")
+            number = int(data.get("numberofBowls"))
+            price = float(data.get("bowlTotal"))
             if request.user.is_authenticated:
                 user = request.user
                 Bowl = IndividualBowlOrder.objects.get(user=user, bowlName=bowlName)
-                Bowl.quantity = number
-                Bowl.price = price
+                if Bowl.quantity != number:
+                    Bowl.quantity = max(0,Bowl.quantity + number)
+                if Bowl.price != price:
+                    Bowl.price = price
                 Bowl.save()
                 return JsonResponse({"message":"Order updated"})
             return JsonResponse({"error": "User not logged in"}, status=405)
@@ -220,7 +207,7 @@ def makeBasket(request):
     if(request.method == "POST"):
         try:
             data = json.loads(request.body)
-            price = data.get("basketTotal")
+            price = float(data.get("basketTotal"))
             if request.user.is_authenticated:
                 user = request.user
                 totalOrder = Basket(user=user, totalPrice=price)
@@ -235,7 +222,7 @@ def updateBasket(request):
     if(request.method == "POST"):
         try:
             data = json.loads(request.body)
-            price = data.get("basketTotal")
+            price = float(data.get("basketTotal"))
             if request.user.is_authenticated:
                 user = request.user
                 totalOrder = Basket.objects.get(user=user)
