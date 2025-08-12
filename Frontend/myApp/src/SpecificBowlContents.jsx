@@ -130,6 +130,19 @@ function Contents() {
       }));
     }
   }
+  async function updateforDeletedOrder(
+    urlfororderData,
+    urlforbasketData,
+    orderData,
+  ) {
+    const totalData = {
+      ...orderData,
+      bowlName: bowlIDWithoutDashes,
+      bowlTotal: bowlPrice,
+    };
+    await add(urlforbasketData, totalData);
+    await add(urlfororderData, totalData);
+  }
   async function updateOrderandBasket(
     urlfororderData,
     urlforbasketData,
@@ -291,7 +304,7 @@ function Contents() {
               <button
                 type="button"
                 onClick={() =>
-                  updateOrderandBasket(
+                  updateforDeletedOrder(
                     "https://mealbowlapp.onrender.com/databaseTesting/deleteOrder/",
                     "https://mealbowlapp.onrender.com/databaseTesting/updateBasketForDeletedOrder/",
                     orderData,
