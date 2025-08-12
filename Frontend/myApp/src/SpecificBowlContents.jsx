@@ -10,7 +10,8 @@ function Contents() {
   const [macrosClicked, setMacrosClicked] = useState(true);
   const labels = ["Calories", "Protein", "Carbs", "Fats"];
   const [orderClicked, setOrderClicked] = useState(false);
-  const [dataToSend, setDataToSend] = useState({});
+  const [orderData, setorderData] = useState({});
+  const [basketData, setbasketData] = useState({});
   const [processing, setProcessing] = useState(false);
 
   const Hot = {
@@ -118,19 +119,27 @@ function Contents() {
   function updateOrderData(e, inputField) {
     if (inputField) {
       let { name, value } = e.target;
-      setDataToSend((fillIn) => ({
+      setorderData((fillIn) => ({
         ...fillIn,
         [name]: value,
       }));
     } else {
-      setDataToSend((fillIn) => ({
+      setorderData((fillIn) => ({
         ...fillIn,
         [e.name]: e.value,
       }));
     }
   }
-  async function add(url) {
-    console.log(dataToSend);
+  async function updateOrderandBasket(
+    urlfororderData,
+    urlforbasketData,
+    orderData,
+  ) {
+    await add(urlfororderData, orderData);
+    await add(urlforbasketData, orderData);
+  }
+  async function add(url, data) {
+    console.log(data);
     setProcessing(true);
     let response;
     let CSRFToken = await getCookieFromBrowser("csrftoken");
@@ -146,7 +155,7 @@ function Contents() {
           "X-CSRFToken": CSRFToken,
         },
         credentials: "include",
-        body: JSON.stringify(dataToSend),
+        body: JSON.stringify(data),
       });
       const contentType = sendData.headers.get("content-type");
       if (contentType && contentType.includes("application/json")) {
@@ -156,7 +165,7 @@ function Contents() {
       }
       if (sendData.ok) {
         console.log("Server responded with: ", response);
-        updateOrderData({ name: "quantity", value: "" }, false);
+        updateOrderData({ name: "numberofBowls", value: "" }, false);
         setProcessing(false);
       } else {
         console.log("Server threw an error", response);
@@ -182,7 +191,7 @@ function Contents() {
   useEffect(() => {
     updateOrderData({ name: "bowlName", value: bowlIDWithoutDashes }, false);
     updateOrderData({ name: "bowlTotal", value: bowlPrice }, false);
-  }, []);
+  }, [bowlPrice, bowlIDWithoutDashes]);
   return (
     <>
       <div className={BowlContentsStyles.flexitAll}>
@@ -257,7 +266,7 @@ function Contents() {
             <>
               <label htmlFor="numberofBowls">Quantity</label>
               <input
-                value={dataToSend.numberofBowls || ""}
+                value={orderData.numberofBowls || ""}
                 id="numberofBowls"
                 name="numberofBowls"
                 type="number"
@@ -268,8 +277,10 @@ function Contents() {
               <button
                 type="button"
                 onClick={() =>
-                  add(
+                  updateOrderandBasket(
                     "https://mealbowlapp.onrender.com/databaseTesting/updateOrder/",
+                    "https://mealbowlapp.onrender.com/databaseTesting/updateBasket/",
+                    orderData,
                   )
                 }
                 disabled={processing}

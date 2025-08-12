@@ -164,7 +164,6 @@ def addOrder(request):
         except Exception as e:
             return JsonResponse({"error":str(e)},status=400)
     return JsonResponse({"error": "Only POST allowed"}, status=405)
-
 def updateOrder(request):
     if(request.method == "POST"):
         try:
@@ -207,10 +206,11 @@ def makeBasket(request):
     if(request.method == "POST"):
         try:
             data = json.loads(request.body)
-            price = float(data.get("basketTotal"))
+            bowlName = data.get("bowlName")
             if request.user.is_authenticated:
+                Bowl = IndividualBowlOrder.objects.get(user=user, bowlName=bowlName)
                 user = request.user
-                totalOrder = Basket(user=user, totalPrice=price)
+                totalOrder = Basket(user=user, totalPrice=Bowl.price)
                 totalOrder.save()
                 return JsonResponse({"message":"Basket created"})
             return JsonResponse({"error": "User not logged in"}, status=405)
@@ -222,11 +222,12 @@ def updateBasket(request):
     if(request.method == "POST"):
         try:
             data = json.loads(request.body)
-            price = float(data.get("basketTotal"))
+            bowlName = data.get("bowlName")
             if request.user.is_authenticated:
                 user = request.user
+                Bowl = IndividualBowlOrder.objects.get(user=user, bowlName=bowlName)
                 totalOrder = Basket.objects.get(user=user)
-                totalOrder.totalPrice = price
+                totalOrder.totalPrice = max(0,totalOrder.totalPrice + Bowl.price)
                 totalOrder.save()
                 return JsonResponse({"message":"Basket updated"})
             return JsonResponse({"error": "User not logged in"}, status=405)
