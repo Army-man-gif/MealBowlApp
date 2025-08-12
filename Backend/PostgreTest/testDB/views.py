@@ -20,6 +20,8 @@ import traceback
 # -----------------------------------------------------------
 from django.middleware.csrf import get_token
 # -----------------------------------------------------------
+from decimal import Decimal
+# -----------------------------------------------------------
 
 def get_csrf_token(request):
     token = get_token(request)
@@ -170,14 +172,14 @@ def updateOrder(request):
             data = json.loads(request.body)
             bowlName = data.get("bowlName")
             number = int(data.get("numberofBowls"))
-            price = float(data.get("bowlTotal")) * number
+            price = Decimal(data.get("bowlTotal")) * number
             if request.user.is_authenticated:
                 user = request.user
                 Bowl = IndividualBowlOrder.objects.get(user=user, bowlName=bowlName)
                 if Bowl.quantity != number:
                     Bowl.quantity = max(0,Bowl.quantity + number)
                 if Bowl.price != price:
-                    Bowl.price = max(0,Bowl.price + price)
+                    Bowl.price = max(Decimal("0"),Bowl.price + price)
                 Bowl.save()
                 return JsonResponse({"message":"Order updated"})
             return JsonResponse({"error": "User not logged in"}, status=405)
