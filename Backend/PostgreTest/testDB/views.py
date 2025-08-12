@@ -225,11 +225,12 @@ def updateBasket(request):
         try:
             data = json.loads(request.body)
             bowlName = data.get("bowlName")
+            number = data.get("numberofBowls")
+            price = Decimal(data.get("bowlTotal")) * number
             if request.user.is_authenticated:
                 user = request.user
-                Bowl = IndividualBowlOrder.objects.get(user=user, bowlName=bowlName)
                 totalOrder = Basket.objects.get(user=user)
-                totalOrder.totalPrice = max(0,totalOrder.totalPrice + Bowl.price)
+                totalOrder.totalPrice = max(0,totalOrder.totalPrice + price)
                 totalOrder.save()
                 return JsonResponse({"message":"Basket updated"})
             return JsonResponse({"error": "User not logged in"}, status=405)
@@ -247,9 +248,7 @@ def updateBasketForDeletedOrder(request):
                 user = request.user
                 Bowl = IndividualBowlOrder.objects.get(user=user, bowlName=bowlName)
                 totalOrder = Basket.objects.get(user=user)
-                number = Bowl.quantity
-                priceToSubtract = number * Bowl.price
-                totalOrder.totalPrice = max(0,totalOrder.totalPrice - priceToSubtract)
+                totalOrder.totalPrice = max(0,totalOrder.totalPrice - Bowl.price)
                 totalOrder.save()
                 return JsonResponse({"message":"Basket updated"})
             return JsonResponse({"error": "User not logged in"}, status=405)
