@@ -208,8 +208,8 @@ def makeBasket(request):
             data = json.loads(request.body)
             bowlName = data.get("bowlName")
             if request.user.is_authenticated:
-                Bowl = IndividualBowlOrder.objects.get(user=user, bowlName=bowlName)
                 user = request.user
+                Bowl = IndividualBowlOrder.objects.get(user=user, bowlName=bowlName)
                 totalOrder = Basket(user=user, totalPrice=Bowl.price)
                 totalOrder.save()
                 return JsonResponse({"message":"Basket created"})
