@@ -245,7 +245,7 @@ def updateBasketForDeletedOrder(request):
                 user = request.user
                 Bowl = IndividualBowlOrder.objects.get(user=user, bowlName=bowlName)
                 totalOrder = Basket.objects.get(user=user)
-                number = totalOrder.quantity
+                number = Bowl.quantity
                 priceToSubtract = number * Bowl.price
                 totalOrder.totalPrice = max(0,totalOrder.totalPrice - priceToSubtract)
                 totalOrder.save()
