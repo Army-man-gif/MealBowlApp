@@ -301,21 +301,21 @@ function Contents() {
               >
                 Confirm
               </button>
-              <button
-                type="button"
-                onClick={() =>
-                  updateforDeletedOrder(
-                    "https://mealbowlapp.onrender.com/databaseTesting/deleteOrder/",
-                    "https://mealbowlapp.onrender.com/databaseTesting/updateBasketForDeletedOrder/",
-                    orderData,
-                  )
-                }
-                disabled={processing}
-              >
-                Clear orders for this bowl
-              </button>
             </>
           )}
+          <button
+            type="button"
+            onClick={() =>
+              updateforDeletedOrder(
+                "https://mealbowlapp.onrender.com/databaseTesting/deleteOrder/",
+                "https://mealbowlapp.onrender.com/databaseTesting/updateBasketForDeletedOrder/",
+                orderData,
+              )
+            }
+            disabled={processing}
+          >
+            Clear orders for this bowl
+          </button>
         </div>
       </div>
     </>
