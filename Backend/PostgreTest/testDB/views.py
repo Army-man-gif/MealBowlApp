@@ -177,7 +177,7 @@ def updateOrder(request):
                 if Bowl.quantity != number:
                     Bowl.quantity = max(0,Bowl.quantity + number)
                 if Bowl.price != price:
-                    Bowl.price = price
+                    Bowl.price = max(0,Bowl.price + price)
                 Bowl.save()
                 return JsonResponse({"message":"Order updated"})
             return JsonResponse({"error": "User not logged in"}, status=405)
