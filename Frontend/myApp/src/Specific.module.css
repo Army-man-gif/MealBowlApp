@@ -20,6 +20,8 @@
   background: linear-gradient(135deg, #fff9c4, #ffe082, #ffd54f);
   min-width: max-content;
   border-radius: 20px;
+  position: relative;
+  left: 0%;
 }
 .addToOrder {
   font-size: 1em;
@@ -28,6 +30,7 @@
   position: absolute;
   border-radius: 20px;
   top: 100%;
+  left: -50%;
   width: max-content;
   position: relative;
   display: flex;
@@ -54,6 +57,7 @@
   background-image: linear-gradient(to right, pink, orange);
   position: absolute;
   top: 105%;
+  left: -35%;
   border-radius: 20px;
 }
 .flexIngreAndMacros {
