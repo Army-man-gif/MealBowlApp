@@ -153,8 +153,12 @@ function Contents() {
       bowlName: bowlIDWithoutDashes,
       bowlTotal: bowlPrice,
     };
-    await add(urlfororderData, totalData);
-    await add(urlforbasketData, totalData);
+    if (totalData.numberofBowls !== "" || totalData.numberofBowls) {
+      await add(urlfororderData, totalData);
+      await add(urlforbasketData, totalData);
+    } else {
+      console.log("An empty number of bowls cannot be sent as a request");
+    }
   }
   async function add(url, data) {
     console.log(data);
@@ -270,39 +274,42 @@ function Contents() {
               </>
             )}
           </div>
-          <button
-            onClick={() => toggle("order")}
-            className={BowlContentsStyles.Button}
-          >
-            Add to order
-          </button>
-          {orderClicked && (
-            <>
-              <label htmlFor="numberofBowls">Quantity</label>
-              <input
-                value={orderData.numberofBowls || ""}
-                id="numberofBowls"
-                name="numberofBowls"
-                type="number"
-                placeholder="Enter the number of these bowls you want"
-                disabled={processing}
-                onChange={(e) => updateOrderData(e, true)}
-              />
-              <button
-                type="button"
-                onClick={() =>
-                  updateOrderandBasket(
-                    "https://mealbowlapp.onrender.com/databaseTesting/updateOrder/",
-                    "https://mealbowlapp.onrender.com/databaseTesting/updateBasket/",
-                    orderData,
-                  )
-                }
-                disabled={processing}
-              >
-                Confirm
-              </button>
-            </>
-          )}
+          <div className={BowlContentsStyles.addToOrder}>
+            <button
+              onClick={() => toggle("order")}
+              className={BowlContentsStyles.Button}
+            >
+              Add to order
+            </button>
+            {orderClicked && (
+              <>
+                <input
+                  className="rounded"
+                  value={orderData.numberofBowls || ""}
+                  id="numberofBowls"
+                  name="numberofBowls"
+                  type="number"
+                  placeholder="Enter number of bowls"
+                  disabled={processing}
+                  onChange={(e) => updateOrderData(e, true)}
+                />
+                <button
+                  type="button"
+                  className={BowlContentsStyles.styleConfirm}
+                  onClick={() =>
+                    updateOrderandBasket(
+                      "https://mealbowlapp.onrender.com/databaseTesting/updateOrder/",
+                      "https://mealbowlapp.onrender.com/databaseTesting/updateBasket/",
+                      orderData,
+                    )
+                  }
+                  disabled={processing}
+                >
+                  Confirm
+                </button>
+              </>
+            )}
+          </div>
           <button
             type="button"
             onClick={() =>
@@ -313,6 +320,7 @@ function Contents() {
               )
             }
             disabled={processing}
+            className={BowlContentsStyles.Clear}
           >
             Clear orders for this bowl
           </button>

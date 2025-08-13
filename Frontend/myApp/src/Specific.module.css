@@ -15,6 +15,47 @@
   flex-direction: column;
   gap: 10%;
 }
+.Button {
+  font-size: 1em;
+  background: linear-gradient(135deg, #fff9c4, #ffe082, #ffd54f);
+  min-width: max-content;
+  border-radius: 20px;
+}
+.addToOrder {
+  font-size: 1em;
+  gap: 1em;
+  background-image: linear-gradient(to right, purple, orange);
+  position: absolute;
+  border-radius: 20px;
+  top: 100%;
+  width: max-content;
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+}
+.styleConfirm {
+  font-size: 1em;
+  background: linear-gradient(135deg, #fff9c4, #ffe082, #ffd54f);
+  position: absolute;
+  border-radius: 20px;
+  top: 100%;
+  min-width: max-content;
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+}
+.Clear {
+  background-image: linear-gradient(to right, pink, orange);
+  position: absolute;
+  top: 105%;
+  border-radius: 20px;
+}
 .flexIngreAndMacros {
   display: flex;
   justify-content: space-between;
@@ -90,13 +131,7 @@
   pointer-events: none;
   z-index: -1;
 }
-.Button {
-  position: absolute;
-  top: 110%;
-  background-image: linear-gradient(to right, pink, lightgreen);
-  font-size: 1.5em;
-  border-radius: 15px;
-}
+
 @media screen and (max-width: 480px) {
   .flexitAll {
     gap: 5%;

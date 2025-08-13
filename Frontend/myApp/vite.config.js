@@ -7,7 +7,4 @@ const isProduction = process.env.NODE_ENV === "production";
 export default defineConfig({
   base: isProduction ? "/MealBowlApp/docs/" : "/",
   plugins: [react()],
-  server: {
-    open: true,
-  },
 });
