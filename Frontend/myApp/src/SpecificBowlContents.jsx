@@ -324,6 +324,7 @@ function Contents() {
               Clear orders for this bowl
             </button>
           </div>
+          <button className={BowlContentsStyles.Checkout}>Checkout</button>
         </div>
       </div>
     </>
