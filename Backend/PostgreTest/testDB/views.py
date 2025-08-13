@@ -225,7 +225,7 @@ def updateBasket(request):
         try:
             data = json.loads(request.body)
             bowlName = data.get("bowlName")
-            number = data.get("numberofBowls")
+            number = int(data.get("numberofBowls"))
             price = Decimal(data.get("bowlTotal")) * number
             if request.user.is_authenticated:
                 user = request.user
