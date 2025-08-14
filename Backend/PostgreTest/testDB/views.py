@@ -170,7 +170,7 @@ def getPrice(request):
     try:
         if request.user.is_authenticated:
             totalOrder = Basket.objects.get(user=request.user)
-            toReturn = {"price": totalOrder.price}
+            toReturn = {"price": totalOrder.totalPrice}
             return JsonResponse({toReturn})
         return JsonResponse({"error":"User is not logged in"})
     except Exception as e:

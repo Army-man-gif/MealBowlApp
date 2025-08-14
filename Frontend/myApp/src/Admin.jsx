@@ -44,7 +44,7 @@ function AdminPage() {
     const numRows = 4;
 
     // Option 1: All 1fr
-    const useDefault = true;
+    const useDefault = false;
 
     // Option 2: Custom fractions
     const customFractions = ["1fr", "2fr", "1fr", "3fr"];
@@ -56,7 +56,7 @@ function AdminPage() {
 
     // Apply CSS Grid
     grid.style.display = "grid";
-    grid.style.gridTemplateColumns = rowFractions.join(" ");
+    grid.style.gridTemplateRows = rowFractions.join(" ");
     grid.style.rowGap = "50px";
 
     // Add some items for demonstration
