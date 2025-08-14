@@ -7,7 +7,14 @@ async function AdminPage() {
       credentials: "include",
     },
   );
-  console.log(getAll);
+  const contentType = getAll.headers.get("content-type");
+  let result;
+  if (contentType && contentType.includes("application/json")) {
+    result = await getAll.json();
+  } else {
+    result = await getAll.text();
+  }
+  console.log(result);
   return (
     <>
       <div>Hi</div>
