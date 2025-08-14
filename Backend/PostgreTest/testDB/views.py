@@ -166,6 +166,23 @@ def addOrder(request):
         except Exception as e:
             return JsonResponse({"error":str(e)},status=400)
     return JsonResponse({"error": "Only POST allowed"}, status=405)
+def getEverything(request):
+    try:
+        if request.user.is_authenticated:
+            userIDs = IndividualBowlOrder.values_list("user",flat=True).distinct()
+            users = User.objects.filter(id__in=userIDs)
+            toReturn = {}
+            for user in users:
+                BowlOrders = IndividualBowlOrder.filter(user=user)
+                dictionary = {}
+                dictionary["BowlName"] = BowlOrders.bowlName
+                dictionary["NumberofBowls"] = BowlOrders.quantity
+                dictionary["Price"] = BowlOrders.price
+                toReturn[user.username] = dictionary
+            return JsonResponse(toReturn)
+        return JsonResponse({"erorr","User is not logged in"})
+    except Exception as e:
+        return JsonResponse({"error":str(e)},status=400)
 def updateOrder(request):
     if(request.method == "POST"):
         try:

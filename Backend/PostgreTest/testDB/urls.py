@@ -16,4 +16,6 @@ urlpatterns = [
     path("makeBasket/", views.makeBasket,name="makeBasket"),
     path("updateBasket/", views.updateBasket,name="updateBasket"),
     path("updateBasketForDeletedOrder/",views.updateBasketForDeletedOrder,name="updateBasketForDeletedOrder"),
+    path("getEverything/", views.getEverything,name="getEverything"),
+
 ]
