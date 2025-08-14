@@ -166,6 +166,15 @@ def addOrder(request):
         except Exception as e:
             return JsonResponse({"error":str(e)},status=400)
     return JsonResponse({"error": "Only POST allowed"}, status=405)
+def getPrice(request):
+    try:
+        if request.user.is_authenticated:
+            totalOrder = Basket.objects.get(user=request.user)
+            toReturn = {"price": totalOrder.price}
+            return JsonResponse({toReturn})
+        return JsonResponse({"error":"User is not logged in"})
+    except Exception as e:
+        return JsonResponse({"error":str(e)},status=400)
 def getEverything(request):
     try:
         if request.user.is_authenticated:
