@@ -169,7 +169,7 @@ def addOrder(request):
 def getEverything(request):
     try:
         if request.user.is_authenticated:
-            userIDs = IndividualBowlOrder.values_list("user",flat=True).distinct()
+            userIDs = IndividualBowlOrder.objects.values_list("user",flat=True).distinct()
             users = User.objects.filter(id__in=userIDs)
             Orders = IndividualBowlOrder.objects.filter(user__in=users)
             toReturn = {}
