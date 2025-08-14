@@ -171,16 +171,18 @@ def getEverything(request):
         if request.user.is_authenticated:
             userIDs = IndividualBowlOrder.values_list("user",flat=True).distinct()
             users = User.objects.filter(id__in=userIDs)
+            Orders = IndividualBowlOrder.objects.filter(user__in=users)
             toReturn = {}
-            for user in users:
-                BowlOrders = IndividualBowlOrder.filter(user=user)
-                dictionary = {}
-                dictionary["BowlName"] = BowlOrders.bowlName
-                dictionary["NumberofBowls"] = BowlOrders.quantity
-                dictionary["Price"] = BowlOrders.price
-                toReturn[user.username] = dictionary
+            for order in Orders:
+                username = order.user.username
+                if username not in toReturn:
+                    toReturn[username] = {}
+                toReturn[username][order.bowlName] = {
+                    "NumberofBowls": order.quantity,
+                    "Price": order.price,
+                }
             return JsonResponse(toReturn)
-        return JsonResponse({"erorr","User is not logged in"})
+        return JsonResponse({"error":"User is not logged in"})
     except Exception as e:
         return JsonResponse({"error":str(e)},status=400)
 def updateOrder(request):

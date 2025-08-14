@@ -1,3 +1,5 @@
+import { setCookie, getCookieFromBrowser } from "./auth.js";
+
 async function AdminPage() {
   const getAll = await fetch(
     "https://mealbowlapp.onrender.com/databaseTesting/getEverything/",
