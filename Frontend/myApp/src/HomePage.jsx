@@ -125,7 +125,6 @@ function RenderBowls() {
       }
     }
     setprocessing(true);
-    let CSRFToken = await getCookieFromBrowser("csrftoken");
     const check = await SendData(
       "https://mealbowlapp.onrender.com/databaseTesting/login/",
       dataToUse,
@@ -237,7 +236,7 @@ function RenderBowls() {
           lastIndex = i;
         }
       }
-      if (lastIndex != -1 && Object.keys(registerData).length !== 0) {
+      if (lastIndex != -1) {
         console.log("Yes");
         const key = localStorage.key(lastIndex);
         const value = JSON.parse(localStorage.getItem(key));
