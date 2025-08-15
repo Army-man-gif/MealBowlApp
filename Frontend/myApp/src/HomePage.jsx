@@ -247,17 +247,16 @@ function RenderBowls() {
     setlogout(false);
   }
   useEffect(() => {
-    async () => {
+    (async () => {
       const flag = JSON.parse(sessionStorage.getItem("Logged-In"));
       console.log("Flag: ", flag);
       if (!flag) {
-        (async () => {
-          await setCookie();
-          setCookieSet(true);
-          await verifyLocally();
-          sessionStorage.setItem("Logged-In", true);
-        })();
+        await setCookie();
+        setCookieSet(true);
+        await verifyLocally();
+        sessionStorage.setItem("Logged-In", true);
       } else {
+        setlogout(true);
         const admin = await checkAdmin();
         if (admin) {
           setAdmin(true);
@@ -265,7 +264,7 @@ function RenderBowls() {
           setAdmin(false);
         }
       }
-    };
+    })();
   }, []);
   return (
     <>
