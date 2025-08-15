@@ -1,7 +1,7 @@
 import BowlImage from "./BowlImage.jsx";
 import HomepageStyles from "./HomePage.module.css";
 import { LoginContext } from "./LoginContext.jsx";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import React from "react";
 import bowl from "./assets/bowl.png";
 import bowl3 from "./assets/bowl3.jpg";
@@ -51,6 +51,7 @@ function RenderBowls() {
         dataToUse = data;
       }
     }
+    console.log(dataToUse);
     let CSRFToken = await getCookieFromBrowser("csrftoken");
     if (!CSRFToken) {
       await setCookie();
@@ -74,9 +75,11 @@ function RenderBowls() {
       }
       if (sendData.ok) {
         console.log("Server responded with: ", response);
+        /*
         updateRegisterData({ name: "username", value: "" }, false);
         updateRegisterData({ name: "email", value: "" }, false);
         updateRegisterData({ name: "password", value: "" }, false);
+        */
         setloginClicked(false);
         setlogout(true);
       } else {
@@ -114,8 +117,28 @@ function RenderBowls() {
       }
     }
   }
+  async function verifyLocally() {
+    let lastIndex = -1;
+    for (let i = 0; i < localStorage.length; i++) {
+      const Currentkey = localStorage.key(i);
+      if (Currentkey.includes("User-")) {
+        lastIndex = i;
+      }
+    }
+    if (lastIndex != -1) {
+      const key = localStorage.key(lastIndex);
+      const value = JSON.parse(localStorage.getItem(key));
+      setRegisterData(value);
+      console.log("" + value);
+      const verification = await verifyUsingDatabase(value);
+      if (verification) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
   async function verifyUsingDatabase(data = {}) {
-    console.log("length", Object.keys(data).length);
     let dataToUse;
     if (Object.keys(registerData).length !== 0) {
       dataToUse = registerData;
@@ -137,15 +160,18 @@ function RenderBowls() {
         setAdmin(false);
       }
       setName(registerData.username);
+      /*
       updateRegisterData({ name: "username", value: "" }, false);
       updateRegisterData({ name: "email", value: "" }, false);
       updateRegisterData({ name: "password", value: "" }, false);
+      */
       localStorage.setItem(
         "User-" + dataToUse.username,
         JSON.stringify(dataToUse),
       );
       setprocessing(false);
       setlogout(true);
+      return true;
     } else {
       updateRegisterData(
         { name: "username", value: "Invalid credentials" },
@@ -156,6 +182,7 @@ function RenderBowls() {
       setprocessing(false);
       setlogout(false);
       setDontSkipLogin(true);
+      return false;
     }
   }
   async function checkAdmin() {
@@ -226,23 +253,9 @@ function RenderBowls() {
   }
   useEffect(() => {
     (async () => {
-      console.log("Hi");
       await setCookie();
       setCookieSet(true);
-      let lastIndex = -1;
-      for (let i = 0; i < localStorage.length; i++) {
-        const Currentkey = localStorage.key(i);
-        if (Currentkey.includes("User-")) {
-          lastIndex = i;
-        }
-      }
-      if (lastIndex != -1) {
-        console.log("Yes");
-        const key = localStorage.key(lastIndex);
-        const value = JSON.parse(localStorage.getItem(key));
-        setRegisterData(value);
-        await verifyUsingDatabase(value);
-      }
+      await verifyLocally();
     })();
   }, []);
   return (
