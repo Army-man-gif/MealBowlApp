@@ -1,7 +1,6 @@
 import BowlImage from "./BowlImage.jsx";
 import HomepageStyles from "./HomePage.module.css";
-import { LoginContext } from "./LoginContext.jsx";
-import { useContext, useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
 import bowl from "./assets/bowl.png";
 import bowl3 from "./assets/bowl3.jpg";
@@ -21,9 +20,8 @@ function RenderBowls() {
   const [DontSkipLogin, setDontSkipLogin] = useState(false);
   const [processing, setprocessing] = useState(false);
   const [cookieSet, setCookieSet] = useState(false);
-  const [admin, setAdmin] = useState(false);
   const [name, setName] = useState("");
-  const { registerData, setRegisterData } = useContext(LoginContext);
+  const [registerData, setRegisterData] = useState({});
   const logged = !JSON.parse(sessionStorage.getItem("Logged-In"));
   function updateRegisterData(e, inputField) {
     if (inputField) {
@@ -103,9 +101,9 @@ function RenderBowls() {
         sessionStorage.setItem("Logged-In", true);
         const admin = await checkAdmin();
         if (admin) {
-          setAdmin(true);
+          sessionStorage.setItem("admin", true);
         } else {
-          setAdmin(false);
+          sessionStorage.setItem("admin", false);
         }
       } else {
         console.log("error");
@@ -154,9 +152,9 @@ function RenderBowls() {
     if (check.message) {
       const admin = await checkAdmin();
       if (admin) {
-        setAdmin(true);
+        sessionStorage.setItem("admin", true);
       } else {
-        setAdmin(false);
+        sessionStorage.setItem("admin", false);
       }
       setName(registerData.username);
       updateRegisterData({ name: "username", value: "" }, false);
@@ -205,7 +203,7 @@ function RenderBowls() {
     }
   }
   async function logoutfunction() {
-    setAdmin(false);
+    sessionStorage.setItem("admin", false);
     const logoutCall = await fetch(
       "https://mealbowlapp.onrender.com/databaseTesting/logout/",
       {
@@ -226,7 +224,6 @@ function RenderBowls() {
       console.log(result.message);
     } else {
       sessionStorage.setItem("Logged-In", true);
-      setlogout(true);
       console.log(result.error);
     }
   }
@@ -261,9 +258,9 @@ function RenderBowls() {
       } else {
         const admin = await checkAdmin();
         if (admin) {
-          setAdmin(true);
+          sessionStorage.setItem("admin", true);
         } else {
-          setAdmin(false);
+          sessionStorage.setItem("admin", false);
         }
       }
     })();
@@ -424,7 +421,7 @@ function RenderBowls() {
               </>
             ))}
         </div>
-        {admin && JSON.parse(sessionStorage.getItem("Logged-In")) && (
+        {JSON.parse(sessionStorage.getItem("admin", true)) && (
           <div className={HomepageStyles.admin}>
             <Link to="/Admin">
               <h2 className="clickable">👑 Access admin page</h2>
