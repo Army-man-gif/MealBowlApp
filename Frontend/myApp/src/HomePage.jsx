@@ -24,16 +24,6 @@ function RenderBowls() {
   const [cookieSet, setCookieSet] = useState(false);
   const [admin, setAdmin] = useState(false);
   const [name, setName] = useState("");
-  const fetchPermissionFromBackend = async () => {
-    const data = await fetch(
-      "https://mealbowlapp.onrender.com/databaseTesting/",
-    );
-    if (data) {
-      console.log("Page fetched", data);
-    } else {
-      console.log("not fetched");
-    }
-  };
 
   function updateRegisterData(e, inputField) {
     if (inputField) {
