@@ -18,14 +18,13 @@ import { Link } from "react-router-dom";
 function RenderBowls() {
   const [contactClicked, setcontactClicked] = useState(false);
   const [loginClicked, setloginClicked] = useState(false);
-  const [logout, setlogout] = useState(false);
   const [DontSkipLogin, setDontSkipLogin] = useState(false);
   const [processing, setprocessing] = useState(false);
   const [cookieSet, setCookieSet] = useState(false);
   const [admin, setAdmin] = useState(false);
   const [name, setName] = useState("");
   const { registerData, setRegisterData } = useContext(LoginContext);
-
+  const logged = !JSON.parse(sessionStorage.getItem("Logged-In"));
   function updateRegisterData(e, inputField) {
     if (inputField) {
       let { name, value } = e.target;
@@ -78,7 +77,7 @@ function RenderBowls() {
         updateRegisterData({ name: "email", value: "" }, false);
         updateRegisterData({ name: "password", value: "" }, false);
         setloginClicked(false);
-        setlogout(true);
+        sessionStorage.setItem("Logged-In", true);
       } else {
         console.log("Server threw an error", response);
       }
@@ -101,18 +100,21 @@ function RenderBowls() {
           "User-" + registerData.username,
           JSON.stringify(registerData),
         );
+        sessionStorage.setItem("Logged-In", true);
         const admin = await checkAdmin();
         if (admin) {
           setAdmin(true);
         } else {
           setAdmin(false);
         }
-        setprocessing(false);
       } else {
         console.log("error");
-        setprocessing(true);
+        sessionStorage.setItem("Logged-In", false);
       }
+    } else {
+      sessionStorage.setItem("Logged-In", false);
     }
+    setprocessing(false);
   }
   async function verifyLocally() {
     let lastIndex = -1;
@@ -165,7 +167,7 @@ function RenderBowls() {
         JSON.stringify(dataToUse),
       );
       setprocessing(false);
-      setlogout(true);
+      sessionStorage.setItem("Logged-In", true);
       return true;
     } else {
       updateRegisterData(
@@ -175,7 +177,7 @@ function RenderBowls() {
       updateRegisterData({ name: "email", value: "" }, false);
       updateRegisterData({ name: "password", value: "" }, false);
       setprocessing(false);
-      setlogout(false);
+      sessionStorage.setItem("Logged-In", false);
       setDontSkipLogin(true);
       return false;
     }
@@ -195,10 +197,10 @@ function RenderBowls() {
       result = await adminCheck.text();
     }
     console.log(result, ":", result.admin);
+    sessionStorage.setItem("Logged-In", true);
     if (result.admin) {
       return true;
     } else {
-      setlogout(true);
       return false;
     }
   }
@@ -219,10 +221,11 @@ function RenderBowls() {
     }
     if (result.message) {
       setDontSkipLogin(true);
-      setlogout(false);
+      sessionStorage.setItem("Logged-In", false);
       setloginClicked(true);
       console.log(result.message);
     } else {
+      sessionStorage.setItem("Logged-In", true);
       setlogout(true);
       console.log(result.error);
     }
@@ -240,11 +243,11 @@ function RenderBowls() {
   }
   function redirectToLogin() {
     setDontSkipLogin(true);
-    setlogout(false);
+    sessionStorage.setItem("Logged-In", false);
   }
   function redirectToRegister() {
     setDontSkipLogin(false);
-    setlogout(false);
+    sessionStorage.setItem("Logged-In", false);
   }
   useEffect(() => {
     (async () => {
@@ -256,7 +259,6 @@ function RenderBowls() {
         await verifyLocally();
         sessionStorage.setItem("Logged-In", true);
       } else {
-        setlogout(true);
         const admin = await checkAdmin();
         if (admin) {
           setAdmin(true);
@@ -300,7 +302,7 @@ function RenderBowls() {
       </div>
       <div className={HomepageStyles.container}>
         <div className={HomepageStyles.flexedLogin}>
-          {!logout ? (
+          {!JSON.parse(sessionStorage.getItem("Logged-In")) ? (
             DontSkipLogin ? (
               <h2 onClick={() => pressed("login")} className="clickable">
                 Login
@@ -315,7 +317,7 @@ function RenderBowls() {
               Logout
             </h2>
           )}
-          {!logout &&
+          {!JSON.parse(sessionStorage.getItem("Logged-In")) &&
             loginClicked &&
             (DontSkipLogin ? (
               <>
@@ -422,7 +424,7 @@ function RenderBowls() {
               </>
             ))}
         </div>
-        {admin && (
+        {admin && JSON.parse(sessionStorage.getItem("Logged-In")) && (
           <div className={HomepageStyles.admin}>
             <Link to="/Admin">
               <h2 className="clickable">👑 Access admin page</h2>
