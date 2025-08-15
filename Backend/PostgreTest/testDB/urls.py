@@ -17,6 +17,6 @@ urlpatterns = [
     path("updateBasket/", views.updateBasket,name="updateBasket"),
     path("updateBasketForDeletedOrder/",views.updateBasketForDeletedOrder,name="updateBasketForDeletedOrder"),
     path("getEverything/", views.getEverything,name="getEverything"),
-    path("getPrice/", views.getPrice,name="getPrice"),
+    path("getPrices/", views.getPrices,name="getPrices"),
 
 ]
