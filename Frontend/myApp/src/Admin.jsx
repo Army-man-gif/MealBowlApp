@@ -52,12 +52,12 @@ function AdminPage() {
         );
         renderingData.push(
           <div style={{ gridColumn: "1" }} key={`NoOfBowls-${key2}-${j}`}>
-            Number of bowls: {value2.NumberofBowls}
+            Number of bowls: {value2["NumberofBowls"]}
           </div>,
         );
         renderingData.push(
           <div style={{ gridColumn: "1" }} key={`Price-${key2}-${j}`}>
-            Price of this part of the order: {value2.Price}
+            Price of this part of the order: {value2["Price"]}
           </div>,
         );
         renderingData.push(
@@ -69,7 +69,7 @@ function AdminPage() {
       });
       renderingData.push(
         <div key={`BasketPrice-User-${key}-${i}`}>
-          Basket total: {getPricesresult.key.price}
+          Basket total: {getPricesresult[key]["price"]}
         </div>,
       );
       if (i !== Object.keys(getAllresult).length - 1) {
