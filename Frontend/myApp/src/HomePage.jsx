@@ -1,6 +1,7 @@
 import BowlImage from "./BowlImage.jsx";
 import HomepageStyles from "./HomePage.module.css";
-import { useState, useEffect } from "react";
+import { LoginContext } from "./LoginContext.jsx";
+import { useContext, useState, useEffect } from "react";
 import React from "react";
 import bowl from "./assets/bowl.png";
 import bowl3 from "./assets/bowl3.jpg";
@@ -20,10 +21,10 @@ function RenderBowls() {
   const [logout, setlogout] = useState(false);
   const [DontSkipLogin, setDontSkipLogin] = useState(false);
   const [processing, setprocessing] = useState(false);
-  const [registerData, setRegisterData] = useState({});
   const [cookieSet, setCookieSet] = useState(false);
   const [admin, setAdmin] = useState(false);
   const [name, setName] = useState("");
+  const { registerData, setRegisterData } = useContext(LoginContext);
 
   function updateRegisterData(e, inputField) {
     if (inputField) {
@@ -198,7 +199,7 @@ function RenderBowls() {
     if (result.message) {
       setDontSkipLogin(true);
       setlogout(false);
-      setloginClicked(!loginClicked);
+      setloginClicked(true);
       console.log(result.message);
     } else {
       setlogout(true);
@@ -226,6 +227,7 @@ function RenderBowls() {
   }
   useEffect(() => {
     (async () => {
+      console.log("Hi");
       await setCookie();
       setCookieSet(true);
       let lastIndex = -1;
@@ -235,7 +237,8 @@ function RenderBowls() {
           lastIndex = i;
         }
       }
-      if (lastIndex != -1) {
+      if (lastIndex != -1 && Object.keys(registerData).length !== 0) {
+        console.log("Yes");
         const key = localStorage.key(lastIndex);
         const value = JSON.parse(localStorage.getItem(key));
         setRegisterData(value);

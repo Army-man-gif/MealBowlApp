@@ -88,37 +88,6 @@ function AdminPage() {
       }
     });
     setAllData(renderingData);
-    /*
-    const grid = document.getElementById("grid");
-
-    // Number of columns
-    const numRows = 4;
-
-    // Option 1: All 1fr
-    const useDefault = false;
-
-    // Option 2: Custom fractions
-    const customFractions = ["1fr", "2fr", "1fr", "3fr"];
-
-    // Decide which to use
-    const rowFractions = useDefault
-      ? Array(numRows).fill("1fr")
-      : customFractions;
-
-    // Apply CSS Grid
-    grid.style.display = "grid";
-    grid.style.gridTemplateRows = rowFractions.join(" ");
-    grid.style.rowGap = "50px";
-
-    // Add some items for demonstration
-    for (let i = 0; i < numRows*2; i++) {
-      const div = document.createElement("div");
-      div.textContent = `Item ${i + 1}`;
-      div.style.border = "1px solid black";
-      div.style.padding = "10px";
-      grid.appendChild(div);
-    }
-    */
   }
   useEffect(() => {
     render();
