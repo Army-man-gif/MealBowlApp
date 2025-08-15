@@ -40,7 +40,6 @@ function RenderBowls() {
       }));
     }
   }
-
   async function SendData(url, data = {}) {
     let response;
     let dataToUse;
@@ -75,11 +74,9 @@ function RenderBowls() {
       }
       if (sendData.ok) {
         console.log("Server responded with: ", response);
-        /*
         updateRegisterData({ name: "username", value: "" }, false);
         updateRegisterData({ name: "email", value: "" }, false);
         updateRegisterData({ name: "password", value: "" }, false);
-        */
         setloginClicked(false);
         setlogout(true);
       } else {
@@ -160,11 +157,9 @@ function RenderBowls() {
         setAdmin(false);
       }
       setName(registerData.username);
-      /*
       updateRegisterData({ name: "username", value: "" }, false);
       updateRegisterData({ name: "email", value: "" }, false);
       updateRegisterData({ name: "password", value: "" }, false);
-      */
       localStorage.setItem(
         "User-" + dataToUse.username,
         JSON.stringify(dataToUse),
@@ -252,11 +247,25 @@ function RenderBowls() {
     setlogout(false);
   }
   useEffect(() => {
-    (async () => {
-      await setCookie();
-      setCookieSet(true);
-      await verifyLocally();
-    })();
+    async () => {
+      const flag = JSON.parse(sessionStorage.getItem("Logged-In"));
+      console.log("Flag: ", flag);
+      if (!flag) {
+        (async () => {
+          await setCookie();
+          setCookieSet(true);
+          await verifyLocally();
+          sessionStorage.setItem("Logged-In", true);
+        })();
+      } else {
+        const admin = await checkAdmin();
+        if (admin) {
+          setAdmin(true);
+        } else {
+          setAdmin(false);
+        }
+      }
+    };
   }, []);
   return (
     <>
