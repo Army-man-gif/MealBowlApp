@@ -4,7 +4,7 @@ import { setCookie, getCookieFromBrowser } from "./auth.js";
 function AdminPage() {
   const [allData, setAllData] = useState([]);
   const [rows, setRows] = useState(0);
-  async function render() {
+  async function callAdminData() {
     const getAll = await fetch(
       "https://mealbowlapp.onrender.com/databaseTesting/getEverything/",
       {
@@ -31,6 +31,28 @@ function AdminPage() {
     } else {
       getPricesresult = await getPrices.text();
     }
+    sessionStorage.setItem("AdminData", JSON.stringify(getAllresult));
+    sessionStorage.setItem("AdminPriceData", JSON.stringify(getPricesresult));
+  }
+  async function render() {
+    let getAllresult = null;
+    let getPricesresult = null;
+    const tryToPullAdminDataFromLocal = JSON.parse(
+      sessionStorage.getItem("AdminData"),
+    );
+    const tryToPullPriceDataFromLocal = JSON.parse(
+      sessionStorage.getItem("AdminPriceData"),
+    );
+    if (Object.keys(tryToPullAdminDataFromLocal).length !== 0) {
+      getAllresult = tryToPullAdminDataFromLocal;
+    }
+    if (Object.keys(tryToPullPriceDataFromLocal).length !== 0) {
+      getPricesresult = tryToPullPriceDataFromLocal;
+    }
+    if (getAllresult == null || getPricesresult == null) {
+      await callAdminData();
+    }
+    console.log(tryToPullAdminDataFromLocal);
     let max = 0;
     const users = Object.keys(getAllresult).length;
     for (const key of Object.keys(getAllresult)) {

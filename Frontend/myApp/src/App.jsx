@@ -6,14 +6,33 @@ import "./variables.css";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 const basename = import.meta.env.DEV ? "/" : "/MealBowlApp/docs";
+import { useState } from "react";
 
 function App() {
+  const [somethingChanged, setsomethingChanged] = useState(0);
+
   return (
     <>
       <BrowserRouter basename={basename}>
         <Routes>
-          <Route path="/" element={<RenderBowls />} />
-          <Route path="/contents/:bowlID" element={<Contents />} />
+          <Route
+            path="/"
+            element={
+              <RenderBowls
+                somethingChanged={somethingChanged}
+                setsomethingChanged={setsomethingChanged}
+              />
+            }
+          />
+          <Route
+            path="/contents/:bowlID"
+            element={
+              <Contents
+                somethingChanged={somethingChanged}
+                setsomethingChanged={setsomethingChanged}
+              />
+            }
+          />
           <Route path="/Admin" element={<AdminPage />} />
         </Routes>
       </BrowserRouter>

@@ -1,9 +1,9 @@
 import BowlContentsStyles from "./Specific.module.css";
-import React, { useEffect, useState } from "react";
-import { data, useParams } from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
+import { useParams } from "react-router-dom";
 import { setCookie, getCookieFromBrowser } from "./auth.js";
 
-function Contents() {
+function Contents({ somethingChanged, setsomethingChanged }) {
   window.scrollTo(0, 0);
   const { bowlID } = useParams();
   const [ingredientsClicked, setingredientsClicked] = useState(true);
@@ -13,7 +13,38 @@ function Contents() {
   const [orderData, setorderData] = useState({});
   const [basketData, setbasketData] = useState({});
   const [processing, setProcessing] = useState(false);
+  const intialRun = useRef(true);
 
+  async function callAdminData() {
+    const getAll = await fetch(
+      "https://mealbowlapp.onrender.com/databaseTesting/getEverything/",
+      {
+        credentials: "include",
+      },
+    );
+    const getPrices = await fetch(
+      "https://mealbowlapp.onrender.com/databaseTesting/getPrices/",
+      {
+        credentials: "include",
+      },
+    );
+    const contentType = getAll.headers.get("content-type");
+    const contentType2 = getPrices.headers.get("content-type");
+    let getAllresult;
+    let getPricesresult;
+    if (contentType && contentType.includes("application/json")) {
+      getAllresult = await getAll.json();
+    } else {
+      getAllresult = await getAll.text();
+    }
+    if (contentType2 && contentType2.includes("application/json")) {
+      getPricesresult = await getPrices.json();
+    } else {
+      getPricesresult = await getPrices.text();
+    }
+    sessionStorage.setItem("AdminData", JSON.stringify(getAllresult));
+    sessionStorage.setItem("AdminPriceData", JSON.stringify(getPricesresult));
+  }
   const Hot = {
     "Soya-Chunk-High-Protein-Bowl": true,
     "Paneer-Power-Bowl": true,
@@ -142,6 +173,7 @@ function Contents() {
     };
     await add(urlforbasketData, totalData);
     await add(urlfororderData, totalData);
+    setsomethingChanged((prev) => prev + 1);
   }
   async function updateOrderandBasket(
     urlfororderData,
@@ -156,6 +188,7 @@ function Contents() {
     if (totalData.numberofBowls !== "" || totalData.numberofBowls) {
       await add(urlfororderData, totalData);
       await add(urlforbasketData, totalData);
+      setsomethingChanged((prev) => prev + 1);
     } else {
       console.log("An empty number of bowls cannot be sent as a request");
     }
@@ -210,6 +243,15 @@ function Contents() {
       setOrderClicked(!orderClicked);
     }
   }
+  useEffect(() => {
+    if (intialRun.current) {
+      intialRun.current = false;
+      return;
+    }
+    (async () => {
+      await callAdminData();
+    })();
+  }, [somethingChanged]);
   return (
     <>
       <div className={BowlContentsStyles.flexitAll}>

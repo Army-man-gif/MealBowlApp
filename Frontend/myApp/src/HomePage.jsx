@@ -1,6 +1,6 @@
 import BowlImage from "./BowlImage.jsx";
 import HomepageStyles from "./HomePage.module.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import React from "react";
 import bowl from "./assets/bowl.png";
 import bowl3 from "./assets/bowl3.jpg";
@@ -14,7 +14,7 @@ import logo from "./assets/logo.png";
 import { setCookie, getCookieFromBrowser } from "./auth.js";
 import { Link } from "react-router-dom";
 
-function RenderBowls() {
+function RenderBowls({ somethingChanged, setsomethingChanged }) {
   const [contactClicked, setcontactClicked] = useState(false);
   const [loginClicked, setloginClicked] = useState(false);
   const [DontSkipLogin, setDontSkipLogin] = useState(false);
@@ -22,7 +22,8 @@ function RenderBowls() {
   const [cookieSet, setCookieSet] = useState(false);
   const [name, setName] = useState("");
   const [registerData, setRegisterData] = useState({});
-  const logged = !JSON.parse(sessionStorage.getItem("Logged-In"));
+  const intialRun = useRef(true);
+
   function updateRegisterData(e, inputField) {
     if (inputField) {
       let { name, value } = e.target;
@@ -102,8 +103,10 @@ function RenderBowls() {
         const admin = await checkAdmin();
         if (admin) {
           sessionStorage.setItem("admin", true);
+          setsomethingChanged((prev) => prev + 1);
         } else {
           sessionStorage.setItem("admin", false);
+          setsomethingChanged((prev) => prev + 1);
         }
       } else {
         console.log("error");
@@ -123,10 +126,9 @@ function RenderBowls() {
       }
     }
     if (lastIndex != -1) {
-      const key = localStorage.key(lastIndex);
+      const key = localStorage.getItem("MostRecentLogin");
       const value = JSON.parse(localStorage.getItem(key));
       setRegisterData(value);
-      console.log("" + value);
       const verification = await verifyUsingDatabase(value);
       if (verification) {
         return true;
@@ -134,6 +136,37 @@ function RenderBowls() {
         return false;
       }
     }
+    return false;
+  }
+  async function callAdminData() {
+    const getAll = await fetch(
+      "https://mealbowlapp.onrender.com/databaseTesting/getEverything/",
+      {
+        credentials: "include",
+      },
+    );
+    const getPrices = await fetch(
+      "https://mealbowlapp.onrender.com/databaseTesting/getPrices/",
+      {
+        credentials: "include",
+      },
+    );
+    const contentType = getAll.headers.get("content-type");
+    const contentType2 = getPrices.headers.get("content-type");
+    let getAllresult;
+    let getPricesresult;
+    if (contentType && contentType.includes("application/json")) {
+      getAllresult = await getAll.json();
+    } else {
+      getAllresult = await getAll.text();
+    }
+    if (contentType2 && contentType2.includes("application/json")) {
+      getPricesresult = await getPrices.json();
+    } else {
+      getPricesresult = await getPrices.text();
+    }
+    sessionStorage.setItem("AdminData", JSON.stringify(getAllresult));
+    sessionStorage.setItem("AdminPriceData", JSON.stringify(getPricesresult));
   }
   async function verifyUsingDatabase(data = {}) {
     let dataToUse;
@@ -153,8 +186,10 @@ function RenderBowls() {
       const admin = await checkAdmin();
       if (admin) {
         sessionStorage.setItem("admin", true);
+        setsomethingChanged((prev) => prev + 1);
       } else {
         sessionStorage.setItem("admin", false);
+        setsomethingChanged((prev) => prev + 1);
       }
       setName(registerData.username);
       updateRegisterData({ name: "username", value: "" }, false);
@@ -165,6 +200,7 @@ function RenderBowls() {
         JSON.stringify(dataToUse),
       );
       setprocessing(false);
+      localStorage.setItem("MostRecentLogin", "User-" + dataToUse.username);
       sessionStorage.setItem("Logged-In", true);
       return true;
     } else {
@@ -253,8 +289,12 @@ function RenderBowls() {
       if (!flag) {
         await setCookie();
         setCookieSet(true);
-        await verifyLocally();
-        sessionStorage.setItem("Logged-In", true);
+        const ver = await verifyLocally();
+        if (ver) {
+          sessionStorage.setItem("Logged-In", true);
+        } else {
+          sessionStorage.setItem("Logged-In", false);
+        }
       } else {
         const admin = await checkAdmin();
         if (admin) {
@@ -265,6 +305,15 @@ function RenderBowls() {
       }
     })();
   }, []);
+  useEffect(() => {
+    if (intialRun.current) {
+      intialRun.current = false;
+      return;
+    }
+    (async () => {
+      await callAdminData();
+    })();
+  }, [somethingChanged]);
   return (
     <>
       <div className={HomepageStyles.banner}>
