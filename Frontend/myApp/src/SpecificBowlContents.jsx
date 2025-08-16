@@ -11,8 +11,9 @@ function Contents({ somethingChanged, setsomethingChanged }) {
   const labels = ["Calories", "Protein", "Carbs", "Fats"];
   const [orderClicked, setOrderClicked] = useState(false);
   const [orderData, setorderData] = useState({});
-  const [basketData, setbasketData] = useState({});
   const [processing, setProcessing] = useState(false);
+  const [checkingOut, setcheckingOut] = useState(false);
+  const [checkoutClicked, setCheckoutClicked] = useState(false);
   const intialRun = useRef(true);
   async function callAdminData() {
     const getAll = await fetch(
@@ -231,6 +232,9 @@ function Contents({ somethingChanged, setsomethingChanged }) {
     }
     return response;
   }
+  function checkoutPressed() {
+    setCheckoutClicked(true);
+  }
   function toggle(toChange) {
     if (toChange == "ingredients") {
       setingredientsClicked(!ingredientsClicked);
@@ -365,7 +369,14 @@ function Contents({ somethingChanged, setsomethingChanged }) {
               Clear orders for this bowl
             </button>
           </div>
-          <button className={BowlContentsStyles.Checkout}>Checkout</button>
+          <button
+            onClick={checkoutPressed}
+            disabled={checkingOut}
+            className={BowlContentsStyles.Checkout}
+          >
+            Checkout
+          </button>
+          {checkoutClicked && <Link to={`/checkout/${bowlID}`}></Link>}
         </div>
       </div>
     </>

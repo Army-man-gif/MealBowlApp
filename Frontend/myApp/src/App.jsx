@@ -1,8 +1,12 @@
 import RenderBowls from "./HomePage.jsx";
 import Contents from "./SpecificBowlContents.jsx";
+import SpecificCheckout from "./SpecificCheckout.jsx";
+import MainCheckout from "./MainCheckout.jsx";
 import AdminPage from "./Admin.jsx";
+
 import "./globalStyles.css";
 import "./variables.css";
+
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 const basename = import.meta.env.DEV ? "/" : "/MealBowlApp/docs";
@@ -34,6 +38,11 @@ function App() {
             }
           />
           <Route path="/Admin" element={<AdminPage />} />
+          <Route
+            path="/checkout/:bowlID"
+            element={<SpecificCheckout />}
+          ></Route>
+          <Route path="/checkout" element={<MainCheckout />}></Route>
         </Routes>
       </BrowserRouter>
     </>
