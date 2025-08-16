@@ -101,12 +101,11 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
         );
         sessionStorage.setItem("Logged-In", true);
         const admin = await checkAdmin();
+        setsomethingChanged((prev) => prev + 1);
         if (admin) {
           sessionStorage.setItem("admin", true);
-          setsomethingChanged((prev) => prev + 1);
         } else {
           sessionStorage.setItem("admin", false);
-          setsomethingChanged((prev) => prev + 1);
         }
       } else {
         console.log("error");
@@ -184,12 +183,11 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
     );
     if (check.message) {
       const admin = await checkAdmin();
+      setsomethingChanged((prev) => prev + 1);
       if (admin) {
         sessionStorage.setItem("admin", true);
-        setsomethingChanged((prev) => prev + 1);
       } else {
         sessionStorage.setItem("admin", false);
-        setsomethingChanged((prev) => prev + 1);
       }
       setName(registerData.username);
       updateRegisterData({ name: "username", value: "" }, false);
@@ -299,17 +297,15 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
         const admin = await checkAdmin();
         if (admin) {
           sessionStorage.setItem("admin", true);
+          setsomethingChanged((prev) => prev + 1);
         } else {
           sessionStorage.setItem("admin", false);
+          setsomethingChanged((prev) => prev + 1);
         }
       }
     })();
   }, []);
   useEffect(() => {
-    if (intialRun.current) {
-      intialRun.current = false;
-      return;
-    }
     (async () => {
       await callAdminData();
     })();
@@ -470,13 +466,15 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
               </>
             ))}
         </div>
-        {JSON.parse(sessionStorage.getItem("admin", true)) && (
-          <div className={HomepageStyles.admin}>
-            <Link to="/Admin">
-              <h2 className="clickable">👑 Access admin page</h2>
-            </Link>
-          </div>
-        )}
+        {JSON.parse(sessionStorage.getItem("admin", true)) &&
+          sessionStorage.getItem("AdminData") &&
+          sessionStorage.getItem("AdminPriceData") && (
+            <div className={HomepageStyles.admin}>
+              <Link to="/Admin">
+                <h2 className="clickable">👑 Access admin page</h2>
+              </Link>
+            </div>
+          )}
       </div>
 
       <div className={HomepageStyles.bowlTextContainer}>

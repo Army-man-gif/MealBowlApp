@@ -14,7 +14,6 @@ function Contents({ somethingChanged, setsomethingChanged }) {
   const [basketData, setbasketData] = useState({});
   const [processing, setProcessing] = useState(false);
   const intialRun = useRef(true);
-
   async function callAdminData() {
     const getAll = await fetch(
       "https://mealbowlapp.onrender.com/databaseTesting/getEverything/",
