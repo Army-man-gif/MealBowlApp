@@ -137,6 +137,22 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
     }
     return false;
   }
+  async function callCheckoutData() {
+    const getAll = await fetch(
+      "https://mealbowlapp.onrender.com/databaseTesting/getEverythingForThatUser/",
+      {
+        credentials: "include",
+      },
+    );
+    const contentType = getAll.headers.get("content-type");
+    let getAllresult;
+    if (contentType && contentType.includes("application/json")) {
+      getAllresult = await getAll.json();
+    } else {
+      getAllresult = await getAll.text();
+    }
+    sessionStorage.setItem("CheckoutData", JSON.stringify(getAllresult));
+  }
   async function callAdminData() {
     const getAll = await fetch(
       "https://mealbowlapp.onrender.com/databaseTesting/getEverything/",
@@ -308,6 +324,7 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
   useEffect(() => {
     (async () => {
       await callAdminData();
+      await callCheckoutData();
     })();
   }, [somethingChanged]);
   return (

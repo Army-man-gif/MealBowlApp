@@ -4,6 +4,8 @@ function MainCheckout() {
   const [allData, setAllData] = useState([]);
   const [rows, setRows] = useState(0);
   const [checkingOut, setCheckingOut] = useState(false);
+  let getAllresult = null;
+  let CheckoutData = null;
   async function callCheckoutData() {
     const getAll = await fetch(
       "https://mealbowlapp.onrender.com/databaseTesting/getEverythingForThatUser/",
@@ -12,7 +14,6 @@ function MainCheckout() {
       },
     );
     const contentType = getAll.headers.get("content-type");
-    let getAllresult;
     if (contentType && contentType.includes("application/json")) {
       getAllresult = await getAll.json();
     } else {
@@ -21,7 +22,6 @@ function MainCheckout() {
     sessionStorage.setItem("CheckoutData", JSON.stringify(getAllresult));
   }
   async function render() {
-    let CheckoutData = null;
     try {
       const tryToPullCheckoutDataFromLocal = JSON.parse(
         sessionStorage.getItem("CheckoutData"),
@@ -32,7 +32,6 @@ function MainCheckout() {
     } catch {
       if (CheckoutData == null) {
         await callCheckoutData();
-        await render();
       }
     }
     console.log(CheckoutData);
@@ -73,15 +72,8 @@ function MainCheckout() {
           type="number"
           value={value2["NumberofBowls"]}
           placeholder="Change your order quantity"
-          style={{ gridColumn: "1 / 2" }}
+          style={{ gridColumn: "1 / -1" }}
         ></input>,
-      );
-      renderingData.push(
-        <button
-          disabled={checkingOut}
-          key={`Alter-Order-Confirm-Button-${key2}-${j}`}
-          type="button"
-        ></button>,
       );
       renderingData.push(
         <div
@@ -90,6 +82,7 @@ function MainCheckout() {
         ></div>,
       );
     });
+    console.log(CheckoutData[outsideDict[1]]);
     renderingData.push(
       <div key={`BasketPrice-User-${outsideDict[1]}-0`}>
         Basket total: {CheckoutData[outsideDict[1]]["TotalPrice"]}

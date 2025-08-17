@@ -4,6 +4,8 @@ import { setCookie, getCookieFromBrowser } from "./auth.js";
 function AdminPage() {
   const [allData, setAllData] = useState([]);
   const [rows, setRows] = useState(0);
+  let getAllresult = null;
+  let getPricesresult = null;
   async function callAdminData() {
     const getAll = await fetch(
       "https://mealbowlapp.onrender.com/databaseTesting/getEverything/",
@@ -19,8 +21,6 @@ function AdminPage() {
     );
     const contentType = getAll.headers.get("content-type");
     const contentType2 = getPrices.headers.get("content-type");
-    let getAllresult;
-    let getPricesresult;
     if (contentType && contentType.includes("application/json")) {
       getAllresult = await getAll.json();
     } else {
@@ -35,8 +35,6 @@ function AdminPage() {
     sessionStorage.setItem("AdminPriceData", JSON.stringify(getPricesresult));
   }
   async function render() {
-    let getAllresult = null;
-    let getPricesresult = null;
     const tryToPullAdminDataFromLocal = JSON.parse(
       sessionStorage.getItem("AdminData"),
     );
@@ -52,7 +50,6 @@ function AdminPage() {
     if (getAllresult == null || getPricesresult == null) {
       await callAdminData();
     }
-    console.log(tryToPullAdminDataFromLocal);
     let max = 0;
     const users = Object.keys(getAllresult).length;
     for (const key of Object.keys(getAllresult)) {

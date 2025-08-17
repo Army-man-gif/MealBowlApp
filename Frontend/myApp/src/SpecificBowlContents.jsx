@@ -14,6 +14,22 @@ function Contents({ somethingChanged, setsomethingChanged }) {
   const [processing, setProcessing] = useState(false);
   const [checkingOut, setcheckingOut] = useState(false);
   const intialRun = useRef(true);
+  async function callCheckoutData() {
+    const getAll = await fetch(
+      "https://mealbowlapp.onrender.com/databaseTesting/getEverythingForThatUser/",
+      {
+        credentials: "include",
+      },
+    );
+    const contentType = getAll.headers.get("content-type");
+    let getAllresult;
+    if (contentType && contentType.includes("application/json")) {
+      getAllresult = await getAll.json();
+    } else {
+      getAllresult = await getAll.text();
+    }
+    sessionStorage.setItem("CheckoutData", JSON.stringify(getAllresult));
+  }
   async function callAdminData() {
     const getAll = await fetch(
       "https://mealbowlapp.onrender.com/databaseTesting/getEverything/",
@@ -249,6 +265,7 @@ function Contents({ somethingChanged, setsomethingChanged }) {
     }
     (async () => {
       await callAdminData();
+      await callCheckoutData();
     })();
   }, [somethingChanged]);
   return (

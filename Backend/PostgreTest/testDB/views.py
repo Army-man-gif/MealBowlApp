@@ -190,13 +190,14 @@ def getEverythingForThatUser(request):
             Orders = IndividualBowlOrder.objects.filter(user=request.user)
             priceOverrall = Basket.objects.get(user=request.user)
             toReturn = {}
+            username = order.user.username
+            toReturn[username] = {}
             for order in Orders:
-                username = order.user.username
                 toReturn[username][order.bowlName] = {
                     "NumberofBowls": order.quantity,
                     "Price": order.price,
                 }
-            toReturn[request.user.username] = {
+            toReturn[username] = {
                 "TotalPrice":priceOverrall.totalPrice
             }
             return JsonResponse(toReturn)
