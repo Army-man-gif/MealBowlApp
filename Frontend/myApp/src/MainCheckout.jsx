@@ -4,21 +4,39 @@ function MainCheckout() {
   const [allData, setAllData] = useState([]);
   const [rows, setRows] = useState(0);
   const [checkingOut, setCheckingOut] = useState(false);
-  async function callCheckoutData() {}
+  async function callCheckoutData() {
+    const getAll = await fetch(
+      "https://mealbowlapp.onrender.com/databaseTesting/getEverythingForThatUser/",
+      {
+        credentials: "include",
+      },
+    );
+    const contentType = getAll.headers.get("content-type");
+    let getAllresult;
+    if (contentType && contentType.includes("application/json")) {
+      getAllresult = await getAll.json();
+    } else {
+      getAllresult = await getAll.text();
+    }
+    sessionStorage.setItem("CheckoutData", JSON.stringify(getAllresult));
+  }
   async function render() {
     let CheckoutData = null;
-    const tryToPullCheckoutDataFromLocal = JSON.parse(
-      sessionStorage.getItem("CheckoutData"),
-    );
-    if (Object.keys(tryToPullCheckoutDataFromLocal).length !== 0) {
-      CheckoutData = tryToPullCheckoutDataFromLocal;
+    try {
+      const tryToPullCheckoutDataFromLocal = JSON.parse(
+        sessionStorage.getItem("CheckoutData"),
+      );
+      if (Object.keys(tryToPullCheckoutDataFromLocal).length !== 0) {
+        CheckoutData = tryToPullCheckoutDataFromLocal;
+      }
+    } catch {
+      if (CheckoutData == null) {
+        await callCheckoutData();
+        await render();
+      }
     }
-    if (CheckoutData == null) {
-      await callCheckoutData();
-    }
-    console.log(tryToPullCheckoutDataFromLocal);
+    console.log(CheckoutData);
     let max = 0;
-    const user = Object.keys(CheckoutData)[0];
     for (const key of Object.keys(CheckoutData)) {
       const dict = CheckoutData[key];
       const lengthofDict = Object.keys(dict).length;
@@ -73,8 +91,8 @@ function MainCheckout() {
       );
     });
     renderingData.push(
-      <div key={`BasketPrice-User-${outsideDict[0]}-0`}>
-        Basket total: {CheckoutData[outsideDict[0]]["price"]}
+      <div key={`BasketPrice-User-${outsideDict[1]}-0`}>
+        Basket total: {CheckoutData[outsideDict[1]]["TotalPrice"]}
       </div>,
     );
     setAllData(renderingData);
