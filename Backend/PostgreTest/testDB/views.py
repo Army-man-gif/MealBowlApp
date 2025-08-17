@@ -197,9 +197,7 @@ def getEverythingForThatUser(request):
                     "NumberofBowls": order.quantity,
                     "Price": order.price,
                 }
-            toReturn[username] = {
-                "TotalPrice":priceOverrall.totalPrice
-            }
+            toReturn[username]["TotalPrice"] = priceOverrall.totalPrice
             return JsonResponse(toReturn)
         return JsonResponse({"error":"User is not logged in"})
     except Exception as e:

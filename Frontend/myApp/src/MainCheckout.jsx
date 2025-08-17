@@ -34,7 +34,7 @@ function MainCheckout() {
         await callCheckoutData();
       }
     }
-    console.log(CheckoutData);
+    console.log("Everything:", CheckoutData);
     let max = 0;
     for (const key of Object.keys(CheckoutData)) {
       const dict = CheckoutData[key];
@@ -82,10 +82,10 @@ function MainCheckout() {
         ></div>,
       );
     });
-    console.log(CheckoutData[outsideDict[1]]);
+    console.log(CheckoutData[outsideDict[0]]);
     renderingData.push(
       <div key={`BasketPrice-User-${outsideDict[1]}-0`}>
-        Basket total: {CheckoutData[outsideDict[1]]["TotalPrice"]}
+        Basket total: {CheckoutData[outsideDict[0]]["TotalPrice"]}
       </div>,
     );
     setAllData(renderingData);
