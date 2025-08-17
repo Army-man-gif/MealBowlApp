@@ -34,7 +34,6 @@ function MainCheckout() {
         await callCheckoutData();
       }
     }
-    console.log("Everything:", CheckoutData);
     let max = 0;
     for (const key of Object.keys(CheckoutData)) {
       const dict = CheckoutData[key];
@@ -45,11 +44,23 @@ function MainCheckout() {
     }
     let renderingData = [];
     setRows(max * 3 + 2);
-    const outsideDict = Object.entries(CheckoutData)[0];
-    renderingData.push(
-      <div key={`User-${outsideDict[0]}-0`}>{outsideDict[0]}</div>,
+    const usernameKey = Object.keys(CheckoutData)[0];
+    const userData = CheckoutData[usernameKey];
+    const priceKey = Object.keys(CheckoutData)[1];
+    const priceData = CheckoutData[priceKey];
+    console.log(
+      "usernameKey: ",
+      usernameKey,
+      "userData: ",
+      userData,
+      "priceKey: ",
+      priceKey,
+      "priceData",
+      priceData,
     );
-    Object.entries(outsideDict[1]).forEach(([key2, value2], j) => {
+
+    renderingData.push(<div key={`User-${usernameKey}-0`}>{usernameKey}</div>);
+    Object.entries(userData).forEach(([key2, value2], j) => {
       renderingData.push(
         <div style={{ gridColumn: "1" }} key={`BowlName-${key2}-${j}`}>
           {key2}
@@ -82,10 +93,10 @@ function MainCheckout() {
         ></div>,
       );
     });
-    console.log(CheckoutData[outsideDict[0]]);
+    console.log(priceData);
     renderingData.push(
-      <div key={`BasketPrice-User-${outsideDict[1]}-0`}>
-        Basket total: {CheckoutData[outsideDict[0]]["TotalPrice"]}
+      <div key={`BasketPrice-User-${usernameKey}-0`}>
+        Basket total: {priceData}
       </div>,
     );
     setAllData(renderingData);
