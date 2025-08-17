@@ -38,10 +38,6 @@ function App() {
             }
           />
           <Route path="/Admin" element={<AdminPage />} />
-          <Route
-            path="/checkout/:bowlID"
-            element={<SpecificCheckout />}
-          ></Route>
           <Route path="/checkout" element={<MainCheckout />}></Route>
         </Routes>
       </BrowserRouter>

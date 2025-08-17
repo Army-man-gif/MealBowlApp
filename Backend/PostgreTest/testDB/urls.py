@@ -18,5 +18,6 @@ urlpatterns = [
     path("updateBasketForDeletedOrder/",views.updateBasketForDeletedOrder,name="updateBasketForDeletedOrder"),
     path("getEverything/", views.getEverything,name="getEverything"),
     path("getPrices/", views.getPrices,name="getPrices"),
+    path("getEverythingForThatUser/", views.getEverythingForThatUser,name="getEverythingForThatUser"),
 
 ]

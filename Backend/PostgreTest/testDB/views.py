@@ -184,6 +184,25 @@ def getPrices(request):
         return JsonResponse({"error":"User is not logged in"})
     except Exception as e:
         return JsonResponse({"error":str(e)},status=400)
+def getEverythingForThatUser(request):
+    try:
+        if request.user.is_authenticated:
+            Orders = IndividualBowlOrder.objects.filter(user=request.user)
+            priceOverrall = Basket.objects.get(user=request.user)
+            toReturn = {}
+            for order in Orders:
+                username = order.user.username
+                toReturn[username][order.bowlName] = {
+                    "NumberofBowls": order.quantity,
+                    "Price": order.price,
+                }
+            toReturn[request.user.username] = {
+                "TotalPrice":priceOverrall.totalPrice
+            }
+            return JsonResponse(toReturn)
+        return JsonResponse({"error":"User is not logged in"})
+    except Exception as e:
+        return JsonResponse({"error":str(e)},status=400)
 def getEverything(request):
     try:
         if request.user.is_authenticated:

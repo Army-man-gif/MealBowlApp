@@ -1,6 +1,6 @@
 import BowlContentsStyles from "./Specific.module.css";
 import React, { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { setCookie, getCookieFromBrowser } from "./auth.js";
 
 function Contents({ somethingChanged, setsomethingChanged }) {
@@ -13,7 +13,6 @@ function Contents({ somethingChanged, setsomethingChanged }) {
   const [orderData, setorderData] = useState({});
   const [processing, setProcessing] = useState(false);
   const [checkingOut, setcheckingOut] = useState(false);
-  const [checkoutClicked, setCheckoutClicked] = useState(false);
   const intialRun = useRef(true);
   async function callAdminData() {
     const getAll = await fetch(
@@ -232,9 +231,6 @@ function Contents({ somethingChanged, setsomethingChanged }) {
     }
     return response;
   }
-  function checkoutPressed() {
-    setCheckoutClicked(true);
-  }
   function toggle(toChange) {
     if (toChange == "ingredients") {
       setingredientsClicked(!ingredientsClicked);
@@ -369,14 +365,14 @@ function Contents({ somethingChanged, setsomethingChanged }) {
               Clear orders for this bowl
             </button>
           </div>
-          <button
-            onClick={checkoutPressed}
-            disabled={checkingOut}
-            className={BowlContentsStyles.Checkout}
-          >
-            Checkout
-          </button>
-          {checkoutClicked && <Link to={`/checkout/${bowlID}`}></Link>}
+          <Link to={`/checkout`}>
+            <button
+              disabled={checkingOut}
+              className={BowlContentsStyles.Checkout}
+            >
+              Checkout
+            </button>
+          </Link>
         </div>
       </div>
     </>
