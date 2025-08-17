@@ -105,7 +105,7 @@ function MainCheckout() {
   }
   useEffect(() => {
     render();
-  }, []);
+  });
   return (
     <>
       <div
