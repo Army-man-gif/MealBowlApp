@@ -176,36 +176,36 @@ function Contents({ somethingChanged, setsomethingChanged }) {
       }));
     }
   }
-  async function updateforDeletedOrder(
-    urlfororderData,
-    urlforbasketData,
-    orderData,
-  ) {
+  async function update(orderData, del) {
     const totalData = {
       ...orderData,
       bowlName: bowlIDWithoutDashes,
       bowlTotal: bowlPrice,
     };
-    await add(urlforbasketData, totalData);
-    await add(urlfororderData, totalData);
-    setsomethingChanged((prev) => prev + 1);
-  }
-  async function updateOrderandBasket(
-    urlfororderData,
-    urlforbasketData,
-    orderData,
-  ) {
-    const totalData = {
-      ...orderData,
-      bowlName: bowlIDWithoutDashes,
-      bowlTotal: bowlPrice,
-    };
-    if (totalData.numberofBowls !== "" || totalData.numberofBowls) {
-      await add(urlfororderData, totalData);
-      await add(urlforbasketData, totalData);
-      setsomethingChanged((prev) => prev + 1);
+    if (!del) {
+      if (totalData.numberofBowls !== "" || totalData.numberofBowls) {
+        await add(
+          "https://mealbowlapp.onrender.com/databaseTesting/updateOrder/",
+          totalData,
+        );
+        await add(
+          "https://mealbowlapp.onrender.com/databaseTesting/updateBasket/",
+          totalData,
+        );
+        setsomethingChanged((prev) => prev + 1);
+      } else {
+        console.log("An empty number of bowls cannot be sent as a request");
+      }
     } else {
-      console.log("An empty number of bowls cannot be sent as a request");
+      await add(
+        "https://mealbowlapp.onrender.com/databaseTesting/updateBasketForDeletedOrder/",
+        totalData,
+      );
+      await add(
+        "https://mealbowlapp.onrender.com/databaseTesting/deleteOrder/",
+        totalData,
+      );
+      setsomethingChanged((prev) => prev + 1);
     }
   }
   async function add(url, data) {
@@ -354,13 +354,7 @@ function Contents({ somethingChanged, setsomethingChanged }) {
                 <button
                   type="button"
                   className={BowlContentsStyles.styleConfirm}
-                  onClick={() =>
-                    updateOrderandBasket(
-                      "https://mealbowlapp.onrender.com/databaseTesting/updateOrder/",
-                      "https://mealbowlapp.onrender.com/databaseTesting/updateBasket/",
-                      orderData,
-                    )
-                  }
+                  onClick={() => update(orderData, false)}
                   disabled={processing}
                 >
                   Confirm
@@ -369,13 +363,7 @@ function Contents({ somethingChanged, setsomethingChanged }) {
             )}
             <button
               type="button"
-              onClick={() =>
-                updateforDeletedOrder(
-                  "https://mealbowlapp.onrender.com/databaseTesting/deleteOrder/",
-                  "https://mealbowlapp.onrender.com/databaseTesting/updateBasketForDeletedOrder/",
-                  orderData,
-                )
-              }
+              onClick={() => update(orderData, true)}
               disabled={processing}
               className={BowlContentsStyles.Clear}
             >
@@ -384,7 +372,9 @@ function Contents({ somethingChanged, setsomethingChanged }) {
           </div>
           {sessionStorage.getItem("CheckoutData") && (
             <Link to={`/checkout`}>
-              <button className="MainCheckout">Checkout</button>
+              <button hidden={processing} className="MainCheckout">
+                Checkout
+              </button>
             </Link>
           )}
         </div>

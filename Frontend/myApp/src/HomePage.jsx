@@ -347,7 +347,9 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
       </p>
       {sessionStorage.getItem("CheckoutData") && (
         <Link to={`/checkout`}>
-          <button className="MainCheckout">Checkout</button>
+          <button hidden={processing} className="MainCheckout">
+            Checkout
+          </button>
         </Link>
       )}
 

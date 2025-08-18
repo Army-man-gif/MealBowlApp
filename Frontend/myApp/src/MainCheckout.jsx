@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { setCookie, getCookieFromBrowser } from "./auth.js";
 import React from "react";
 function MainCheckout({ somethingChanged, setsomethingChanged }) {
