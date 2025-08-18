@@ -190,14 +190,15 @@ def getEverythingForThatUser(request):
             Orders = IndividualBowlOrder.objects.filter(user=request.user)
             priceOverrall = Basket.objects.get(user=request.user)
             toReturn = {}
-            username = priceOverrall.user.username
-            toReturn[username] = {}
-            for order in Orders:
-                toReturn[username][order.bowlName] = {
-                    "NumberofBowls": order.quantity,
-                    "Price": order.price,
-                }
-            toReturn[username]["TotalPrice"] = priceOverrall.totalPrice
+            if(Orders and priceOverrall):
+                username = priceOverrall.user.username
+                toReturn[username] = {}
+                for order in Orders:
+                    toReturn[username][order.bowlName] = {
+                        "NumberofBowls": order.quantity,
+                        "Price": order.price,
+                    }
+                toReturn[username]["TotalPrice"] = priceOverrall.totalPrice
             return JsonResponse(toReturn)
         return JsonResponse({"error":"User is not logged in"})
     except Exception as e:

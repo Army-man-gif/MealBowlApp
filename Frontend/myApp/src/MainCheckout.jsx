@@ -18,19 +18,12 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
   }
   async function update(changedValue, originalValue, bowlPrice, bowlName) {
     setCheckingOut(true);
-    changedValue = Number(changedValue);
-    originalValue = Number(originalValue);
-    let toSubtract;
-    let toAdd;
-    let totalData = {
-      numberofBowls: changedValue,
-      bowlName: bowlName,
-      bowlTotal: bowlPrice,
-    };
+    changedValue = Number(changedValue ?? 0);
+    originalValue = Number(originalValue ?? 0);
+    let totalData;
     if (changedValue > originalValue) {
-      toAdd = originalValue - changedValue;
       totalData = {
-        numberofBowls: toAdd,
+        numberofBowls: changedValue - originalValue,
         bowlName: bowlName,
         bowlTotal: bowlPrice,
       };
@@ -44,9 +37,8 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
       );
       setsomethingChanged((prev) => prev + 1);
     } else if (changedValue > 0 && changedValue < originalValue) {
-      toSubtract = originalValue - changedValue;
       totalData = {
-        numberofBowls: -toSubtract,
+        numberofBowls: changedValue - originalValue,
         bowlName: bowlName,
         bowlTotal: bowlPrice,
       };
@@ -60,6 +52,11 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
       );
       setsomethingChanged((prev) => prev + 1);
     } else if (changedValue === 0) {
+      totalData = {
+        numberofBowls: originalValue,
+        bowlName: bowlName,
+        bowlTotal: bowlPrice,
+      };
       await add(
         "https://mealbowlapp.onrender.com/databaseTesting/updateBasketForDeletedOrder/",
         totalData,
@@ -68,9 +65,9 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
         "https://mealbowlapp.onrender.com/databaseTesting/deleteOrder/",
         totalData,
       );
-      setCheckingOut(true);
       setsomethingChanged((prev) => prev + 1);
     }
+    setCheckingOut(true);
   }
   async function add(url, data) {
     let response;
@@ -199,7 +196,7 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
                   update(
                     cur[key2] ?? "",
                     value2["NumberofBowls"],
-                    value2["Price"],
+                    value2["Price"] / value2["NumberofBowls"],
                     key2,
                   )
                 }
