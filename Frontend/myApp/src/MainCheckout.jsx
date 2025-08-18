@@ -1,11 +1,101 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { setCookie, getCookieFromBrowser } from "./auth.js";
 
-function MainCheckout() {
+function MainCheckout({ somethingChanged, setsomethingChanged }) {
   const [allData, setAllData] = useState([]);
   const [rows, setRows] = useState(0);
   const [checkingOut, setCheckingOut] = useState(false);
+  const [orderData, setorderData] = useState({});
+  const intialRun = useRef(true);
+  const [cur, setCur] = useState("");
   let getAllresult = null;
   let CheckoutData = null;
+  async function update(changedValue, originalValue, bowlPrice, bowlName) {
+    if (changedValue === originalValue) {
+      return;
+    } else if (changedValue > bowlPrice) {
+      const totalData = {
+        numberofBowls: changedValue,
+        bowlName: bowlName,
+        bowlTotal: bowlPrice,
+      };
+      await add(
+        "https://mealbowlapp.onrender.com/databaseTesting/updateOrder/",
+        totalData,
+      );
+      await add(
+        "https://mealbowlapp.onrender.com/databaseTesting/updateBasket/",
+        totalData,
+      );
+      setsomethingChanged((prev) => prev + 1);
+    } else if (changedValue > 0 && changedValue < bowlPrice) {
+      const totalData = {
+        numberofBowls: -changedValue,
+        bowlName: bowlName,
+        bowlTotal: bowlPrice,
+      };
+      await add(
+        "https://mealbowlapp.onrender.com/databaseTesting/updateOrder/",
+        totalData,
+      );
+      await add(
+        "https://mealbowlapp.onrender.com/databaseTesting/updateBasket/",
+        totalData,
+      );
+      setsomethingChanged((prev) => prev + 1);
+    } else if (changedValue === 0) {
+      const totalData = {
+        bowlName: bowlName,
+      };
+      await add(
+        "https://mealbowlapp.onrender.com/databaseTesting/deleteOrder/",
+        totalData,
+      );
+      await add(
+        "https://mealbowlapp.onrender.com/databaseTesting/updateBasketForDeletedOrder/",
+        totalData,
+      );
+      setsomethingChanged((prev) => prev + 1);
+    } else {
+      return;
+    }
+  }
+  async function add(url, data) {
+    console.log(data);
+    setCheckingOut(true);
+    let response;
+    let CSRFToken = await getCookieFromBrowser("csrftoken");
+    if (!CSRFToken) {
+      await setCookie();
+      CSRFToken = await getCookieFromBrowser("csrftoken");
+    }
+    try {
+      const sendData = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": CSRFToken,
+        },
+        credentials: "include",
+        body: JSON.stringify(data),
+      });
+      const contentType = sendData.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        response = await sendData.json();
+      } else {
+        response = await sendData.text();
+      }
+      if (sendData.ok) {
+        console.log("Server responded with: ", response);
+      } else {
+        console.log("Server threw an error", response);
+      }
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+    setCheckingOut(false);
+    return response;
+  }
   async function callCheckoutData() {
     const getAll = await fetch(
       "https://mealbowlapp.onrender.com/databaseTesting/getEverythingForThatUser/",
@@ -79,13 +169,27 @@ function MainCheckout() {
         );
         renderingData.push(
           <input
+            onChange={(e) => setCur(e.target.value)}
             disabled={checkingOut}
             key={`Alter-Order-${key2}-${j}`}
             type="number"
             value={value2["NumberofBowls"]}
             placeholder="Change your order quantity"
-            style={{ gridColumn: "1 / -1" }}
+            style={{ gridColumn: "1 / 2" }}
           ></input>,
+        );
+        renderingData.push(
+          <button
+            onClick={() =>
+              update(cur, value2["NumberofBowls"], value2["Price"], key2)
+            }
+            disabled={checkingOut}
+            key={`Alter-Order-Confirm-Button-${key2}-${j}`}
+            type="button"
+            style={{ gridColumn: "2 / 3" }}
+          >
+            Click to confirm
+          </button>,
         );
         renderingData.push(
           <div
@@ -104,7 +208,10 @@ function MainCheckout() {
     setAllData(renderingData);
   }
   useEffect(() => {
-    render();
+    if (intialRun.current) {
+      intialRun.current = false;
+      render();
+    }
   });
   return (
     <>
