@@ -183,8 +183,10 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
               {/* ✅ Now input stays in sync */}
               <input
                 onChange={updateCur}
-                disabled={checkingOut}
+                //disabled={checkingOut}
                 name={key2}
+                hidden={true}
+                disabled={true}
                 type="number"
                 value={cur[key2] ?? ""}
                 placeholder="Change your order quantity"
@@ -200,6 +202,7 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
                     key2,
                   )
                 }
+                hidden={true}
                 disabled={checkingOut}
                 type="button"
                 style={{ gridColumn: "2 / 3" }}
