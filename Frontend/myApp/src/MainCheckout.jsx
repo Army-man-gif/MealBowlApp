@@ -1,17 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { setCookie, getCookieFromBrowser } from "./auth.js";
-
+import React from "react";
 function MainCheckout({ somethingChanged, setsomethingChanged }) {
   const [allData, setAllData] = useState([]);
   const [rows, setRows] = useState(0);
   const [checkingOut, setCheckingOut] = useState(false);
-  const [orderData, setorderData] = useState({});
-  const intialRun = useRef(true);
   const [cur, setCur] = useState({});
+  const [userData, setUserData] = useState({});
   let getAllresult = null;
   let CheckoutData = null;
   function updateCur(e) {
-    console.log("Entered");
     let { name, value } = e.target;
     setCur((prev) => ({
       ...prev,
@@ -21,14 +19,18 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
   async function update(changedValue, originalValue, bowlPrice, bowlName) {
     changedValue = Number(changedValue);
     originalValue = Number(originalValue);
+    console.log("cur", cur);
+    console.log("", changedValue, "", originalValue);
+    /*
+    let totalData = {
+      numberofBowls: changedValue,
+      bowlName: bowlName,
+      bowlTotal: bowlPrice,
+    };
     if (changedValue === originalValue) {
       return;
     } else if (changedValue > bowlPrice) {
-      const totalData = {
-        numberofBowls: changedValue,
-        bowlName: bowlName,
-        bowlTotal: bowlPrice,
-      };
+
       await add(
         "https://mealbowlapp.onrender.com/databaseTesting/updateOrder/",
         totalData,
@@ -39,7 +41,7 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
       );
       setsomethingChanged((prev) => prev + 1);
     } else if (changedValue > 0 && changedValue < bowlPrice) {
-      const totalData = {
+      totalData = {
         numberofBowls: -changedValue,
         bowlName: bowlName,
         bowlTotal: bowlPrice,
@@ -54,21 +56,20 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
       );
       setsomethingChanged((prev) => prev + 1);
     } else if (changedValue === 0) {
-      const totalData = {
-        bowlName: bowlName,
-      };
-      await add(
-        "https://mealbowlapp.onrender.com/databaseTesting/deleteOrder/",
-        totalData,
-      );
       await add(
         "https://mealbowlapp.onrender.com/databaseTesting/updateBasketForDeletedOrder/",
         totalData,
       );
+      await add(
+        "https://mealbowlapp.onrender.com/databaseTesting/deleteOrder/",
+        totalData,
+      );
+
       setsomethingChanged((prev) => prev + 1);
     } else {
       return;
     }
+    */
   }
   async function add(url, data) {
     console.log(data);
@@ -121,113 +122,41 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
     }
     sessionStorage.setItem("CheckoutData", JSON.stringify(getAllresult));
   }
-  async function render() {
-    try {
-      const tryToPullCheckoutDataFromLocal = JSON.parse(
-        sessionStorage.getItem("CheckoutData"),
-      );
-      if (Object.keys(tryToPullCheckoutDataFromLocal).length !== 0) {
-        CheckoutData = tryToPullCheckoutDataFromLocal;
-      }
-    } catch {
-      if (CheckoutData == null) {
-        await callCheckoutData();
-      }
-    }
-    let max = 0;
-    for (const key of Object.keys(CheckoutData)) {
-      const dict = CheckoutData[key];
-      const lengthofDict = Object.keys(dict).length;
-      if (lengthofDict > max) {
-        max = lengthofDict;
-      }
-    }
-    let renderingData = [];
-    setRows(max * 3 + 2);
-    const keys = Object.keys(CheckoutData);
-    const usernameKey = Object.keys(CheckoutData)[0];
-    const userData = CheckoutData[usernameKey];
-    const priceData = userData["TotalPrice"];
-    console.log(
-      "keys: ",
-      keys,
-      "usernameKey: ",
-      usernameKey,
-      "userData: ",
-      userData,
-      "priceData",
-      priceData,
-    );
-
-    renderingData.push(<div key={`User-${usernameKey}-0`}>{usernameKey}</div>);
-    Object.entries(userData).forEach(([key2, value2], j) => {
-      if (j < Object.keys(userData).length - 1) {
-        renderingData.push(
-          <div style={{ gridColumn: "1" }} key={`BowlName-${key2}-${j}`}>
-            {key2}
-          </div>,
-        );
-        renderingData.push(
-          <div style={{ gridColumn: "2" }} key={`NoOfBowls-${key2}-${j}`}>
-            Number of bowls: {value2["NumberofBowls"]}
-          </div>,
-        );
-        renderingData.push(
-          <div style={{ gridColumn: "3" }} key={`Price-${key2}-${j}`}>
-            Price of this part of the order: {value2["Price"]}
-          </div>,
-        );
-        renderingData.push(
-          <input
-            onChange={(e) => updateCur(e)}
-            disabled={checkingOut}
-            key={`Alter-Order-${key2}-${j}`}
-            name={key2}
-            type="number"
-            value={cur[key2] ?? value2["NumberofBowls"]}
-            placeholder="Change your order quantity"
-            style={{ gridColumn: "1 / 2" }}
-          ></input>,
-        );
-        renderingData.push(
-          <button
-            onClick={() =>
-              update(
-                cur[key2] ?? value2["NumberofBowls"],
-                value2["NumberofBowls"],
-                value2["Price"],
-                key2,
-              )
-            }
-            disabled={checkingOut}
-            key={`Alter-Order-Confirm-Button-${key2}-${j}`}
-            type="button"
-            style={{ gridColumn: "2 / 3" }}
-          >
-            Click to confirm
-          </button>,
-        );
-        renderingData.push(
-          <div
-            key={`Space-${key2}-${j}`}
-            style={{ gridColumn: "1 / -1", height: "20px" }}
-          ></div>,
-        );
-      }
-    });
-    console.log(priceData);
-    renderingData.push(
-      <div key={`BasketPrice-User-${usernameKey}-0`}>
-        Basket total: {priceData}
-      </div>,
-    );
-    setAllData(renderingData);
-  }
   useEffect(() => {
-    if (intialRun.current) {
-      intialRun.current = false;
-      render();
+    async function fetchData() {
+      try {
+        const tryToPullCheckoutDataFromLocal = JSON.parse(
+          sessionStorage.getItem("CheckoutData"),
+        );
+        if (Object.keys(tryToPullCheckoutDataFromLocal).length !== 0) {
+          CheckoutData = tryToPullCheckoutDataFromLocal;
+        }
+      } catch {
+        if (CheckoutData == null) {
+          await callCheckoutData();
+        }
+      }
+      let max = 0;
+      for (const key of Object.keys(CheckoutData)) {
+        const dict = CheckoutData[key];
+        const lengthofDict = Object.keys(dict).length;
+        if (lengthofDict > max) {
+          max = lengthofDict;
+        }
+      }
+      setRows(max * 3 + 2);
+      const usernameKey = Object.keys(CheckoutData)[0];
+      const userData = CheckoutData[usernameKey];
+      setUserData(userData);
+      const initialCur = {};
+      Object.entries(userData).forEach(([key2, value2]) => {
+        if (key2 !== "TotalPrice") {
+          initialCur[key2] = value2["NumberofBowls"];
+        }
+      });
+      setCur(initialCur);
     }
+    fetchData();
   }, []);
   return (
     <>
@@ -240,7 +169,56 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
           rowGap: "50px",
         }}
       >
-        {allData}
+        {/* Show username */}
+        {Object.keys(userData).length > 0 && (
+          <div>{Object.keys(CheckoutData ?? {})[0]}</div>
+        )}
+
+        {Object.entries(userData).map(([key2, value2], j) =>
+          key2 !== "TotalPrice" ? (
+            <React.Fragment key={key2}>
+              <div style={{ gridColumn: "1" }}>{key2}</div>
+              <div style={{ gridColumn: "2" }}>
+                Number of bowls: {value2["NumberofBowls"]}
+              </div>
+              <div style={{ gridColumn: "3" }}>
+                Price of this part of the order: {value2["Price"]}
+              </div>
+
+              {/* ✅ Now input stays in sync */}
+              <input
+                onChange={updateCur}
+                disabled={checkingOut}
+                name={key2}
+                type="number"
+                value={cur[key2] ?? ""}
+                placeholder="Change your order quantity"
+                style={{ gridColumn: "1 / 2" }}
+              />
+
+              <button
+                onClick={() =>
+                  update(
+                    cur[key2] ?? "",
+                    value2["NumberofBowls"],
+                    value2["Price"],
+                    key2,
+                  )
+                }
+                disabled={checkingOut}
+                type="button"
+                style={{ gridColumn: "2 / 3" }}
+              >
+                Click to confirm
+              </button>
+
+              <div style={{ gridColumn: "1 / -1", height: "20px" }}></div>
+            </React.Fragment>
+          ) : null,
+        )}
+        {"TotalPrice" in userData && (
+          <div>Basket total: {userData["TotalPrice"]}</div>
+        )}
       </div>
     </>
   );

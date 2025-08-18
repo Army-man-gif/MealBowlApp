@@ -37,7 +37,15 @@ function App() {
             }
           />
           <Route path="/Admin" element={<AdminPage />} />
-          <Route path="/checkout" element={<MainCheckout />}></Route>
+          <Route
+            path="/checkout"
+            element={
+              <MainCheckout
+                somethingChanged={somethingChanged}
+                setsomethingChanged={setsomethingChanged}
+              />
+            }
+          ></Route>
         </Routes>
       </BrowserRouter>
     </>
