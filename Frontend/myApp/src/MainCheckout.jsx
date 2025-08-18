@@ -17,20 +17,23 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
     }));
   }
   async function update(changedValue, originalValue, bowlPrice, bowlName) {
+    setCheckingOut(true);
     changedValue = Number(changedValue);
     originalValue = Number(originalValue);
-    console.log("cur", cur);
-    console.log("", changedValue, "", originalValue);
-    /*
+    let toSubtract;
+    let toAdd;
     let totalData = {
       numberofBowls: changedValue,
       bowlName: bowlName,
       bowlTotal: bowlPrice,
     };
-    if (changedValue === originalValue) {
-      return;
-    } else if (changedValue > bowlPrice) {
-
+    if (changedValue > originalValue) {
+      toAdd = originalValue - changedValue;
+      totalData = {
+        numberofBowls: toAdd,
+        bowlName: bowlName,
+        bowlTotal: bowlPrice,
+      };
       await add(
         "https://mealbowlapp.onrender.com/databaseTesting/updateOrder/",
         totalData,
@@ -40,9 +43,10 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
         totalData,
       );
       setsomethingChanged((prev) => prev + 1);
-    } else if (changedValue > 0 && changedValue < bowlPrice) {
+    } else if (changedValue > 0 && changedValue < originalValue) {
+      toSubtract = originalValue - changedValue;
       totalData = {
-        numberofBowls: -changedValue,
+        numberofBowls: -toSubtract,
         bowlName: bowlName,
         bowlTotal: bowlPrice,
       };
@@ -64,16 +68,11 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
         "https://mealbowlapp.onrender.com/databaseTesting/deleteOrder/",
         totalData,
       );
-
+      setCheckingOut(true);
       setsomethingChanged((prev) => prev + 1);
-    } else {
-      return;
     }
-    */
   }
   async function add(url, data) {
-    console.log(data);
-    setCheckingOut(true);
     let response;
     let CSRFToken = await getCookieFromBrowser("csrftoken");
     if (!CSRFToken) {
@@ -104,7 +103,6 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
     } catch (error) {
       console.log("Error: ", error);
     }
-    setCheckingOut(false);
     return response;
   }
   async function callCheckoutData() {
@@ -120,7 +118,7 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
     } else {
       getAllresult = await getAll.text();
     }
-    sessionStorage.setItem("CheckoutData", JSON.stringify(getAllresult));
+    sessionStorage.setItem("CheckoutData", JSON.stringify(getAllresult) ?? "");
   }
   useEffect(() => {
     async function fetchData() {

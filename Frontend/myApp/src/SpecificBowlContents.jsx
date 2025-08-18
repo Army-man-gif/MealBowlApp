@@ -382,11 +382,11 @@ function Contents({ somethingChanged, setsomethingChanged }) {
               Clear orders for this bowl
             </button>
           </div>
-          <Link to={`/checkout`}>
-            <button disabled={checkingOut} className="Checkout">
-              Checkout
-            </button>
-          </Link>
+          {sessionStorage.getItem("CheckoutData") && (
+            <Link to={`/checkout`}>
+              <button className="MainCheckout">Checkout</button>
+            </Link>
+          )}
         </div>
       </div>
     </>

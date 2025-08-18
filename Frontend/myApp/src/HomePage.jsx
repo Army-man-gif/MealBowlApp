@@ -345,9 +345,12 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
         brings you balanced meals, with lots of options, all bursting with
         flavours
       </p>
-      <Link to={`/checkout`}>
-        <button className="MainCheckout">Checkout</button>
-      </Link>
+      {sessionStorage.getItem("CheckoutData") && (
+        <Link to={`/checkout`}>
+          <button className="MainCheckout">Checkout</button>
+        </Link>
+      )}
+
       <div className={HomepageStyles.contactPlacement}>
         <h2 onClick={() => pressed("contact")} className="clickable">
           📞 Contact us{" "}
