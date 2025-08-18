@@ -7,10 +7,20 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
   const [checkingOut, setCheckingOut] = useState(false);
   const [orderData, setorderData] = useState({});
   const intialRun = useRef(true);
-  const [cur, setCur] = useState("");
+  const [cur, setCur] = useState({});
   let getAllresult = null;
   let CheckoutData = null;
+  function updateCur(e) {
+    console.log("Entered");
+    let { name, value } = e.target;
+    setCur((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
   async function update(changedValue, originalValue, bowlPrice, bowlName) {
+    changedValue = Number(changedValue);
+    originalValue = Number(originalValue);
     if (changedValue === originalValue) {
       return;
     } else if (changedValue > bowlPrice) {
@@ -169,11 +179,12 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
         );
         renderingData.push(
           <input
-            onChange={(e) => setCur(e.target.value)}
+            onChange={(e) => updateCur(e)}
             disabled={checkingOut}
             key={`Alter-Order-${key2}-${j}`}
+            name={key2}
             type="number"
-            value={cur == "" ? value2["NumberofBowls"] : cur}
+            value={cur[key2] ?? value2["NumberofBowls"]}
             placeholder="Change your order quantity"
             style={{ gridColumn: "1 / 2" }}
           ></input>,
@@ -182,7 +193,7 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
           <button
             onClick={() =>
               update(
-                cur == "" ? value2["NumberofBowls"] : cur,
+                cur[key2] ?? value2["NumberofBowls"],
                 value2["NumberofBowls"],
                 value2["Price"],
                 key2,
@@ -217,7 +228,7 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
       intialRun.current = false;
       render();
     }
-  });
+  }, []);
   return (
     <>
       <div

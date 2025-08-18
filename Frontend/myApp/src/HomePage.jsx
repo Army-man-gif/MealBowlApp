@@ -1,6 +1,6 @@
 import BowlImage from "./BowlImage.jsx";
 import HomepageStyles from "./HomePage.module.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
 import bowl from "./assets/bowl.png";
 import bowl3 from "./assets/bowl3.jpg";
@@ -19,11 +19,9 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
   const [loginClicked, setloginClicked] = useState(false);
   const [DontSkipLogin, setDontSkipLogin] = useState(false);
   const [processing, setprocessing] = useState(false);
+  const [registerData, setRegisterData] = useState({});
   const [cookieSet, setCookieSet] = useState(false);
   const [name, setName] = useState("");
-  const [registerData, setRegisterData] = useState({});
-  const intialRun = useRef(true);
-
   function updateRegisterData(e, inputField) {
     if (inputField) {
       let { name, value } = e.target;
@@ -298,7 +296,7 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
   }
   useEffect(() => {
     (async () => {
-      const flag = JSON.parse(sessionStorage.getItem("Logged-In"));
+      const flag = JSON.parse(sessionStorage.getItem("Logged-In")) ?? false;
       console.log("Flag: ", flag);
       if (!flag) {
         await setCookie();
@@ -320,7 +318,7 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
         }
       }
     })();
-  }, []);
+  });
   useEffect(() => {
     (async () => {
       await callAdminData();
@@ -347,6 +345,9 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
         brings you balanced meals, with lots of options, all bursting with
         flavours
       </p>
+      <Link to={`/checkout`}>
+        <button className="MainCheckout">Checkout</button>
+      </Link>
       <div className={HomepageStyles.contactPlacement}>
         <h2 onClick={() => pressed("contact")} className="clickable">
           📞 Contact us{" "}
@@ -511,6 +512,9 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
           <span>s</span>
         </div>
       </div>
+      <Link to={`/checkout`}>
+        <button className="Checkout">Checkout</button>
+      </Link>
       <div id="Bowls" className={HomepageStyles.arrangeBowls}>
         <BowlImage
           name="Soya Chunk High-Protein Bowl"

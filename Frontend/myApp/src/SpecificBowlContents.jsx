@@ -383,10 +383,7 @@ function Contents({ somethingChanged, setsomethingChanged }) {
             </button>
           </div>
           <Link to={`/checkout`}>
-            <button
-              disabled={checkingOut}
-              className={BowlContentsStyles.Checkout}
-            >
+            <button disabled={checkingOut} className="Checkout">
               Checkout
             </button>
           </Link>

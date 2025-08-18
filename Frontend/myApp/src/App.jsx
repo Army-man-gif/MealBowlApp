@@ -1,6 +1,5 @@
 import RenderBowls from "./HomePage.jsx";
 import Contents from "./SpecificBowlContents.jsx";
-import SpecificCheckout from "./SpecificCheckout.jsx";
 import MainCheckout from "./MainCheckout.jsx";
 import AdminPage from "./Admin.jsx";
 
