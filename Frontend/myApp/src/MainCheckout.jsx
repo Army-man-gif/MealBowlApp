@@ -173,7 +173,7 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
             disabled={checkingOut}
             key={`Alter-Order-${key2}-${j}`}
             type="number"
-            value={value2["NumberofBowls"]}
+            value={cur == "" ? value2["NumberofBowls"] : cur}
             placeholder="Change your order quantity"
             style={{ gridColumn: "1 / 2" }}
           ></input>,
@@ -181,7 +181,12 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
         renderingData.push(
           <button
             onClick={() =>
-              update(cur, value2["NumberofBowls"], value2["Price"], key2)
+              update(
+                cur == "" ? value2["NumberofBowls"] : cur,
+                value2["NumberofBowls"],
+                value2["Price"],
+                key2,
+              )
             }
             disabled={checkingOut}
             key={`Alter-Order-Confirm-Button-${key2}-${j}`}
