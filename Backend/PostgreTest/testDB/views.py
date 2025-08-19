@@ -201,8 +201,10 @@ def getEverythingForThatUser(request):
                 toReturn[username]["TotalPrice"] = priceOverrall.totalPrice
             return JsonResponse(toReturn)
         return JsonResponse({"error":"User is not logged in"})
-    except IndividualBowlOrder.DoesNotExist or Basket.DoesNotExist:
-        return JsonResponse({"message":"User has no data"})
+    except IndividualBowlOrder.DoesNotExist:
+        return JsonResponse({"message":"User has no orders"})
+    except Basket.DoesNotExist:
+        return JsonResponse({"message":"User has no orders"})
     except Exception as e:
         return JsonResponse({"error":str(e)},status=400)
 def getEverything(request):
