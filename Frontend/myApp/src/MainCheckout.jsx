@@ -17,41 +17,24 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
     }));
   }
   async function update(changedValue, originalValue, bowlPrice, bowlName) {
-    setCheckingOut(true);
     changedValue = Number(changedValue ?? 0);
     originalValue = Number(originalValue ?? 0);
+    console.log(
+      "Changed value: ",
+      changedValue,
+      "Original value: ",
+      originalValue,
+      "Bowl price: ",
+      bowlPrice,
+      "Bowl name: ",
+      bowlName,
+    );
+    console.log(changedValue > originalValue);
+    console.log(0 < changedValue < originalValue);
+    console.log(changedValue === 0);
+    setCheckingOut(true);
     let totalData;
-    if (changedValue > originalValue) {
-      totalData = {
-        numberofBowls: changedValue - originalValue,
-        bowlName: bowlName,
-        bowlTotal: bowlPrice,
-      };
-      await add(
-        "https://mealbowlapp.onrender.com/databaseTesting/updateOrder/",
-        totalData,
-      );
-      await add(
-        "https://mealbowlapp.onrender.com/databaseTesting/updateBasket/",
-        totalData,
-      );
-      setsomethingChanged((prev) => prev + 1);
-    } else if (changedValue > 0 && changedValue < originalValue) {
-      totalData = {
-        numberofBowls: changedValue - originalValue,
-        bowlName: bowlName,
-        bowlTotal: bowlPrice,
-      };
-      await add(
-        "https://mealbowlapp.onrender.com/databaseTesting/updateOrder/",
-        totalData,
-      );
-      await add(
-        "https://mealbowlapp.onrender.com/databaseTesting/updateBasket/",
-        totalData,
-      );
-      setsomethingChanged((prev) => prev + 1);
-    } else if (changedValue === 0) {
+    if (changedValue === 0) {
       totalData = {
         numberofBowls: originalValue,
         bowlName: bowlName,
@@ -67,7 +50,38 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
       );
       setsomethingChanged((prev) => prev + 1);
     }
-    setCheckingOut(true);
+    if (changedValue > originalValue) {
+      totalData = {
+        numberofBowls: changedValue - originalValue,
+        bowlName: bowlName,
+        bowlTotal: bowlPrice,
+      };
+      await add(
+        "https://mealbowlapp.onrender.com/databaseTesting/updateOrder/",
+        totalData,
+      );
+      await add(
+        "https://mealbowlapp.onrender.com/databaseTesting/updateBasket/",
+        totalData,
+      );
+      setsomethingChanged((prev) => prev + 1);
+    } else if (0 < changedValue < originalValue) {
+      totalData = {
+        numberofBowls: changedValue - originalValue,
+        bowlName: bowlName,
+        bowlTotal: bowlPrice,
+      };
+      await add(
+        "https://mealbowlapp.onrender.com/databaseTesting/updateOrder/",
+        totalData,
+      );
+      await add(
+        "https://mealbowlapp.onrender.com/databaseTesting/updateBasket/",
+        totalData,
+      );
+      setsomethingChanged((prev) => prev + 1);
+    }
+    setCheckingOut(false);
   }
   async function add(url, data) {
     let response;
@@ -117,7 +131,44 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
     }
     sessionStorage.setItem("CheckoutData", JSON.stringify(getAllresult) ?? "");
   }
+  async function callAdminData() {
+    const getAll = await fetch(
+      "https://mealbowlapp.onrender.com/databaseTesting/getEverything/",
+      {
+        credentials: "include",
+      },
+    );
+    const getPrices = await fetch(
+      "https://mealbowlapp.onrender.com/databaseTesting/getPrices/",
+      {
+        credentials: "include",
+      },
+    );
+    const contentType = getAll.headers.get("content-type");
+    const contentType2 = getPrices.headers.get("content-type");
+    let getAllresult;
+    let getPricesresult;
+    if (contentType && contentType.includes("application/json")) {
+      getAllresult = await getAll.json();
+    } else {
+      getAllresult = await getAll.text();
+    }
+    if (contentType2 && contentType2.includes("application/json")) {
+      getPricesresult = await getPrices.json();
+    } else {
+      getPricesresult = await getPrices.text();
+    }
+    sessionStorage.setItem("AdminData", JSON.stringify(getAllresult));
+    sessionStorage.setItem("AdminPriceData", JSON.stringify(getPricesresult));
+  }
   useEffect(() => {
+    (async () => {
+      await callAdminData();
+      await callCheckoutData();
+    })();
+  }, [somethingChanged]);
+  useEffect(() => {
+    let empty = false;
     async function fetchData() {
       try {
         const tryToPullCheckoutDataFromLocal = JSON.parse(
@@ -125,31 +176,37 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
         );
         if (Object.keys(tryToPullCheckoutDataFromLocal).length !== 0) {
           CheckoutData = tryToPullCheckoutDataFromLocal;
+        } else {
+          empty = true;
         }
       } catch {
         if (CheckoutData == null) {
           await callCheckoutData();
         }
       }
-      let max = 0;
-      for (const key of Object.keys(CheckoutData)) {
-        const dict = CheckoutData[key];
-        const lengthofDict = Object.keys(dict).length;
-        if (lengthofDict > max) {
-          max = lengthofDict;
+      if (!empty) {
+        let max = 0;
+        for (const key of Object.keys(CheckoutData)) {
+          const dict = CheckoutData[key];
+          const lengthofDict = Object.keys(dict).length;
+          if (lengthofDict > max) {
+            max = lengthofDict;
+          }
         }
+        setRows(max * 3 + 2);
+        const usernameKey = Object.keys(CheckoutData)[0];
+        const userData = CheckoutData[usernameKey];
+        setUserData(userData);
+        const initialCur = {};
+        Object.entries(userData).forEach(([key2, value2]) => {
+          if (key2 !== "TotalPrice") {
+            initialCur[key2] = value2["NumberofBowls"];
+          }
+        });
+        setCur(initialCur);
+      } else {
+        setCur({});
       }
-      setRows(max * 3 + 2);
-      const usernameKey = Object.keys(CheckoutData)[0];
-      const userData = CheckoutData[usernameKey];
-      setUserData(userData);
-      const initialCur = {};
-      Object.entries(userData).forEach(([key2, value2]) => {
-        if (key2 !== "TotalPrice") {
-          initialCur[key2] = value2["NumberofBowls"];
-        }
-      });
-      setCur(initialCur);
     }
     fetchData();
   }, []);
@@ -182,11 +239,11 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
 
               {/* ✅ Now input stays in sync */}
               <input
-                onChange={updateCur}
+                onChange={(e) => updateCur(e)}
                 //disabled={checkingOut}
                 name={key2}
-                hidden={true}
-                disabled={true}
+                hidden={false}
+                disabled={checkingOut}
                 type="number"
                 value={cur[key2] ?? ""}
                 placeholder="Change your order quantity"
@@ -202,7 +259,7 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
                     key2,
                   )
                 }
-                hidden={true}
+                hidden={false}
                 disabled={checkingOut}
                 type="button"
                 style={{ gridColumn: "2 / 3" }}

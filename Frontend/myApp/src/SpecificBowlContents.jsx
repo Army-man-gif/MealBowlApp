@@ -14,6 +14,7 @@ function Contents({ somethingChanged, setsomethingChanged }) {
   const [processing, setProcessing] = useState(false);
   const [checkingOut, setcheckingOut] = useState(false);
   const intialRun = useRef(true);
+
   async function callCheckoutData() {
     const getAll = await fetch(
       "https://mealbowlapp.onrender.com/databaseTesting/getEverythingForThatUser/",
@@ -176,7 +177,7 @@ function Contents({ somethingChanged, setsomethingChanged }) {
       }));
     }
   }
-  async function update(orderData, del) {
+  async function update(orderData, del, delAll) {
     const totalData = {
       ...orderData,
       bowlName: bowlIDWithoutDashes,
@@ -235,7 +236,6 @@ function Contents({ somethingChanged, setsomethingChanged }) {
       }
       if (sendData.ok) {
         console.log("Server responded with: ", response);
-        updateOrderData({ name: "numberofBowls", value: "" }, false);
         setProcessing(false);
       } else {
         console.log("Server threw an error", response);
@@ -349,12 +349,12 @@ function Contents({ somethingChanged, setsomethingChanged }) {
                   type="number"
                   placeholder="Enter number of bowls"
                   disabled={processing}
-                  onChange={(e) => updateOrderData(e, true)}
+                  onChange={(e) => updateOrderData(e, true, false)}
                 />
                 <button
                   type="button"
                   className={BowlContentsStyles.styleConfirm}
-                  onClick={() => update(orderData, false)}
+                  onClick={() => update(orderData, false, false)}
                   disabled={processing}
                 >
                   Confirm
@@ -363,7 +363,7 @@ function Contents({ somethingChanged, setsomethingChanged }) {
             )}
             <button
               type="button"
-              onClick={() => update(orderData, true)}
+              onClick={() => update(orderData, true, true)}
               disabled={processing}
               className={BowlContentsStyles.Clear}
             >

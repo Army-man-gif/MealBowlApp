@@ -3,12 +3,12 @@ import HomepageStyles from "./HomePage.module.css";
 import { useState, useEffect } from "react";
 import React from "react";
 import bowl from "./assets/bowl.png";
-import bowl3 from "./assets/bowl3.jpg";
+import bowl3 from "./assets/Paneer power bowl.jpg";
 import bowl4 from "./assets/bowl4.jpg";
 import bowl5 from "./assets/bowl5.jpg";
 import bowl6 from "./assets/bowl6.jpg";
 import bowl7 from "./assets/bowl7.jpg";
-import bowl8 from "./assets/bowl8.jpg";
+import bowl8 from "./assets/Rajma-Chickpea superfood bowl.jpg";
 import logo from "./assets/logo.png";
 
 import { setCookie, getCookieFromBrowser } from "./auth.js";
