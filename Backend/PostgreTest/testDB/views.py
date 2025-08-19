@@ -312,7 +312,7 @@ def updateBasketForDeletedOrder(request):
                 return JsonResponse({"message":"Basket updated"})
             return JsonResponse({"error": "User not logged in"}, status=405)
         except Basket.DoesNotExist:
-            return makeBasket(request)
+            return JsonResponse({"message":"Basket updated with nothing because it doesn't exist"})
         except Exception as e:
             return JsonResponse({"error":str(e)},status=400)
     return JsonResponse({"error": "Only POST allowed"}, status=405)    
