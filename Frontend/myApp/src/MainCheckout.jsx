@@ -7,6 +7,7 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
   const [checkingOut, setCheckingOut] = useState(false);
   const [cur, setCur] = useState({});
   const [userData, setUserData] = useState({});
+  const [empty, setEmpty] = useState(false);
   let getAllresult = null;
   let CheckoutData = null;
   function updateCur(e) {
@@ -169,6 +170,7 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
   }, [somethingChanged]);
   useEffect(() => {
     let empty = false;
+    setEmpty(false);
     async function fetchData() {
       try {
         const tryToPullCheckoutDataFromLocal = JSON.parse(
@@ -178,6 +180,7 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
           CheckoutData = tryToPullCheckoutDataFromLocal;
         } else {
           empty = true;
+          setEmpty(true);
         }
       } catch {
         if (CheckoutData == null) {
@@ -212,69 +215,71 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
   }, []);
   return (
     <>
-      <div
-        id="grid"
-        style={{
-          display: "grid",
-          gridTemplateRows: Array(rows).fill("1fr").join(" "),
-          gridTemplateColumns: "1fr 1fr 1fr",
-          rowGap: "50px",
-        }}
-      >
-        {/* Show username */}
-        {Object.keys(userData).length > 0 && (
-          <div>{Object.keys(CheckoutData ?? {})[0]}</div>
-        )}
+      {!empty && (
+        <div
+          id="grid"
+          style={{
+            display: "grid",
+            gridTemplateRows: Array(rows).fill("1fr").join(" "),
+            gridTemplateColumns: "1fr 1fr 1fr",
+            rowGap: "50px",
+          }}
+        >
+          {/* Show username */}
+          {Object.keys(userData).length > 0 && (
+            <div>{Object.keys(CheckoutData ?? {})[0]}</div>
+          )}
 
-        {Object.entries(userData).map(([key2, value2], j) =>
-          key2 !== "TotalPrice" ? (
-            <React.Fragment key={key2}>
-              <div style={{ gridColumn: "1" }}>{key2}</div>
-              <div style={{ gridColumn: "2" }}>
-                Number of bowls: {value2["NumberofBowls"]}
-              </div>
-              <div style={{ gridColumn: "3" }}>
-                Price of this part of the order: {value2["Price"]}
-              </div>
+          {Object.entries(userData).map(([key2, value2], j) =>
+            key2 !== "TotalPrice" ? (
+              <React.Fragment key={key2}>
+                <div style={{ gridColumn: "1" }}>{key2}</div>
+                <div style={{ gridColumn: "2" }}>
+                  Number of bowls: {value2["NumberofBowls"]}
+                </div>
+                <div style={{ gridColumn: "3" }}>
+                  Price of this part of the order: {value2["Price"]}
+                </div>
 
-              {/* ✅ Now input stays in sync */}
-              <input
-                onChange={(e) => updateCur(e)}
-                //disabled={checkingOut}
-                name={key2}
-                hidden={false}
-                disabled={checkingOut}
-                type="number"
-                value={cur[key2] ?? ""}
-                placeholder="Change your order quantity"
-                style={{ gridColumn: "1 / 2" }}
-              />
+                {/* ✅ Now input stays in sync */}
+                <input
+                  onChange={(e) => updateCur(e)}
+                  //disabled={checkingOut}
+                  name={key2}
+                  hidden={false}
+                  disabled={checkingOut}
+                  type="number"
+                  value={cur[key2] ?? ""}
+                  placeholder="Change your order quantity"
+                  style={{ gridColumn: "1 / 2" }}
+                />
 
-              <button
-                onClick={() =>
-                  update(
-                    cur[key2] ?? "",
-                    value2["NumberofBowls"],
-                    value2["Price"] / value2["NumberofBowls"],
-                    key2,
-                  )
-                }
-                hidden={false}
-                disabled={checkingOut}
-                type="button"
-                style={{ gridColumn: "2 / 3" }}
-              >
-                Click to confirm
-              </button>
+                <button
+                  onClick={() =>
+                    update(
+                      cur[key2] ?? "",
+                      value2["NumberofBowls"],
+                      value2["Price"] / value2["NumberofBowls"],
+                      key2,
+                    )
+                  }
+                  hidden={false}
+                  disabled={checkingOut}
+                  type="button"
+                  style={{ gridColumn: "2 / 3" }}
+                >
+                  Click to confirm
+                </button>
 
-              <div style={{ gridColumn: "1 / -1", height: "20px" }}></div>
-            </React.Fragment>
-          ) : null,
-        )}
-        {"TotalPrice" in userData && (
-          <div>Basket total: {userData["TotalPrice"]}</div>
-        )}
-      </div>
+                <div style={{ gridColumn: "1 / -1", height: "20px" }}></div>
+              </React.Fragment>
+            ) : null,
+          )}
+          {"TotalPrice" in userData && (
+            <div>Basket total: {userData["TotalPrice"]}</div>
+          )}
+        </div>
+      )}
     </>
   );
 }
