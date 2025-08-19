@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { setCookie, getCookieFromBrowser } from "./auth.js";
 import React from "react";
 function MainCheckout({ somethingChanged, setsomethingChanged }) {
@@ -8,8 +8,10 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
   const [cur, setCur] = useState({});
   const [userData, setUserData] = useState({});
   const [empty, setEmpty] = useState(false);
+  const [CheckoutData, setCheckoutData] = useState({});
+  const intialRun = useRef(true);
+
   let getAllresult = null;
-  let CheckoutData = null;
   function updateCur(e) {
     let { name, value } = e.target;
     setCur((prev) => ({
@@ -33,6 +35,7 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
     console.log(changedValue > originalValue);
     console.log(0 < changedValue < originalValue);
     console.log(changedValue === 0);
+    setsomethingChanged((prev) => prev + 1);
     setCheckingOut(true);
     let totalData;
     if (changedValue === 0) {
@@ -49,7 +52,6 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
         "https://mealbowlapp.onrender.com/databaseTesting/deleteOrder/",
         totalData,
       );
-      setsomethingChanged((prev) => prev + 1);
     }
     if (changedValue > originalValue) {
       totalData = {
@@ -65,8 +67,8 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
         "https://mealbowlapp.onrender.com/databaseTesting/updateBasket/",
         totalData,
       );
-      setsomethingChanged((prev) => prev + 1);
     } else if (0 < changedValue < originalValue) {
+      console.log(changedValue - originalValue);
       totalData = {
         numberofBowls: changedValue - originalValue,
         bowlName: bowlName,
@@ -80,7 +82,6 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
         "https://mealbowlapp.onrender.com/databaseTesting/updateBasket/",
         totalData,
       );
-      setsomethingChanged((prev) => prev + 1);
     }
     setCheckingOut(false);
   }
@@ -163,47 +164,53 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
     sessionStorage.setItem("AdminPriceData", JSON.stringify(getPricesresult));
   }
   useEffect(() => {
-    (async () => {
-      await callAdminData();
-      await callCheckoutData();
-    })();
-  }, [somethingChanged]);
-  useEffect(() => {
-    let empty = false;
+    if (!intialRun.current) {
+      (async () => {
+        await callAdminData();
+        await callCheckoutData();
+        window.location.reload();
+      })();
+    } else {
+      intialRun.current = false;
+    }
+    let emptyLocal = false;
+    let tryToPullCheckoutDataFromLocal = null;
     setEmpty(false);
     async function fetchData() {
       try {
-        const tryToPullCheckoutDataFromLocal = JSON.parse(
+        tryToPullCheckoutDataFromLocal = JSON.parse(
           sessionStorage.getItem("CheckoutData"),
         );
         if (Object.keys(tryToPullCheckoutDataFromLocal).length !== 0) {
-          CheckoutData = tryToPullCheckoutDataFromLocal;
+          setCheckoutData(tryToPullCheckoutDataFromLocal);
         } else {
-          empty = true;
+          emptyLocal = true;
           setEmpty(true);
         }
       } catch {
-        if (CheckoutData == null) {
+        if (tryToPullCheckoutDataFromLocal == null) {
+          await callAdminData();
           await callCheckoutData();
         }
       }
-      if (!empty) {
+      if (!emptyLocal) {
         let max = 0;
-        for (const key of Object.keys(CheckoutData)) {
-          const dict = CheckoutData[key];
+        for (const key of Object.keys(tryToPullCheckoutDataFromLocal)) {
+          const dict = tryToPullCheckoutDataFromLocal[key];
           const lengthofDict = Object.keys(dict).length;
           if (lengthofDict > max) {
             max = lengthofDict;
           }
         }
         setRows(max * 3 + 2);
-        const usernameKey = Object.keys(CheckoutData)[0];
-        const userData = CheckoutData[usernameKey];
-        setUserData(userData);
+        const usernameKey = Object.keys(tryToPullCheckoutDataFromLocal)[0];
+        const userDataLocal = tryToPullCheckoutDataFromLocal[usernameKey];
+        setUserData(userDataLocal);
         const initialCur = {};
-        Object.entries(userData).forEach(([key2, value2]) => {
+        Object.entries(userDataLocal).forEach(([key2, value2]) => {
           if (key2 !== "TotalPrice") {
             initialCur[key2] = value2["NumberofBowls"];
+            console.log(initialCur[key2]);
           }
         });
         setCur(initialCur);
@@ -212,7 +219,7 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
       }
     }
     fetchData();
-  }, []);
+  }, [somethingChanged]);
   return (
     <>
       {!empty && (
@@ -230,12 +237,12 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
             <div>{Object.keys(CheckoutData ?? {})[0]}</div>
           )}
 
-          {Object.entries(userData).map(([key2, value2], j) =>
+          {Object.entries(userData).map(([key2, value2]) =>
             key2 !== "TotalPrice" ? (
               <React.Fragment key={key2}>
                 <div style={{ gridColumn: "1" }}>{key2}</div>
                 <div style={{ gridColumn: "2" }}>
-                  Number of bowls: {value2["NumberofBowls"]}
+                  Number of bowls: {cur[key2] ?? ""}
                 </div>
                 <div style={{ gridColumn: "3" }}>
                   Price of this part of the order: {value2["Price"]}
