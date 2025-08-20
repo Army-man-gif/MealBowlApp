@@ -40,6 +40,19 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
       }));
     }
   }
+  async function ensureCSRFToken() {
+    let token = await getCookieFromBrowser("csrftoken");
+    if (!token) {
+      await setCookie();
+      // wait until cookie actually exists
+      for (let i = 0; i < 10; i++) {
+        token = await getCookieFromBrowser("csrftoken");
+        if (token) break;
+        await new Promise((r) => setTimeout(r, 100)); // wait 100ms
+      }
+    }
+    return token;
+  }
   async function SendData(url, data = {}) {
     let response;
     let dataToUse;
@@ -51,11 +64,7 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
       }
     }
     console.log(dataToUse);
-    let CSRFToken = await getCookieFromBrowser("csrftoken");
-    if (!CSRFToken) {
-      await setCookie();
-      CSRFToken = await getCookieFromBrowser("csrftoken");
-    }
+    let CSRFToken = await ensureCSRFToken();
     try {
       const sendData = await fetch(url, {
         method: "POST",
