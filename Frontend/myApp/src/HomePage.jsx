@@ -293,13 +293,13 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
   async function saveClicked() {
     if (!isMounted.current) return;
     setSave(true);
-    setText("Saving changes");
-    console.log("Saving changes");
+    setText("Syncing changes");
+    console.log("Syncing changes");
     await saveChanges();
 
     if (!isMounted.current) return;
-    console.log("Saved changes");
-    setText("Saved changes");
+    console.log("Syncing changes");
+    setText("Syncing changes");
     setSave(false);
   }
   return (
