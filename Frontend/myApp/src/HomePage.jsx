@@ -25,6 +25,7 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
   const [name, setName] = useState("");
   const [text, setText] = useState("Save all changes");
   const [manualLogout, setManualLogout] = useState(false);
+  const isMounted = useRef(false);
 
   function updateRegisterData(e, inputField) {
     if (inputField) {
@@ -169,6 +170,7 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
       setprocessing(false);
       localStorage.setItem("MostRecentLogin", "User-" + dataToUse.username);
       sessionStorage.setItem("Logged-In", true);
+      await saveClicked();
       return true;
     } else {
       updateRegisterData(
@@ -197,7 +199,6 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
     } else {
       result = await adminCheck.text();
     }
-    sessionStorage.setItem("Logged-In", true);
     if (result.admin) {
       return true;
     } else {
@@ -205,6 +206,7 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
     }
   }
   async function logoutfunction() {
+    sessionStorage.removeItem("admin");
     const logoutCall = await fetch(
       "https://mealbowlapp.onrender.com/databaseTesting/logout/",
       {
@@ -248,6 +250,13 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
     setDontSkipLogin(false);
     sessionStorage.setItem("Logged-In", false);
   }
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
   useEffect(() => {
     (async () => {
       const flag = JSON.parse(sessionStorage.getItem("Logged-In")) ?? false;
@@ -255,18 +264,17 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
         await setCookie();
         setCookieSet(true);
         const ver = await verifyLocally();
+        console.log(ver);
         if (ver) {
           sessionStorage.setItem("Logged-In", true);
-          if (intialRun) {
-            intialRun = false;
-            (async () => {
-              await saveClicked();
-            })();
-          }
         } else {
           sessionStorage.setItem("Logged-In", false);
         }
-      } else {
+      } else if (flag && !manualLogout) {
+        (async () => {
+          await saveClicked();
+        })();
+        console.log("Here");
         const admin = await checkAdmin();
         if (admin) {
           sessionStorage.setItem("admin", true);
@@ -277,10 +285,16 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
         }
       }
     })();
-  });
+  }, []);
+
   async function saveClicked() {
+    if (!isMounted.current) return;
+
     setText("Saving changes");
     await saveChanges();
+
+    if (!isMounted.current) return;
+
     setSave(false);
     alert("Changes saved");
   }
