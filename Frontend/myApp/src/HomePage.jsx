@@ -296,7 +296,7 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
     if (!isMounted.current) return;
 
     setSave(false);
-    alert("Changes saved");
+    setText("Saving changes");
   }
   useEffect(() => {
     if (!intialRun) {
