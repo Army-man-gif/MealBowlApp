@@ -14,52 +14,6 @@ function Contents({ somethingChanged, setsomethingChanged }) {
   const [processing, setProcessing] = useState(false);
   const intialRun = useRef(true);
 
-  async function callCheckoutData() {
-    const getAll = await fetch(
-      "https://mealbowlapp.onrender.com/databaseTesting/getEverythingForThatUser/",
-      {
-        credentials: "include",
-      },
-    );
-    const contentType = getAll.headers.get("content-type");
-    let getAllresult;
-    if (contentType && contentType.includes("application/json")) {
-      getAllresult = await getAll.json();
-    } else {
-      getAllresult = await getAll.text();
-    }
-    sessionStorage.setItem("CheckoutData", JSON.stringify(getAllresult));
-  }
-  async function callAdminData() {
-    const getAll = await fetch(
-      "https://mealbowlapp.onrender.com/databaseTesting/getEverything/",
-      {
-        credentials: "include",
-      },
-    );
-    const getPrices = await fetch(
-      "https://mealbowlapp.onrender.com/databaseTesting/getPrices/",
-      {
-        credentials: "include",
-      },
-    );
-    const contentType = getAll.headers.get("content-type");
-    const contentType2 = getPrices.headers.get("content-type");
-    let getAllresult;
-    let getPricesresult;
-    if (contentType && contentType.includes("application/json")) {
-      getAllresult = await getAll.json();
-    } else {
-      getAllresult = await getAll.text();
-    }
-    if (contentType2 && contentType2.includes("application/json")) {
-      getPricesresult = await getPrices.json();
-    } else {
-      getPricesresult = await getPrices.text();
-    }
-    sessionStorage.setItem("AdminData", JSON.stringify(getAllresult));
-    sessionStorage.setItem("AdminPriceData", JSON.stringify(getPricesresult));
-  }
   const Hot = {
     "Soya-Chunk-High-Protein-Bowl": true,
     "Paneer-Power-Bowl": true,
@@ -177,9 +131,11 @@ function Contents({ somethingChanged, setsomethingChanged }) {
     }
   }
   async function update(orderData, del) {
-    const dataToChange = JSON.parse(sessionStorage.getItem("CheckoutData"));
-    const dataToChange2 = JSON.parse(sessionStorage.getItem("AdminData"));
-    const dataToChange3 = JSON.parse(sessionStorage.getItem("AdminPriceData"));
+    const dataToChange =
+      JSON.parse(sessionStorage.getItem("CheckoutData")) || {};
+    const dataToChange2 = JSON.parse(sessionStorage.getItem("AdminData")) || {};
+    const dataToChange3 =
+      JSON.parse(sessionStorage.getItem("AdminPriceData")) || {};
     const username = localStorage
       .getItem("MostRecentLogin")
       .replace("User-", "");
@@ -189,12 +145,12 @@ function Contents({ somethingChanged, setsomethingChanged }) {
       bowlName: bowlIDWithoutDashes,
       bowlTotal: bowlPrice,
     };
+    console.log(del);
     if (!del) {
       console.log(bowlIDWithoutDashes);
       if (totalData.numberofBowls !== "" || totalData.numberofBowls) {
         if (!dataToChange[username]) {
           dataToChange[username] = {};
-          dataToChange[username][totalData.bowlName] = {};
         }
         if (dataToChange[username][totalData.bowlName] == undefined) {
           dataToChange[username][totalData.bowlName] = {};
@@ -227,7 +183,7 @@ function Contents({ somethingChanged, setsomethingChanged }) {
         dataToChange3[username]["price"] =
           (dataToChange3[username]["price"] || 0) +
           parseInt(totalData.numberofBowls) * parseFloat(bowlPrice);
-
+        console.log(dataToChange, dataToChange2, dataToChange3);
         sessionStorage.setItem("CheckoutData", JSON.stringify(dataToChange));
         sessionStorage.setItem("AdminData", JSON.stringify(dataToChange2));
         sessionStorage.setItem("AdminPriceData", JSON.stringify(dataToChange3));
@@ -245,9 +201,23 @@ function Contents({ somethingChanged, setsomethingChanged }) {
         console.log("An empty number of bowls cannot be sent as a request");
       }
     } else {
-      delete dataToChange[username][bowlIDWithoutDashes];
-      delete dataToChange2[username][bowlIDWithoutDashes];
-      delete dataToChange3[username];
+      if (
+        del &&
+        dataToChange[username] &&
+        dataToChange[username][totalData.bowlName]
+      ) {
+        delete dataToChange[username][bowlIDWithoutDashes];
+      }
+      if (
+        del &&
+        dataToChange2[username] &&
+        dataToChange2[username][totalData.bowlName]
+      ) {
+        delete dataToChange2[username][bowlIDWithoutDashes];
+      }
+      if (del && dataToChange3[username]) {
+        delete dataToChange3[username];
+      }
       sessionStorage.setItem("CheckoutData", JSON.stringify(dataToChange));
       sessionStorage.setItem("AdminData", JSON.stringify(dataToChange2));
       sessionStorage.setItem("AdminPriceData", JSON.stringify(dataToChange3));
@@ -412,7 +382,11 @@ function Contents({ somethingChanged, setsomethingChanged }) {
           </div>
           {sessionStorage.getItem("CheckoutData") && (
             <Link to={`/checkout`}>
-              <button hidden={true} disabled={true} className="MainCheckout">
+              <button
+                hidden={processing}
+                disabled={processing}
+                className="MainCheckout"
+              >
                 Checkout
               </button>
             </Link>

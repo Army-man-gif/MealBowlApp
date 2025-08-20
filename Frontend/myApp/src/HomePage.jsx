@@ -149,7 +149,9 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
     } else {
       getAllresult = await getAll.text();
     }
-    sessionStorage.setItem("CheckoutData", JSON.stringify(getAllresult));
+    if (getAll.ok && getAllresult && !getAllresult.error) {
+      sessionStorage.setItem("CheckoutData", JSON.stringify(getAllresult));
+    }
   }
   async function callAdminData() {
     const getAll = await fetch(
@@ -178,8 +180,12 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
     } else {
       getPricesresult = await getPrices.text();
     }
-    sessionStorage.setItem("AdminData", JSON.stringify(getAllresult));
-    sessionStorage.setItem("AdminPriceData", JSON.stringify(getPricesresult));
+    if (getAll.ok && getAllresult && !getAllresult.error) {
+      sessionStorage.setItem("AdminData", JSON.stringify(getAllresult));
+    }
+    if (getPrices.ok && getPricesresult && !getPricesresult.error) {
+      sessionStorage.setItem("AdminPriceData", JSON.stringify(getPricesresult));
+    }
   }
   async function verifyUsingDatabase(data = {}) {
     let dataToUse;
@@ -242,7 +248,6 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
     } else {
       result = await adminCheck.text();
     }
-    console.log(result, ":", result.admin);
     sessionStorage.setItem("Logged-In", true);
     if (result.admin) {
       return true;
@@ -297,7 +302,6 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
   useEffect(() => {
     (async () => {
       const flag = JSON.parse(sessionStorage.getItem("Logged-In")) ?? false;
-      console.log("Flag: ", flag);
       if (!flag) {
         await setCookie();
         setCookieSet(true);
