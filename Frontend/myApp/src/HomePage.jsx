@@ -1,6 +1,6 @@
 import BowlImage from "./BowlImage.jsx";
 import HomepageStyles from "./HomePage.module.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, use } from "react";
 import React from "react";
 import bowl from "./assets/bowl.png";
 import bowl3 from "./assets/Paneer power bowl.jpg";
@@ -289,7 +289,11 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
       })();
     }
   }, [reShowSave]);
-
+  useEffect(() => {
+    (async () => {
+      setCookie();
+    })();
+  }, []);
   async function saveClicked() {
     if (!isMounted.current) return;
     setSave(true);
