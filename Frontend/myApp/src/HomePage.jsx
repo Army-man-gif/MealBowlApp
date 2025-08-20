@@ -25,7 +25,7 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
   const [text, setText] = useState("Save all changes");
   const [manualLogout, setManualLogout] = useState(false);
   const isMounted = useRef(false);
-  const initial = useRef(false);
+  const initial = useRef(true);
   function updateRegisterData(e, inputField) {
     if (inputField) {
       let { name, value } = e.target;
@@ -324,7 +324,8 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
         flavours
       </p>
       {sessionStorage.getItem("CheckoutData") &&
-        JSON.parse(sessionStorage.getItem("Logged-In", true)) && (
+        JSON.parse(sessionStorage.getItem("Logged-In", true)) &&
+        !save && (
           <Link to={`/checkout`}>
             <button hidden={processing} className="MainCheckout">
               Checkout
@@ -471,7 +472,8 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
         {JSON.parse(sessionStorage.getItem("admin", true)) &&
           sessionStorage.getItem("AdminData") &&
           sessionStorage.getItem("AdminPriceData") &&
-          JSON.parse(sessionStorage.getItem("Logged-In", true)) && (
+          JSON.parse(sessionStorage.getItem("Logged-In", true)) &&
+          !save && (
             <div className={HomepageStyles.admin}>
               <Link to="/Admin">
                 <h2 className="clickable">👑 Access admin page</h2>
