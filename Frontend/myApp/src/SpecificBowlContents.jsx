@@ -1,6 +1,6 @@
 import BowlContentsStyles from "./Specific.module.css";
 import React, { useEffect, useState, useRef } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, data } from "react-router-dom";
 import { setCookie, getCookieFromBrowser } from "./auth.js";
 
 function Contents({ somethingChanged, setsomethingChanged }) {
@@ -12,7 +12,6 @@ function Contents({ somethingChanged, setsomethingChanged }) {
   const [orderClicked, setOrderClicked] = useState(false);
   const [orderData, setorderData] = useState({});
   const [processing, setProcessing] = useState(false);
-  const [checkingOut, setcheckingOut] = useState(false);
   const intialRun = useRef(true);
 
   async function callCheckoutData() {
@@ -177,14 +176,61 @@ function Contents({ somethingChanged, setsomethingChanged }) {
       }));
     }
   }
-  async function update(orderData, del, delAll) {
+  async function update(orderData, del) {
+    const dataToChange = JSON.parse(sessionStorage.getItem("CheckoutData"));
+    const dataToChange2 = JSON.parse(sessionStorage.getItem("AdminData"));
+    const dataToChange3 = JSON.parse(sessionStorage.getItem("AdminPriceData"));
+    const username = localStorage
+      .getItem("MostRecentLogin")
+      .replace("User-", "");
+    setProcessing(true);
     const totalData = {
       ...orderData,
       bowlName: bowlIDWithoutDashes,
       bowlTotal: bowlPrice,
     };
     if (!del) {
+      console.log(bowlIDWithoutDashes);
       if (totalData.numberofBowls !== "" || totalData.numberofBowls) {
+        if (!dataToChange[username]) {
+          dataToChange[username] = {};
+          dataToChange[username][totalData.bowlName] = {};
+        }
+        if (dataToChange[username][totalData.bowlName] == undefined) {
+          dataToChange[username][totalData.bowlName] = {};
+        }
+        dataToChange[username][totalData.bowlName]["NumberofBowls"] =
+          (dataToChange[username][totalData.bowlName]["NumberofBowls"] || 0) +
+          parseInt(totalData.numberofBowls);
+
+        dataToChange[username][totalData.bowlName]["Price"] =
+          (dataToChange[username][totalData.bowlName]["Price"] || 0) +
+          parseInt(totalData.numberofBowls) * parseFloat(totalData.bowlTotal);
+
+        if (dataToChange2[username] == undefined) {
+          dataToChange2[username] = {};
+        }
+        if (dataToChange2[username][totalData.bowlName] == undefined) {
+          dataToChange2[username][totalData.bowlName] = {};
+        }
+        dataToChange2[username][totalData.bowlName]["NumberofBowls"] =
+          (dataToChange2[username][totalData.bowlName]["NumberofBowls"] || 0) +
+          parseInt(totalData.numberofBowls);
+
+        dataToChange2[username][totalData.bowlName]["Price"] =
+          (dataToChange2[username][totalData.bowlName]["Price"] || 0) +
+          parseInt(totalData.numberofBowls) * parseFloat(totalData.bowlTotal);
+
+        if (!dataToChange3[username]) {
+          dataToChange3[username] = {};
+        }
+        dataToChange3[username]["price"] =
+          (dataToChange3[username]["price"] || 0) +
+          parseInt(totalData.numberofBowls) * parseFloat(bowlPrice);
+
+        sessionStorage.setItem("CheckoutData", JSON.stringify(dataToChange));
+        sessionStorage.setItem("AdminData", JSON.stringify(dataToChange2));
+        sessionStorage.setItem("AdminPriceData", JSON.stringify(dataToChange3));
         await add(
           "https://mealbowlapp.onrender.com/databaseTesting/updateOrder/",
           totalData,
@@ -194,10 +240,17 @@ function Contents({ somethingChanged, setsomethingChanged }) {
           totalData,
         );
         setsomethingChanged((prev) => prev + 1);
+        setProcessing(false);
       } else {
         console.log("An empty number of bowls cannot be sent as a request");
       }
     } else {
+      delete dataToChange[username][bowlIDWithoutDashes];
+      delete dataToChange2[username][bowlIDWithoutDashes];
+      delete dataToChange3[username];
+      sessionStorage.setItem("CheckoutData", JSON.stringify(dataToChange));
+      sessionStorage.setItem("AdminData", JSON.stringify(dataToChange2));
+      sessionStorage.setItem("AdminPriceData", JSON.stringify(dataToChange3));
       await add(
         "https://mealbowlapp.onrender.com/databaseTesting/updateBasketForDeletedOrder/",
         totalData,
@@ -207,11 +260,11 @@ function Contents({ somethingChanged, setsomethingChanged }) {
         totalData,
       );
       setsomethingChanged((prev) => prev + 1);
+      setProcessing(false);
     }
   }
   async function add(url, data) {
     console.log(data);
-    setProcessing(true);
     let response;
     let CSRFToken = await getCookieFromBrowser("csrftoken");
     if (!CSRFToken) {
@@ -236,14 +289,11 @@ function Contents({ somethingChanged, setsomethingChanged }) {
       }
       if (sendData.ok) {
         console.log("Server responded with: ", response);
-        setProcessing(false);
       } else {
         console.log("Server threw an error", response);
-        setProcessing(false);
       }
     } catch (error) {
       console.log("Error: ", error);
-      setProcessing(false);
     }
     return response;
   }
@@ -258,16 +308,6 @@ function Contents({ somethingChanged, setsomethingChanged }) {
       setOrderClicked(!orderClicked);
     }
   }
-  useEffect(() => {
-    if (intialRun.current) {
-      intialRun.current = false;
-      return;
-    }
-    (async () => {
-      await callAdminData();
-      await callCheckoutData();
-    })();
-  }, [somethingChanged]);
   return (
     <>
       <div className={BowlContentsStyles.flexitAll}>
@@ -349,12 +389,12 @@ function Contents({ somethingChanged, setsomethingChanged }) {
                   type="number"
                   placeholder="Enter number of bowls"
                   disabled={processing}
-                  onChange={(e) => updateOrderData(e, true, false)}
+                  onChange={(e) => updateOrderData(e, true)}
                 />
                 <button
                   type="button"
                   className={BowlContentsStyles.styleConfirm}
-                  onClick={() => update(orderData, false, false)}
+                  onClick={() => update(orderData, false)}
                   disabled={processing}
                 >
                   Confirm
@@ -363,7 +403,7 @@ function Contents({ somethingChanged, setsomethingChanged }) {
             )}
             <button
               type="button"
-              onClick={() => update(orderData, true, true)}
+              onClick={() => update(orderData, true)}
               disabled={processing}
               className={BowlContentsStyles.Clear}
             >
@@ -372,7 +412,7 @@ function Contents({ somethingChanged, setsomethingChanged }) {
           </div>
           {sessionStorage.getItem("CheckoutData") && (
             <Link to={`/checkout`}>
-              <button hidden={processing} className="MainCheckout">
+              <button hidden={true} disabled={true} className="MainCheckout">
                 Checkout
               </button>
             </Link>

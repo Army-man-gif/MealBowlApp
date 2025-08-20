@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { setCookie, getCookieFromBrowser } from "./auth.js";
 import React from "react";
+import { data } from "react-router-dom";
 function MainCheckout({ somethingChanged, setsomethingChanged }) {
   const [allData, setAllData] = useState([]);
   const [rows, setRows] = useState(0);
@@ -9,6 +10,7 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
   const [userData, setUserData] = useState({});
   const [empty, setEmpty] = useState(false);
   const [CheckoutData, setCheckoutData] = useState({});
+  const [trackPrice, setTrackPrice] = useState(null);
   const intialRun = useRef(true);
 
   let getAllresult = null;
@@ -20,6 +22,11 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
     }));
   }
   async function update(changedValue, originalValue, bowlPrice, bowlName) {
+    const dataToChange = JSON.parse(sessionStorage.getItem("CheckoutData"));
+    const dataToChange2 = JSON.parse(sessionStorage.getItem("AdminData"));
+    const dataToChange3 = JSON.parse(sessionStorage.getItem("AdminPriceData"));
+
+    const userKey = Object.keys(dataToChange)[0];
     changedValue = Number(changedValue ?? 0);
     originalValue = Number(originalValue ?? 0);
     console.log(
@@ -39,6 +46,13 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
     setCheckingOut(true);
     let totalData;
     if (changedValue === 0) {
+      delete dataToChange[userKey][bowlName];
+      delete dataToChange2[userKey][bowlName];
+      delete dataToChange3[userKey];
+      sessionStorage.setItem("CheckoutData", JSON.stringify(dataToChange));
+      sessionStorage.setItem("AdminData", JSON.stringify(dataToChange2));
+      sessionStorage.setItem("AdminPriceData", JSON.stringify(dataToChange3));
+
       totalData = {
         numberofBowls: originalValue,
         bowlName: bowlName,
@@ -54,6 +68,14 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
       );
     }
     if (changedValue > originalValue) {
+      dataToChange[userKey][bowlName]["NumberofBowls"] = changedValue;
+      dataToChange2[userKey][bowlName]["NumberofBowls"] = changedValue;
+      dataToChange3[userKey]["price"] =
+        parseFloat(changedValue) * parseFloat(bowlPrice);
+      sessionStorage.setItem("CheckoutData", JSON.stringify(dataToChange));
+      sessionStorage.setItem("AdminData", JSON.stringify(dataToChange2));
+      sessionStorage.setItem("AdminPriceData", JSON.stringify(dataToChange3));
+
       totalData = {
         numberofBowls: changedValue - originalValue,
         bowlName: bowlName,
@@ -68,6 +90,14 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
         totalData,
       );
     } else if (0 < changedValue < originalValue) {
+      dataToChange[userKey][bowlName]["NumberofBowls"] = changedValue;
+      dataToChange2[userKey][bowlName]["NumberofBowls"] = changedValue;
+      dataToChange3[userKey]["price"] =
+        parseFloat(changedValue) * parseFloat(bowlPrice);
+      sessionStorage.setItem("CheckoutData", JSON.stringify(dataToChange));
+      sessionStorage.setItem("AdminData", JSON.stringify(dataToChange2));
+      sessionStorage.setItem("AdminPriceData", JSON.stringify(dataToChange3));
+      sessionStorage.setItem("CheckoutData", JSON.stringify(dataToChange));
       console.log(changedValue - originalValue);
       totalData = {
         numberofBowls: changedValue - originalValue,
@@ -164,15 +194,6 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
     sessionStorage.setItem("AdminPriceData", JSON.stringify(getPricesresult));
   }
   useEffect(() => {
-    if (!intialRun.current) {
-      (async () => {
-        await callAdminData();
-        await callCheckoutData();
-        window.location.reload();
-      })();
-    } else {
-      intialRun.current = false;
-    }
     let emptyLocal = false;
     let tryToPullCheckoutDataFromLocal = null;
     setEmpty(false);
@@ -203,7 +224,9 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
           }
         }
         setRows(max * 3 + 2);
-        const usernameKey = Object.keys(tryToPullCheckoutDataFromLocal)[0];
+        const usernameKey = localStorage
+          .getItem("MostRecentLogin")
+          .replace("User-", "");
         const userDataLocal = tryToPullCheckoutDataFromLocal[usernameKey];
         setUserData(userDataLocal);
         const initialCur = {};
@@ -211,6 +234,8 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
           if (key2 !== "TotalPrice") {
             initialCur[key2] = value2["NumberofBowls"];
             console.log(initialCur[key2]);
+          } else {
+            setTrackPrice(value2);
           }
         });
         setCur(initialCur);
@@ -282,9 +307,7 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
               </React.Fragment>
             ) : null,
           )}
-          {"TotalPrice" in userData && (
-            <div>Basket total: {userData["TotalPrice"]}</div>
-          )}
+          <div>Basket total: {trackPrice ?? userData["TotalPrice"]}</div>
         </div>
       )}
     </>
