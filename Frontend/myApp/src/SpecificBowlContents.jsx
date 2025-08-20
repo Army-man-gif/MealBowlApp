@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams, Link, data } from "react-router-dom";
 import { setCookie, getCookieFromBrowser } from "./auth.js";
 
-function Contents({ somethingChanged, setsomethingChanged }) {
+function Contents({ reShowSave, setreShowSave }) {
   window.scrollTo(0, 0);
   const { bowlID } = useParams();
   const [ingredientsClicked, setingredientsClicked] = useState(true);
@@ -147,8 +147,8 @@ function Contents({ somethingChanged, setsomethingChanged }) {
           "https://mealbowlapp.onrender.com/databaseTesting/updateBasket/",
           totalData,
         );
-        setsomethingChanged((prev) => prev + 1);
         setProcessing(false);
+        setreShowSave((prev) => prev + 1);
       } else {
         console.log("An empty number of bowls cannot be sent as a request");
       }
@@ -161,12 +161,11 @@ function Contents({ somethingChanged, setsomethingChanged }) {
         "https://mealbowlapp.onrender.com/databaseTesting/deleteOrder/",
         totalData,
       );
-      setsomethingChanged((prev) => prev + 1);
       setProcessing(false);
+      setreShowSave((prev) => prev + 1);
     }
   }
   async function add(url, data) {
-    console.log(data);
     let response;
     let CSRFToken = await getCookieFromBrowser("csrftoken");
     if (!CSRFToken) {

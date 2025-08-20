@@ -12,8 +12,81 @@ const basename = import.meta.env.DEV ? "/" : "/MealBowlApp/docs";
 import { useState } from "react";
 
 function App() {
-  const [somethingChanged, setsomethingChanged] = useState(0);
-
+  async function callCheckoutData() {
+    const getAll = await fetch(
+      "https://mealbowlapp.onrender.com/databaseTesting/getEverythingForThatUser/",
+      {
+        credentials: "include",
+      },
+    );
+    const contentType = getAll.headers.get("content-type");
+    let getAllresult;
+    if (contentType && contentType.includes("application/json")) {
+      getAllresult = await getAll.json();
+    } else {
+      getAllresult = await getAll.text();
+    }
+    if (
+      getAll.ok &&
+      getAllresult &&
+      !getAllresult.error &&
+      Object.keys(getAllresult).length !== 0
+    ) {
+      sessionStorage.setItem("CheckoutData", JSON.stringify(getAllresult));
+    }
+  }
+  async function callAdminData() {
+    const getAll = await fetch(
+      "https://mealbowlapp.onrender.com/databaseTesting/getEverything/",
+      {
+        credentials: "include",
+      },
+    );
+    const getPrices = await fetch(
+      "https://mealbowlapp.onrender.com/databaseTesting/getPrices/",
+      {
+        credentials: "include",
+      },
+    );
+    const contentType = getAll.headers.get("content-type");
+    const contentType2 = getPrices.headers.get("content-type");
+    let getAllresult;
+    let getPricesresult;
+    if (contentType && contentType.includes("application/json")) {
+      getAllresult = await getAll.json();
+    } else {
+      getAllresult = await getAll.text();
+    }
+    if (contentType2 && contentType2.includes("application/json")) {
+      getPricesresult = await getPrices.json();
+    } else {
+      getPricesresult = await getPrices.text();
+    }
+    if (
+      getAll.ok &&
+      getAllresult &&
+      !getAllresult.error &&
+      Object.keys(getAllresult).length !== 0
+    ) {
+      sessionStorage.setItem("AdminData", JSON.stringify(getAllresult));
+    }
+    if (
+      getPrices.ok &&
+      getPricesresult &&
+      !getPricesresult.error &&
+      Object.keys(getAllresult).length !== 0
+    ) {
+      sessionStorage.setItem("AdminPriceData", JSON.stringify(getPricesresult));
+    }
+  }
+  const [somethingChangedinLogin, setsomethingChangedinLogin] = useState(0);
+  const [reShowSave, setreShowSave] = useState(0);
+  async function saveChanges() {
+    console.log("Starting save");
+    await callCheckoutData();
+    await callAdminData();
+    console.log("Saved");
+  }
   return (
     <>
       <BrowserRouter basename={basename}>
@@ -22,8 +95,11 @@ function App() {
             path="/"
             element={
               <RenderBowls
-                somethingChanged={somethingChanged}
-                setsomethingChanged={setsomethingChanged}
+                somethingChangedinLogin={somethingChangedinLogin}
+                setsomethingChangedinLogin={setsomethingChangedinLogin}
+                saveChanges={saveChanges}
+                reShowSave={reShowSave}
+                setreShowSave={setreShowSave}
               />
             }
           />
@@ -31,8 +107,11 @@ function App() {
             path="/contents/:bowlID"
             element={
               <Contents
-                somethingChanged={somethingChanged}
-                setsomethingChanged={setsomethingChanged}
+                somethingChangedinLogin={somethingChangedinLogin}
+                setsomethingChangedinLogin={setsomethingChangedinLogin}
+                saveChanges={saveChanges}
+                reShowSave={reShowSave}
+                setreShowSave={setreShowSave}
               />
             }
           />
@@ -41,8 +120,11 @@ function App() {
             path="/checkout"
             element={
               <MainCheckout
-                somethingChanged={somethingChanged}
-                setsomethingChanged={setsomethingChanged}
+                somethingChangedinLogin={somethingChangedinLogin}
+                setsomethingChangedinLogin={setsomethingChangedinLogin}
+                saveChanges={saveChanges}
+                reShowSave={reShowSave}
+                setreShowSave={setreShowSave}
               />
             }
           ></Route>

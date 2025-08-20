@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { setCookie, getCookieFromBrowser } from "./auth.js";
 import React from "react";
 import { data } from "react-router-dom";
-function MainCheckout({ somethingChanged, setsomethingChanged }) {
+function MainCheckout({ reShowSave, setreShowSave }) {
   const [allData, setAllData] = useState([]);
   const [rows, setRows] = useState(0);
   const [checkingOut, setCheckingOut] = useState(false);
@@ -42,7 +42,7 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
     console.log(changedValue > originalValue);
     console.log(0 < changedValue < originalValue);
     console.log(changedValue === 0);
-    setsomethingChanged((prev) => prev + 1);
+    setreShowSave((prev) => prev + 1);
     setCheckingOut(true);
     let totalData;
     if (changedValue === 0) {
@@ -148,76 +148,6 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
     }
     return response;
   }
-  async function callCheckoutData() {
-    const getAll = await fetch(
-      "https://mealbowlapp.onrender.com/databaseTesting/getEverythingForThatUser/",
-      {
-        credentials: "include",
-      },
-    );
-    const contentType = getAll.headers.get("content-type");
-    let getAllresult;
-    if (contentType && contentType.includes("application/json")) {
-      getAllresult = await getAll.json();
-    } else {
-      getAllresult = await getAll.text();
-    }
-    if (
-      getAll.ok &&
-      getAllresult &&
-      !getAllresult.error &&
-      Object.keys(getAllresult).length !== 0
-    ) {
-      sessionStorage.setItem("CheckoutData", JSON.stringify(getAllresult));
-      setsomethingChanged((prev) => prev + 1);
-    }
-  }
-  async function callAdminData() {
-    const getAll = await fetch(
-      "https://mealbowlapp.onrender.com/databaseTesting/getEverything/",
-      {
-        credentials: "include",
-      },
-    );
-    const getPrices = await fetch(
-      "https://mealbowlapp.onrender.com/databaseTesting/getPrices/",
-      {
-        credentials: "include",
-      },
-    );
-    const contentType = getAll.headers.get("content-type");
-    const contentType2 = getPrices.headers.get("content-type");
-    let getAllresult;
-    let getPricesresult;
-    if (contentType && contentType.includes("application/json")) {
-      getAllresult = await getAll.json();
-    } else {
-      getAllresult = await getAll.text();
-    }
-    if (contentType2 && contentType2.includes("application/json")) {
-      getPricesresult = await getPrices.json();
-    } else {
-      getPricesresult = await getPrices.text();
-    }
-    if (
-      getAll.ok &&
-      getAllresult &&
-      !getAllresult.error &&
-      Object.keys(getAllresult).length !== 0
-    ) {
-      sessionStorage.setItem("AdminData", JSON.stringify(getAllresult));
-      setsomethingChanged((prev) => prev + 1);
-    }
-    if (
-      getPrices.ok &&
-      getPricesresult &&
-      !getPricesresult.error &&
-      Object.keys(getAllresult).length !== 0
-    ) {
-      sessionStorage.setItem("AdminPriceData", JSON.stringify(getPricesresult));
-      setsomethingChanged((prev) => prev + 1);
-    }
-  }
   useEffect(() => {
     let emptyLocal = false;
     let tryToPullCheckoutDataFromLocal = null;
@@ -232,14 +162,9 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
         } else {
           emptyLocal = true;
           setEmpty(true);
-          await callAdminData();
-          await callCheckoutData();
         }
-      } catch {
-        if (tryToPullCheckoutDataFromLocal == null) {
-          await callAdminData();
-          await callCheckoutData();
-        }
+      } catch (error) {
+        console.error("An error occurred:", error);
       }
       if (!emptyLocal) {
         let max = 0;
@@ -271,7 +196,7 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
       }
     }
     fetchData();
-  }, [somethingChanged]);
+  }, [reShowSave]);
   return (
     <>
       {!empty && (

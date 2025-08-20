@@ -1,6 +1,6 @@
 import BowlImage from "./BowlImage.jsx";
 import HomepageStyles from "./HomePage.module.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import React from "react";
 import bowl from "./assets/bowl.png";
 import bowl3 from "./assets/Paneer power bowl.jpg";
@@ -13,15 +13,19 @@ import logo from "./assets/logo.png";
 
 import { setCookie, getCookieFromBrowser } from "./auth.js";
 import { Link } from "react-router-dom";
-
-function RenderBowls({ somethingChanged, setsomethingChanged }) {
+let intialRun = true;
+function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
   const [contactClicked, setcontactClicked] = useState(false);
   const [loginClicked, setloginClicked] = useState(false);
   const [DontSkipLogin, setDontSkipLogin] = useState(false);
   const [processing, setprocessing] = useState(false);
   const [registerData, setRegisterData] = useState({});
   const [cookieSet, setCookieSet] = useState(false);
+  const [save, setSave] = useState(false);
   const [name, setName] = useState("");
+  const [text, setText] = useState("Save all changes");
+  const [manualLogout, setManualLogout] = useState(false);
+
   function updateRegisterData(e, inputField) {
     if (inputField) {
       let { name, value } = e.target;
@@ -99,7 +103,7 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
         );
         sessionStorage.setItem("Logged-In", true);
         const admin = await checkAdmin();
-        setsomethingChanged((prev) => prev + 1);
+        setsomethingChangedinLogin((prev) => prev + 1);
         if (admin) {
           sessionStorage.setItem("admin", true);
         } else {
@@ -135,76 +139,6 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
     }
     return false;
   }
-  async function callCheckoutData() {
-    const getAll = await fetch(
-      "https://mealbowlapp.onrender.com/databaseTesting/getEverythingForThatUser/",
-      {
-        credentials: "include",
-      },
-    );
-    const contentType = getAll.headers.get("content-type");
-    let getAllresult;
-    if (contentType && contentType.includes("application/json")) {
-      getAllresult = await getAll.json();
-    } else {
-      getAllresult = await getAll.text();
-    }
-    if (
-      getAll.ok &&
-      getAllresult &&
-      !getAllresult.error &&
-      Object.keys(getAllresult).length !== 0
-    ) {
-      sessionStorage.setItem("CheckoutData", JSON.stringify(getAllresult));
-      setsomethingChanged((prev) => prev + 1);
-    }
-  }
-  async function callAdminData() {
-    const getAll = await fetch(
-      "https://mealbowlapp.onrender.com/databaseTesting/getEverything/",
-      {
-        credentials: "include",
-      },
-    );
-    const getPrices = await fetch(
-      "https://mealbowlapp.onrender.com/databaseTesting/getPrices/",
-      {
-        credentials: "include",
-      },
-    );
-    const contentType = getAll.headers.get("content-type");
-    const contentType2 = getPrices.headers.get("content-type");
-    let getAllresult;
-    let getPricesresult;
-    if (contentType && contentType.includes("application/json")) {
-      getAllresult = await getAll.json();
-    } else {
-      getAllresult = await getAll.text();
-    }
-    if (contentType2 && contentType2.includes("application/json")) {
-      getPricesresult = await getPrices.json();
-    } else {
-      getPricesresult = await getPrices.text();
-    }
-    if (
-      getAll.ok &&
-      getAllresult &&
-      !getAllresult.error &&
-      Object.keys(getAllresult).length !== 0
-    ) {
-      sessionStorage.setItem("AdminData", JSON.stringify(getAllresult));
-      setsomethingChanged((prev) => prev + 1);
-    }
-    if (
-      getPrices.ok &&
-      getPricesresult &&
-      !getPricesresult.error &&
-      Object.keys(getAllresult).length !== 0
-    ) {
-      sessionStorage.setItem("AdminPriceData", JSON.stringify(getPricesresult));
-      setsomethingChanged((prev) => prev + 1);
-    }
-  }
   async function verifyUsingDatabase(data = {}) {
     let dataToUse;
     if (Object.keys(registerData).length !== 0) {
@@ -221,16 +155,13 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
     );
     if (check.message) {
       const admin = await checkAdmin();
-      setsomethingChanged((prev) => prev + 1);
+      setsomethingChangedinLogin((prev) => prev + 1);
       if (admin) {
         sessionStorage.setItem("admin", true);
       } else {
         sessionStorage.setItem("admin", false);
       }
       setName(registerData.username);
-      updateRegisterData({ name: "username", value: "" }, false);
-      updateRegisterData({ name: "email", value: "" }, false);
-      updateRegisterData({ name: "password", value: "" }, false);
       localStorage.setItem(
         "User-" + dataToUse.username,
         JSON.stringify(dataToUse),
@@ -274,7 +205,6 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
     }
   }
   async function logoutfunction() {
-    sessionStorage.setItem("admin", false);
     const logoutCall = await fetch(
       "https://mealbowlapp.onrender.com/databaseTesting/logout/",
       {
@@ -291,6 +221,7 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
     if (result.message) {
       setDontSkipLogin(true);
       sessionStorage.setItem("Logged-In", false);
+      setManualLogout(true);
       setloginClicked(true);
       console.log(result.message);
     } else {
@@ -320,12 +251,18 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
   useEffect(() => {
     (async () => {
       const flag = JSON.parse(sessionStorage.getItem("Logged-In")) ?? false;
-      if (!flag) {
+      if (!flag && !manualLogout) {
         await setCookie();
         setCookieSet(true);
         const ver = await verifyLocally();
         if (ver) {
           sessionStorage.setItem("Logged-In", true);
+          if (intialRun) {
+            intialRun = false;
+            (async () => {
+              await saveClicked();
+            })();
+          }
         } else {
           sessionStorage.setItem("Logged-In", false);
         }
@@ -333,22 +270,29 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
         const admin = await checkAdmin();
         if (admin) {
           sessionStorage.setItem("admin", true);
-          setsomethingChanged((prev) => prev + 1);
+          setsomethingChangedinLogin((prev) => prev + 1);
         } else {
           sessionStorage.setItem("admin", false);
-          setsomethingChanged((prev) => prev + 1);
+          setsomethingChangedinLogin((prev) => prev + 1);
         }
       }
     })();
   });
+  async function saveClicked() {
+    setText("Saving changes");
+    await saveChanges();
+    setSave(false);
+    alert("Changes saved");
+  }
   useEffect(() => {
-    (async () => {
-      await callAdminData();
-      await callCheckoutData();
-    })();
-  }, [somethingChanged]);
+    if (!intialRun) {
+      setSave(true);
+    }
+  }, [reShowSave]);
   return (
     <>
+      {save && <button onClick={saveClicked}>{text}</button>}
+
       <div className={HomepageStyles.banner}>
         <img src={logo} className={HomepageStyles.Logo} />
         <p className={HomepageStyles.logoText}>JS</p>
@@ -367,13 +311,14 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
         brings you balanced meals, with lots of options, all bursting with
         flavours
       </p>
-      {sessionStorage.getItem("CheckoutData") && (
-        <Link to={`/checkout`}>
-          <button hidden={processing} className="MainCheckout">
-            Checkout
-          </button>
-        </Link>
-      )}
+      {sessionStorage.getItem("CheckoutData") &&
+        JSON.parse(sessionStorage.getItem("Logged-In", true)) && (
+          <Link to={`/checkout`}>
+            <button hidden={processing} className="MainCheckout">
+              Checkout
+            </button>
+          </Link>
+        )}
 
       <div className={HomepageStyles.contactPlacement}>
         <h2 onClick={() => pressed("contact")} className="clickable">
@@ -513,7 +458,8 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
         </div>
         {JSON.parse(sessionStorage.getItem("admin", true)) &&
           sessionStorage.getItem("AdminData") &&
-          sessionStorage.getItem("AdminPriceData") && (
+          sessionStorage.getItem("AdminPriceData") &&
+          JSON.parse(sessionStorage.getItem("Logged-In", true)) && (
             <div className={HomepageStyles.admin}>
               <Link to="/Admin">
                 <h2 className="clickable">👑 Access admin page</h2>
