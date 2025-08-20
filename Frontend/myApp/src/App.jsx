@@ -82,10 +82,8 @@ function App() {
   const [somethingChangedinLogin, setsomethingChangedinLogin] = useState(0);
   const [reShowSave, setreShowSave] = useState(0);
   async function saveChanges() {
-    console.log("Starting save");
     await callCheckoutData();
     await callAdminData();
-    console.log("Saved");
   }
   return (
     <>

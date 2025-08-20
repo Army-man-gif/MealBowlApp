@@ -13,7 +13,6 @@ import logo from "./assets/logo.png";
 
 import { setCookie, getCookieFromBrowser } from "./auth.js";
 import { Link } from "react-router-dom";
-let intialRun = true;
 function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
   const [contactClicked, setcontactClicked] = useState(false);
   const [loginClicked, setloginClicked] = useState(false);
@@ -26,7 +25,7 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
   const [text, setText] = useState("Save all changes");
   const [manualLogout, setManualLogout] = useState(false);
   const isMounted = useRef(false);
-
+  const initial = useRef(false);
   function updateRegisterData(e, inputField) {
     if (inputField) {
       let { name, value } = e.target;
@@ -258,55 +257,54 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
     };
   }, []);
   useEffect(() => {
-    (async () => {
-      const flag = JSON.parse(sessionStorage.getItem("Logged-In")) ?? false;
-      if (!flag && !manualLogout) {
-        await setCookie();
-        setCookieSet(true);
-        const ver = await verifyLocally();
-        console.log(ver);
-        if (ver) {
-          sessionStorage.setItem("Logged-In", true);
-        } else {
-          sessionStorage.setItem("Logged-In", false);
+    if (initial.current) {
+      (async () => {
+        const flag = JSON.parse(sessionStorage.getItem("Logged-In")) ?? false;
+        if (!flag && !manualLogout) {
+          await setCookie();
+          setCookieSet(true);
+          const ver = await verifyLocally();
+          console.log(ver);
+          if (ver) {
+            sessionStorage.setItem("Logged-In", true);
+          } else {
+            sessionStorage.setItem("Logged-In", false);
+          }
+        } else if (flag && !manualLogout) {
+          console.log("Here");
+          const admin = await checkAdmin();
+          if (admin) {
+            sessionStorage.setItem("admin", true);
+            setsomethingChangedinLogin((prev) => prev + 1);
+          } else {
+            sessionStorage.setItem("admin", false);
+            setsomethingChangedinLogin((prev) => prev + 1);
+          }
         }
-      } else if (flag && !manualLogout) {
-        (async () => {
-          await saveClicked();
-        })();
-        console.log("Here");
-        const admin = await checkAdmin();
-        if (admin) {
-          sessionStorage.setItem("admin", true);
-          setsomethingChangedinLogin((prev) => prev + 1);
-        } else {
-          sessionStorage.setItem("admin", false);
-          setsomethingChangedinLogin((prev) => prev + 1);
-        }
-      }
-    })();
-  }, []);
+      })();
+      initial.current = false;
+    } else {
+      (async () => {
+        await saveClicked();
+      })();
+    }
+  }, [reShowSave]);
 
   async function saveClicked() {
     if (!isMounted.current) return;
-
+    setSave(true);
     setText("Saving changes");
+    console.log("Saving changes");
     await saveChanges();
 
     if (!isMounted.current) return;
-
+    console.log("Saved changes");
+    setText("Saved changes");
     setSave(false);
-    setText("Saving changes");
   }
-  useEffect(() => {
-    if (!intialRun) {
-      setSave(true);
-    }
-  }, [reShowSave]);
   return (
     <>
-      {save && <button onClick={saveClicked}>{text}</button>}
-
+      {save && <div>{text}</div>}
       <div className={HomepageStyles.banner}>
         <img src={logo} className={HomepageStyles.Logo} />
         <p className={HomepageStyles.logoText}>JS</p>

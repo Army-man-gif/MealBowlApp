@@ -65,23 +65,26 @@ function AdminPage() {
       renderingData.push(<div key={`User-${key}-${i}`}>{key}</div>);
       Object.entries(value).forEach(([key2, value2], j) => {
         renderingData.push(
-          <div style={{ gridColumn: "1" }} key={`BowlName-${key2}-${j}`}>
+          <div style={{ gridColumn: "1" }} key={`BowlName-${key}-${key2}-${j}`}>
             {key2}
           </div>,
         );
         renderingData.push(
-          <div style={{ gridColumn: "1" }} key={`NoOfBowls-${key2}-${j}`}>
+          <div
+            style={{ gridColumn: "1" }}
+            key={`NoOfBowls-${key}-${key2}-${j}`}
+          >
             Number of bowls: {value2["NumberofBowls"]}
           </div>,
         );
         renderingData.push(
-          <div style={{ gridColumn: "1" }} key={`Price-${key2}-${j}`}>
+          <div style={{ gridColumn: "1" }} key={`Price-${key}-${key2}-${j}`}>
             Price of this part of the order: {value2["Price"]}
           </div>,
         );
         renderingData.push(
           <div
-            key={`Space-${key2}-${j}`}
+            key={`Space-${key}-${key2}-${j}`}
             style={{ gridColumn: "1 / -1", height: "20px" }}
           ></div>,
         );
