@@ -156,12 +156,21 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
       },
     );
     const contentType = getAll.headers.get("content-type");
+    let getAllresult;
     if (contentType && contentType.includes("application/json")) {
       getAllresult = await getAll.json();
     } else {
       getAllresult = await getAll.text();
     }
-    sessionStorage.setItem("CheckoutData", JSON.stringify(getAllresult) ?? "");
+    if (
+      getAll.ok &&
+      getAllresult &&
+      !getAllresult.error &&
+      Object.keys(getAllresult).length !== 0
+    ) {
+      sessionStorage.setItem("CheckoutData", JSON.stringify(getAllresult));
+      setsomethingChanged((prev) => prev + 1);
+    }
   }
   async function callAdminData() {
     const getAll = await fetch(
@@ -190,8 +199,24 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
     } else {
       getPricesresult = await getPrices.text();
     }
-    sessionStorage.setItem("AdminData", JSON.stringify(getAllresult));
-    sessionStorage.setItem("AdminPriceData", JSON.stringify(getPricesresult));
+    if (
+      getAll.ok &&
+      getAllresult &&
+      !getAllresult.error &&
+      Object.keys(getAllresult).length !== 0
+    ) {
+      sessionStorage.setItem("AdminData", JSON.stringify(getAllresult));
+      setsomethingChanged((prev) => prev + 1);
+    }
+    if (
+      getPrices.ok &&
+      getPricesresult &&
+      !getPricesresult.error &&
+      Object.keys(getAllresult).length !== 0
+    ) {
+      sessionStorage.setItem("AdminPriceData", JSON.stringify(getPricesresult));
+      setsomethingChanged((prev) => prev + 1);
+    }
   }
   useEffect(() => {
     let emptyLocal = false;
@@ -207,6 +232,8 @@ function MainCheckout({ somethingChanged, setsomethingChanged }) {
         } else {
           emptyLocal = true;
           setEmpty(true);
+          await callAdminData();
+          await callCheckoutData();
         }
       } catch {
         if (tryToPullCheckoutDataFromLocal == null) {

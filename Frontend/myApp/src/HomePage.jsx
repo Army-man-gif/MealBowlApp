@@ -149,8 +149,14 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
     } else {
       getAllresult = await getAll.text();
     }
-    if (getAll.ok && getAllresult && !getAllresult.error) {
+    if (
+      getAll.ok &&
+      getAllresult &&
+      !getAllresult.error &&
+      Object.keys(getAllresult).length !== 0
+    ) {
       sessionStorage.setItem("CheckoutData", JSON.stringify(getAllresult));
+      setsomethingChanged((prev) => prev + 1);
     }
   }
   async function callAdminData() {
@@ -180,11 +186,23 @@ function RenderBowls({ somethingChanged, setsomethingChanged }) {
     } else {
       getPricesresult = await getPrices.text();
     }
-    if (getAll.ok && getAllresult && !getAllresult.error) {
+    if (
+      getAll.ok &&
+      getAllresult &&
+      !getAllresult.error &&
+      Object.keys(getAllresult).length !== 0
+    ) {
       sessionStorage.setItem("AdminData", JSON.stringify(getAllresult));
+      setsomethingChanged((prev) => prev + 1);
     }
-    if (getPrices.ok && getPricesresult && !getPricesresult.error) {
+    if (
+      getPrices.ok &&
+      getPricesresult &&
+      !getPricesresult.error &&
+      Object.keys(getAllresult).length !== 0
+    ) {
       sessionStorage.setItem("AdminPriceData", JSON.stringify(getPricesresult));
+      setsomethingChanged((prev) => prev + 1);
     }
   }
   async function verifyUsingDatabase(data = {}) {
