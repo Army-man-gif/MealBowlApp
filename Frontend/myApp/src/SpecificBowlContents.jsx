@@ -131,62 +131,14 @@ function Contents({ somethingChanged, setsomethingChanged }) {
     }
   }
   async function update(orderData, del) {
-    const dataToChange =
-      JSON.parse(sessionStorage.getItem("CheckoutData")) || {};
-    const dataToChange2 = JSON.parse(sessionStorage.getItem("AdminData")) || {};
-    const dataToChange3 =
-      JSON.parse(sessionStorage.getItem("AdminPriceData")) || {};
-    const username = localStorage
-      .getItem("MostRecentLogin")
-      .replace("User-", "");
     setProcessing(true);
     const totalData = {
       ...orderData,
       bowlName: bowlIDWithoutDashes,
       bowlTotal: bowlPrice,
     };
-    console.log(del);
     if (!del) {
-      console.log(bowlIDWithoutDashes);
       if (totalData.numberofBowls !== "" || totalData.numberofBowls) {
-        if (!dataToChange[username]) {
-          dataToChange[username] = {};
-        }
-        if (dataToChange[username][totalData.bowlName] == undefined) {
-          dataToChange[username][totalData.bowlName] = {};
-        }
-        dataToChange[username][totalData.bowlName]["NumberofBowls"] =
-          (dataToChange[username][totalData.bowlName]["NumberofBowls"] || 0) +
-          parseInt(totalData.numberofBowls);
-
-        dataToChange[username][totalData.bowlName]["Price"] =
-          (dataToChange[username][totalData.bowlName]["Price"] || 0) +
-          parseInt(totalData.numberofBowls) * parseFloat(totalData.bowlTotal);
-
-        if (dataToChange2[username] == undefined) {
-          dataToChange2[username] = {};
-        }
-        if (dataToChange2[username][totalData.bowlName] == undefined) {
-          dataToChange2[username][totalData.bowlName] = {};
-        }
-        dataToChange2[username][totalData.bowlName]["NumberofBowls"] =
-          (dataToChange2[username][totalData.bowlName]["NumberofBowls"] || 0) +
-          parseInt(totalData.numberofBowls);
-
-        dataToChange2[username][totalData.bowlName]["Price"] =
-          (dataToChange2[username][totalData.bowlName]["Price"] || 0) +
-          parseInt(totalData.numberofBowls) * parseFloat(totalData.bowlTotal);
-
-        if (!dataToChange3[username]) {
-          dataToChange3[username] = {};
-        }
-        dataToChange3[username]["price"] =
-          (dataToChange3[username]["price"] || 0) +
-          parseInt(totalData.numberofBowls) * parseFloat(bowlPrice);
-        console.log(dataToChange, dataToChange2, dataToChange3);
-        sessionStorage.setItem("CheckoutData", JSON.stringify(dataToChange));
-        sessionStorage.setItem("AdminData", JSON.stringify(dataToChange2));
-        sessionStorage.setItem("AdminPriceData", JSON.stringify(dataToChange3));
         await add(
           "https://mealbowlapp.onrender.com/databaseTesting/updateOrder/",
           totalData,
@@ -201,26 +153,6 @@ function Contents({ somethingChanged, setsomethingChanged }) {
         console.log("An empty number of bowls cannot be sent as a request");
       }
     } else {
-      if (
-        del &&
-        dataToChange[username] &&
-        dataToChange[username][totalData.bowlName]
-      ) {
-        delete dataToChange[username][bowlIDWithoutDashes];
-      }
-      if (
-        del &&
-        dataToChange2[username] &&
-        dataToChange2[username][totalData.bowlName]
-      ) {
-        delete dataToChange2[username][bowlIDWithoutDashes];
-      }
-      if (del && dataToChange3[username]) {
-        delete dataToChange3[username];
-      }
-      sessionStorage.setItem("CheckoutData", JSON.stringify(dataToChange));
-      sessionStorage.setItem("AdminData", JSON.stringify(dataToChange2));
-      sessionStorage.setItem("AdminPriceData", JSON.stringify(dataToChange3));
       await add(
         "https://mealbowlapp.onrender.com/databaseTesting/updateBasketForDeletedOrder/",
         totalData,
@@ -380,17 +312,6 @@ function Contents({ somethingChanged, setsomethingChanged }) {
               Clear orders for this bowl
             </button>
           </div>
-          {sessionStorage.getItem("CheckoutData") && (
-            <Link to={`/checkout`}>
-              <button
-                hidden={processing}
-                disabled={processing}
-                className="MainCheckout"
-              >
-                Checkout
-              </button>
-            </Link>
-          )}
         </div>
       </div>
     </>
