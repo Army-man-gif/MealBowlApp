@@ -125,6 +125,7 @@ function RegisterorLoginPage({
         "https://mealbowlapp.onrender.com/databaseTesting/login/",
       );
       if (loginToAccount.message) {
+        setreShowSave(true);
         localStorage.setItem(
           "User-" + registerData.username,
           JSON.stringify(registerData),
@@ -301,10 +302,10 @@ function RegisterorLoginPage({
         const admin = await checkAdmin();
         if (admin) {
           sessionStorage.setItem("admin", true);
-          setreShowSave(true);
+          setreShowSave(false);
         } else {
           sessionStorage.setItem("admin", false);
-          setreShowSave(true);
+          setreShowSave(false);
         }
       }
     })();
