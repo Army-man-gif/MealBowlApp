@@ -205,14 +205,6 @@ body {
   flex: 0 0 48%;
   margin-bottom: 4%;
 }
-.flexedLogin {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  z-index: 2000;
-}
 .loginLink {
   text-decoration: none;
   background-image: linear-gradient(to right, red, orange, yellow);
@@ -222,7 +214,7 @@ body {
 .admin {
   text-decoration: none;
   z-index: 2000;
-  display: block;
+  font-size: 0.8em;
   background-image: linear-gradient(150deg, #b92b27, #1565c0);
   width: max-content;
   height: max-content;
@@ -253,6 +245,9 @@ body {
   flex-wrap: wrap;
 }
 
+.link {
+  text-decoration: none;
+}
 .link:link {
   color: blue;
 }

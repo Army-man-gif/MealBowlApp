@@ -72,7 +72,7 @@ function RenderBowls({
         flavours
       </p>
       <div className={HomepageStyles.container}>
-        <div className={HomepageStyles.flexedLogin}>
+        <div>
           <Link to={"/loginPage"} className={HomepageStyles.loginLink}>
             👤 Login/Register 📋
           </Link>
