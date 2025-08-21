@@ -2,7 +2,13 @@ import { useState, useEffect, useRef } from "react";
 import { setCookie, getCookieFromBrowser } from "./auth.js";
 import React from "react";
 import { data } from "react-router-dom";
-function MainCheckout({ reShowSave, setreShowSave }) {
+function MainCheckout({
+  saveChanges,
+  reShowSave,
+  setreShowSave,
+  text,
+  setText,
+}) {
   const [allData, setAllData] = useState([]);
   const [rows, setRows] = useState(0);
   const [checkingOut, setCheckingOut] = useState(false);
@@ -11,9 +17,33 @@ function MainCheckout({ reShowSave, setreShowSave }) {
   const [empty, setEmpty] = useState(false);
   const [CheckoutData, setCheckoutData] = useState({});
   const [trackPrice, setTrackPrice] = useState(null);
-  const intialRun = useRef(true);
+  const isMounted = useRef(false);
 
-  let getAllresult = null;
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+  async function saveClicked() {
+    if (!isMounted.current) return;
+    setText("Syncing changes");
+    console.log("Syncing changes");
+    await saveChanges();
+
+    if (!isMounted.current) return;
+    console.log("Synced changes");
+    setText("Synced changes");
+    setreShowSave(false);
+  }
+
+  useEffect(() => {
+    if (reShowSave) {
+      (async () => {
+        await saveClicked();
+      })();
+    }
+  }, [reShowSave]);
   function updateCur(e) {
     let { name, value } = e.target;
     setCur((prev) => ({
@@ -66,6 +96,7 @@ function MainCheckout({ reShowSave, setreShowSave }) {
         "https://mealbowlapp.onrender.com/databaseTesting/deleteOrder/",
         totalData,
       );
+      setreShowSave(true);
     }
     if (changedValue > originalValue) {
       dataToChange[userKey][bowlName]["NumberofBowls"] = changedValue;
@@ -89,6 +120,7 @@ function MainCheckout({ reShowSave, setreShowSave }) {
         "https://mealbowlapp.onrender.com/databaseTesting/updateBasket/",
         totalData,
       );
+      setreShowSave(true);
     } else if (0 < changedValue < originalValue) {
       dataToChange[userKey][bowlName]["NumberofBowls"] = changedValue;
       dataToChange2[userKey][bowlName]["NumberofBowls"] = changedValue;
@@ -112,6 +144,7 @@ function MainCheckout({ reShowSave, setreShowSave }) {
         "https://mealbowlapp.onrender.com/databaseTesting/updateBasket/",
         totalData,
       );
+      setreShowSave(true);
     }
     setCheckingOut(false);
   }
@@ -199,6 +232,7 @@ function MainCheckout({ reShowSave, setreShowSave }) {
   }, [reShowSave]);
   return (
     <>
+      {reShowSave && <div className="syncText">{text}</div>}
       {!empty && (
         <div
           id="grid"
