@@ -300,7 +300,7 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
   }, [reShowSave]);
   useEffect(() => {
     (async () => {
-      setCookie();
+      await ensureCSRFToken();
     })();
   }, []);
   async function saveClicked() {
