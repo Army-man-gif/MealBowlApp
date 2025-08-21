@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams, Link, data } from "react-router-dom";
 import { setCookie, getCookieFromBrowser } from "./auth.js";
 
-function Contents({ reShowSave, setreShowSave }) {
+function Contents({ saveChanges, text, setText, reShowSave, setreShowSave }) {
   window.scrollTo(0, 0);
   const { bowlID } = useParams();
   const [ingredientsClicked, setingredientsClicked] = useState(true);
@@ -13,7 +13,33 @@ function Contents({ reShowSave, setreShowSave }) {
   const [orderData, setorderData] = useState({});
   const [processing, setProcessing] = useState(false);
   const intialRun = useRef(true);
+  const isMounted = useRef(false);
 
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+  async function saveClicked() {
+    if (!isMounted.current) return;
+    setText("Syncing changes");
+    console.log("Syncing changes");
+    await saveChanges();
+
+    if (!isMounted.current) return;
+    console.log("Synced changes");
+    setText("Synced changes");
+    setreShowSave(false);
+  }
+
+  useEffect(() => {
+    if (reShowSave) {
+      (async () => {
+        await saveClicked();
+      })();
+    }
+  }, [reShowSave]);
   const Hot = {
     "Soya-Chunk-High-Protein-Bowl": true,
     "Paneer-Power-Bowl": true,
@@ -148,7 +174,7 @@ function Contents({ reShowSave, setreShowSave }) {
           totalData,
         );
         setProcessing(false);
-        setreShowSave((prev) => prev + 1);
+        setreShowSave(false);
       } else {
         console.log("An empty number of bowls cannot be sent as a request");
       }
@@ -162,7 +188,7 @@ function Contents({ reShowSave, setreShowSave }) {
         totalData,
       );
       setProcessing(false);
-      setreShowSave((prev) => prev + 1);
+      setreShowSave(false);
     }
   }
   async function add(url, data) {
@@ -211,6 +237,7 @@ function Contents({ reShowSave, setreShowSave }) {
   }
   return (
     <>
+      {reShowSave && <div className="syncText">{text}</div>}
       <div className={BowlContentsStyles.flexitAll}>
         <div className={BowlContentsStyles.flexIngreAndMacros}>
           <div

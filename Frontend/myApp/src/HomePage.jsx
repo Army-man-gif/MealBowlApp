@@ -14,19 +14,14 @@ import logo from "./assets/logo.png";
 
 //import { setCookie, getCookieFromBrowser } from "./auth.js";
 import { Link } from "react-router-dom";
-let initial = true;
 function RenderBowls({
-  setsomethingChangedinLogin,
   saveChanges,
   reShowSave,
-  save,
-  setSave,
+  setreShowSave,
   processing,
-  setprocessing,
   text,
   setText,
 }) {
-  const [contactClicked, setcontactClicked] = useState(false);
   const isMounted = useRef(false);
 
   useEffect(() => {
@@ -37,7 +32,6 @@ function RenderBowls({
   }, []);
   async function saveClicked() {
     if (!isMounted.current) return;
-    setSave(true);
     setText("Syncing changes");
     console.log("Syncing changes");
     await saveChanges();
@@ -45,23 +39,20 @@ function RenderBowls({
     if (!isMounted.current) return;
     console.log("Synced changes");
     setText("Synced changes");
-    setSave(false);
+    setreShowSave(false);
   }
 
   useEffect(() => {
-    (async () => {
-      await saveClicked();
-    })();
+    if (reShowSave) {
+      (async () => {
+        await saveClicked();
+      })();
+    }
   }, [reShowSave]);
 
-  function pressed(param) {
-    if (param === "contact") {
-      setcontactClicked(!contactClicked);
-    }
-  }
   return (
     <>
-      {save && <div>{text}</div>}
+      {reShowSave && <div className="syncText">{text}</div>}
       <div className={HomepageStyles.banner}>
         <img src={logo} className={HomepageStyles.Logo} />
         <p className={HomepageStyles.logoText}>JS</p>
@@ -82,7 +73,7 @@ function RenderBowls({
       </p>
       {sessionStorage.getItem("CheckoutData") &&
         JSON.parse(sessionStorage.getItem("Logged-In", true)) &&
-        !save && (
+        !reShowSave && (
           <Link to={`/checkout`}>
             <button hidden={processing} className="MainCheckout">
               Checkout
@@ -102,7 +93,7 @@ function RenderBowls({
           sessionStorage.getItem("AdminData") &&
           sessionStorage.getItem("AdminPriceData") &&
           JSON.parse(sessionStorage.getItem("Logged-In", true)) &&
-          !save && (
+          !reShowSave && (
             <div className={HomepageStyles.admin}>
               <Link to="/Admin">
                 <h2 className="clickable">👑 Access admin page</h2>

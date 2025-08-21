@@ -1,13 +1,14 @@
 import { setCookie, getCookieFromBrowser } from "./auth.js";
 import { useState, useEffect, useRef } from "react";
 import LoginStyles from "./Login.module.css";
-let initial = true;
 function RegisterorLoginPage({
   setsomethingChangedinLogin,
   saveChanges,
-  setSave,
+  reShowSave,
+  setreShowSave,
   processing,
   setprocessing,
+  text,
   setText,
 }) {
   const [DontSkipLogin, setDontSkipLogin] = useState(false);
@@ -15,8 +16,34 @@ function RegisterorLoginPage({
   const [cookieSet, setCookieSet] = useState(false);
   const [name, setName] = useState("");
   const [manualLogout, setManualLogout] = useState(false);
-  const isMounted = useRef(false);
   const [LogoutState, setLogoutState] = useState("Logout");
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+  async function saveClicked() {
+    if (!isMounted.current) return;
+    setText("Syncing changes");
+    console.log("Syncing changes");
+    await saveChanges();
+
+    if (!isMounted.current) return;
+    console.log("Synced changes");
+    setText("Synced changes");
+    setreShowSave(false);
+  }
+
+  useEffect(() => {
+    if (reShowSave) {
+      (async () => {
+        await saveClicked();
+      })();
+    }
+  }, [reShowSave]);
 
   function updateRegisterData(e, inputField) {
     if (inputField) {
@@ -156,7 +183,7 @@ function RegisterorLoginPage({
     );
     if (check.message) {
       const admin = await checkAdmin();
-      setsomethingChangedinLogin((prev) => prev + 1);
+      setreShowSave(true);
       if (admin) {
         sessionStorage.setItem("admin", true);
       } else {
@@ -229,6 +256,7 @@ function RegisterorLoginPage({
       updateRegisterData({ name: "email", value: "" }, false);
       updateRegisterData({ name: "password", value: "" }, false);
       setManualLogout(true);
+      setreShowSave(false);
       console.log(result.message);
     } else {
       sessionStorage.setItem("Logged-In", true);
@@ -250,38 +278,12 @@ function RegisterorLoginPage({
   }
 
   useEffect(() => {
-    isMounted.current = true;
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-  async function saveClicked() {
-    if (!isMounted.current) return;
-    setSave(true);
-    setText("Syncing changes");
-    console.log("Syncing changes");
-    await saveChanges();
-
-    if (!isMounted.current) return;
-    console.log("Synced changes");
-    setText("Synced changes");
-    setSave(false);
-  }
-
-  useEffect(() => {
     (async () => {
       await ensureCSRFToken();
     })();
   }, []);
 
   useEffect(() => {
-    if (initial) {
-      (async () => {
-        await saveClicked();
-      })();
-    } else {
-      initial = false;
-    }
     (async () => {
       const flag = JSON.parse(sessionStorage.getItem("Logged-In")) ?? false;
       if (!flag && !manualLogout) {
@@ -299,10 +301,10 @@ function RegisterorLoginPage({
         const admin = await checkAdmin();
         if (admin) {
           sessionStorage.setItem("admin", true);
-          setsomethingChangedinLogin((prev) => prev + 1);
+          setreShowSave(true);
         } else {
           sessionStorage.setItem("admin", false);
-          setsomethingChangedinLogin((prev) => prev + 1);
+          setreShowSave(true);
         }
       }
     })();
@@ -310,6 +312,7 @@ function RegisterorLoginPage({
 
   return (
     <>
+      {reShowSave && <div className="syncText">{text}</div>}
       <div className={LoginStyles.flexedLogin}>
         {!JSON.parse(sessionStorage.getItem("Logged-In")) ? (
           DontSkipLogin ? (

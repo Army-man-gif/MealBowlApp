@@ -82,8 +82,7 @@ function App() {
     }
   }
   const [somethingChangedinLogin, setsomethingChangedinLogin] = useState(0);
-  const [reShowSave, setreShowSave] = useState(0);
-  const [save, setSave] = useState(false);
+  const [reShowSave, setreShowSave] = useState(false);
   const [processing, setprocessing] = useState(false);
   const [text, setText] = useState("Save all changes");
   async function saveChanges() {
@@ -103,8 +102,6 @@ function App() {
                 saveChanges={saveChanges}
                 reShowSave={reShowSave}
                 setreShowSave={setreShowSave}
-                save={save}
-                setSave={setSave}
                 processing={processing}
                 setprocessing={setprocessing}
                 text={text}
@@ -121,8 +118,6 @@ function App() {
                 saveChanges={saveChanges}
                 reShowSave={reShowSave}
                 setreShowSave={setreShowSave}
-                save={save}
-                setSave={setSave}
                 processing={processing}
                 setprocessing={setprocessing}
                 text={text}
@@ -140,8 +135,6 @@ function App() {
                 saveChanges={saveChanges}
                 reShowSave={reShowSave}
                 setreShowSave={setreShowSave}
-                save={save}
-                setSave={setSave}
                 processing={processing}
                 setprocessing={setprocessing}
                 text={text}
@@ -158,8 +151,6 @@ function App() {
                 saveChanges={saveChanges}
                 reShowSave={reShowSave}
                 setreShowSave={setreShowSave}
-                save={save}
-                setSave={setSave}
                 processing={processing}
                 setprocessing={setprocessing}
                 text={text}
@@ -176,8 +167,6 @@ function App() {
                 saveChanges={saveChanges}
                 reShowSave={reShowSave}
                 setreShowSave={setreShowSave}
-                save={save}
-                setSave={setSave}
                 processing={processing}
                 setprocessing={setprocessing}
                 text={text}
