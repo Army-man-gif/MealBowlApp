@@ -82,10 +82,8 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
         response = await sendData.text();
       }
       if (sendData.ok) {
+        updateRegisterData({ name: "email", value: CSRFToken }, false);
         console.log("Server responded with: ", response);
-        updateRegisterData({ name: "username", value: "" }, false);
-        updateRegisterData({ name: "email", value: "" }, false);
-        updateRegisterData({ name: "password", value: "" }, false);
         setloginClicked(false);
         sessionStorage.setItem("Logged-In", true);
       } else {
