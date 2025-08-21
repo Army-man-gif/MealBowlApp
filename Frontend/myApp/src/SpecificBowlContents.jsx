@@ -12,7 +12,6 @@ function Contents({ saveChanges, text, setText, reShowSave, setreShowSave }) {
   const [orderClicked, setOrderClicked] = useState(false);
   const [orderData, setorderData] = useState({});
   const [processing, setProcessing] = useState(false);
-  const intialRun = useRef(true);
   const isMounted = useRef(false);
 
   useEffect(() => {
@@ -301,12 +300,22 @@ function Contents({ saveChanges, text, setText, reShowSave, setreShowSave }) {
             )}
           </div>
           <div className={BowlContentsStyles.addToOrder}>
-            <button
-              onClick={() => toggle("order")}
-              className={BowlContentsStyles.Button}
-            >
-              Add to order
-            </button>
+            {processing ? (
+              <button
+                onClick={() => toggle("order")}
+                className={BowlContentsStyles.Button}
+              >
+                Add to order
+              </button>
+            ) : (
+              <button
+                onClick={() => toggle("order")}
+                className={BowlContentsStyles.Button}
+              >
+                Order being added, please wait
+              </button>
+            )}
+
             {orderClicked && (
               <>
                 <input

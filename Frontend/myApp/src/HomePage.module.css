@@ -266,6 +266,8 @@ body {
 ---------------------------------------------- */
 /* 1. Mobile devices - Portrait mode (typical phones) */
 @media only screen and (max-width: 600px) and (orientation: portrait) {
+}
+/*
   .admin {
     position: absolute;
     z-index: 2000;
@@ -331,4 +333,4 @@ body {
     font-size: 0.8em;
     margin-top: 0.5em;
   }
-}
+  */
