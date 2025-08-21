@@ -76,7 +76,7 @@ function RenderBowls({
         !reShowSave && (
           <Link to={`/checkout`}>
             <button hidden={processing} className="MainCheckout">
-              Checkout
+              🛒 Checkout
             </button>
           </Link>
         )}
@@ -86,7 +86,7 @@ function RenderBowls({
       <div className={HomepageStyles.container}>
         <div className={HomepageStyles.flexedLogin}>
           <Link to={"/loginPage"} className={HomepageStyles.loginLink}>
-            Login/Register Page
+            👤 Login/Register 📋
           </Link>
         </div>
         {JSON.parse(sessionStorage.getItem("admin", true)) &&
