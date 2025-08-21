@@ -300,7 +300,7 @@ function Contents({ saveChanges, text, setText, reShowSave, setreShowSave }) {
             )}
           </div>
           <div className={BowlContentsStyles.addToOrder}>
-            {processing ? (
+            {!processing ? (
               <button
                 onClick={() => toggle("order")}
                 className={BowlContentsStyles.Button}
@@ -332,6 +332,7 @@ function Contents({ saveChanges, text, setText, reShowSave, setreShowSave }) {
                   type="button"
                   className={BowlContentsStyles.styleConfirm}
                   onClick={() => update(orderData, false)}
+                  hidden={processing}
                   disabled={processing}
                 >
                   Confirm
@@ -342,6 +343,7 @@ function Contents({ saveChanges, text, setText, reShowSave, setreShowSave }) {
               type="button"
               onClick={() => update(orderData, true)}
               disabled={processing}
+              hidden={processing}
               className={BowlContentsStyles.Clear}
             >
               Clear orders for this bowl
