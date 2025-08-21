@@ -49,13 +49,9 @@ function RenderBowls({
   }
 
   useEffect(() => {
-    if (!initial) {
-      (async () => {
-        await saveClicked();
-      })();
-    } else {
-      initial = false;
-    }
+    (async () => {
+      await saveClicked();
+    })();
   }, [reShowSave]);
 
   function pressed(param) {
