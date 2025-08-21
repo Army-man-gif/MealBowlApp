@@ -1,6 +1,7 @@
 import BowlImage from "./BowlImage.jsx";
 import HomepageStyles from "./HomePage.module.css";
-import { useState, useEffect, useRef, use } from "react";
+import LoginFeature from "./LoginLogic.jsx";
+import { useState, useEffect, useRef } from "react";
 import React from "react";
 import bowl from "./assets/bowl.png";
 import bowl3 from "./assets/Paneer power bowl.jpg";
@@ -11,21 +12,31 @@ import bowl7 from "./assets/bowl7.jpg";
 import bowl8 from "./assets/Rajma-Chickpea superfood bowl.jpg";
 import logo from "./assets/logo.png";
 
-import { setCookie, getCookieFromBrowser } from "./auth.js";
+//import { setCookie, getCookieFromBrowser } from "./auth.js";
 import { Link } from "react-router-dom";
-function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
+function RenderBowls({
+  setsomethingChangedinLogin,
+  saveChanges,
+  reShowSave,
+  save,
+  setSave,
+  processing,
+  setprocessing,
+  text,
+  setText,
+}) {
   const [contactClicked, setcontactClicked] = useState(false);
+  const initial = useRef(true);
+  const isMounted = useRef(false);
+  /*
   const [loginClicked, setloginClicked] = useState(false);
   const [DontSkipLogin, setDontSkipLogin] = useState(false);
   const [processing, setprocessing] = useState(false);
   const [registerData, setRegisterData] = useState({});
   const [cookieSet, setCookieSet] = useState(false);
-  const [save, setSave] = useState(false);
   const [name, setName] = useState("");
   const [text, setText] = useState("Save all changes");
   const [manualLogout, setManualLogout] = useState(false);
-  const isMounted = useRef(false);
-  const initial = useRef(true);
   function updateRegisterData(e, inputField) {
     if (inputField) {
       let { name, value } = e.target;
@@ -43,7 +54,10 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
   async function ensureCSRFToken() {
     let token = await getCookieFromBrowser("csrftoken");
     if (!token) {
-      await setCookie();
+      await fetch("http://127.0.0.1:8000/databaseTesting/setToken/", {
+        method: "GET",
+        credentials: "include",
+      });
       // wait until cookie actually exists
       for (let i = 0; i < 10; i++) {
         token = await getCookieFromBrowser("csrftoken");
@@ -237,17 +251,6 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
       console.log(result.error);
     }
   }
-  function pressed(param) {
-    if (param === "contact") {
-      setcontactClicked(!contactClicked);
-    }
-    if (param === "login") {
-      setloginClicked(!loginClicked);
-    }
-    if (param === "logout") {
-      logoutfunction();
-    }
-  }
   function redirectToLogin() {
     setDontSkipLogin(true);
     sessionStorage.setItem("Logged-In", false);
@@ -256,7 +259,18 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
     setDontSkipLogin(false);
     sessionStorage.setItem("Logged-In", false);
   }
+  async function saveClicked() {
+    if (!isMounted.current) return;
+    setSave(true);
+    setText("Syncing changes");
+    console.log("Syncing changes");
+    await saveChanges();
 
+    if (!isMounted.current) return;
+    console.log("Syncing changes");
+    setText("Syncing changes");
+    setSave(false);
+  }
   useEffect(() => {
     isMounted.current = true;
     return () => {
@@ -301,6 +315,13 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
       await ensureCSRFToken();
     })();
   }, []);
+*/
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
   async function saveClicked() {
     if (!isMounted.current) return;
     setSave(true);
@@ -309,9 +330,25 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
     await saveChanges();
 
     if (!isMounted.current) return;
-    console.log("Syncing changes");
-    setText("Syncing changes");
+    console.log("Synced changes");
+    setText("Synced changes");
     setSave(false);
+  }
+
+  useEffect(() => {
+    if (!initial.current) {
+      (async () => {
+        await saveClicked();
+      })();
+    } else {
+      initial.current = false;
+    }
+  }, [reShowSave]);
+
+  function pressed(param) {
+    if (param === "contact") {
+      setcontactClicked(!contactClicked);
+    }
   }
   return (
     <>
@@ -358,6 +395,18 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
       </div>
       <div className={HomepageStyles.container}>
         <div className={HomepageStyles.flexedLogin}>
+          <LoginFeature
+            setsomethingChangedinLogin={setsomethingChangedinLogin}
+            saveChanges={saveChanges}
+            reShowSave={reShowSave}
+            save={save}
+            setSave={setSave}
+            processing={processing}
+            setprocessing={setprocessing}
+            text={text}
+            setText={setText}
+          />
+          {/*
           {!JSON.parse(sessionStorage.getItem("Logged-In")) ? (
             DontSkipLogin ? (
               <h2 onClick={() => pressed("login")} className="clickable">
@@ -479,6 +528,7 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
                 </button>
               </>
             ))}
+            */}
         </div>
         {JSON.parse(sessionStorage.getItem("admin", true)) &&
           sessionStorage.getItem("AdminData") &&

@@ -81,6 +81,9 @@ function App() {
   }
   const [somethingChangedinLogin, setsomethingChangedinLogin] = useState(0);
   const [reShowSave, setreShowSave] = useState(0);
+  const [save, setSave] = useState(false);
+  const [processing, setprocessing] = useState(false);
+  const [text, setText] = useState("Save all changes");
   async function saveChanges() {
     await callCheckoutData();
     await callAdminData();
@@ -98,6 +101,12 @@ function App() {
                 saveChanges={saveChanges}
                 reShowSave={reShowSave}
                 setreShowSave={setreShowSave}
+                save={save}
+                setSave={setSave}
+                processing={processing}
+                setprocessing={setprocessing}
+                text={text}
+                setText={setText}
               />
             }
           />
@@ -110,6 +119,12 @@ function App() {
                 saveChanges={saveChanges}
                 reShowSave={reShowSave}
                 setreShowSave={setreShowSave}
+                save={save}
+                setSave={setSave}
+                processing={processing}
+                setprocessing={setprocessing}
+                text={text}
+                setText={setText}
               />
             }
           />
@@ -123,6 +138,12 @@ function App() {
                 saveChanges={saveChanges}
                 reShowSave={reShowSave}
                 setreShowSave={setreShowSave}
+                save={save}
+                setSave={setSave}
+                processing={processing}
+                setprocessing={setprocessing}
+                text={text}
+                setText={setText}
               />
             }
           ></Route>
