@@ -174,7 +174,7 @@ function Contents({ saveChanges, text, setText, reShowSave, setreShowSave }) {
           totalData,
         );
         setProcessing(false);
-        setreShowSave(false);
+        setreShowSave(true);
       } else {
         console.log("An empty number of bowls cannot be sent as a request");
       }
@@ -188,7 +188,7 @@ function Contents({ saveChanges, text, setText, reShowSave, setreShowSave }) {
         totalData,
       );
       setProcessing(false);
-      setreShowSave(false);
+      setreShowSave(true);
     }
   }
   async function add(url, data) {
