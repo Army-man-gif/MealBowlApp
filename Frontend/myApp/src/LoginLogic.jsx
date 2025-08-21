@@ -10,13 +10,13 @@ function RegisterorLoginPage({
   setprocessing,
   setText,
 }) {
-  const [loginClicked, setloginClicked] = useState(false);
   const [DontSkipLogin, setDontSkipLogin] = useState(false);
   const [registerData, setRegisterData] = useState({});
   const [cookieSet, setCookieSet] = useState(false);
   const [name, setName] = useState("");
   const [manualLogout, setManualLogout] = useState(false);
   const isMounted = useRef(false);
+  const [LogoutState, setLogoutState] = useState("Logout");
 
   function updateRegisterData(e, inputField) {
     if (inputField) {
@@ -79,7 +79,6 @@ function RegisterorLoginPage({
       }
       if (sendData.ok) {
         console.log("Server responded with: ", response);
-        setloginClicked(false);
         sessionStorage.setItem("Logged-In", true);
       } else {
         console.log("Server threw an error", response);
@@ -171,6 +170,7 @@ function RegisterorLoginPage({
       setprocessing(false);
       localStorage.setItem("MostRecentLogin", "User-" + dataToUse.username);
       sessionStorage.setItem("Logged-In", true);
+      setLogoutState("Logout");
       await saveClicked();
       return true;
     } else {
@@ -208,6 +208,7 @@ function RegisterorLoginPage({
   }
   async function logoutfunction() {
     sessionStorage.removeItem("admin");
+    setLogoutState("Logging out");
     const logoutCall = await fetch(
       "https://mealbowlapp.onrender.com/databaseTesting/logout/",
       {
@@ -224,8 +225,10 @@ function RegisterorLoginPage({
     if (result.message) {
       setDontSkipLogin(true);
       sessionStorage.setItem("Logged-In", false);
+      updateRegisterData({ name: "username", value: "" }, false);
+      updateRegisterData({ name: "email", value: "" }, false);
+      updateRegisterData({ name: "password", value: "" }, false);
       setManualLogout(true);
-      setloginClicked(true);
       console.log(result.message);
     } else {
       sessionStorage.setItem("Logged-In", true);
@@ -241,9 +244,6 @@ function RegisterorLoginPage({
     sessionStorage.setItem("Logged-In", false);
   }
   function pressed(param) {
-    if (param === "login") {
-      setloginClicked(!loginClicked);
-    }
     if (param === "logout") {
       logoutfunction();
     }
@@ -313,21 +313,16 @@ function RegisterorLoginPage({
       <div className={LoginStyles.flexedLogin}>
         {!JSON.parse(sessionStorage.getItem("Logged-In")) ? (
           DontSkipLogin ? (
-            <h2 onClick={() => pressed("login")} className="clickable">
-              Login
-            </h2>
+            <h2 className="clickable">Login</h2>
           ) : (
-            <h2 onClick={() => pressed("login")} className="clickable">
-              Signup
-            </h2>
+            <h2 className="clickable">Signup</h2>
           )
         ) : (
           <h2 onClick={() => pressed("logout")} className="clickable">
-            Logout
+            {LogoutState}
           </h2>
         )}
         {!JSON.parse(sessionStorage.getItem("Logged-In")) &&
-          loginClicked &&
           (DontSkipLogin ? (
             <>
               <br></br>
