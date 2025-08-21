@@ -150,85 +150,6 @@ body {
   font-size: 20px;
   color: blue;
 }
-.container {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin: 30px auto;
-}
-.arrangeBowls {
-  margin-left: var(--pushToRight);
-  margin-top: 100px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: var(--gap);
-  flex-wrap: wrap;
-}
-.loginLink {
-  font-size: 1.5em;
-  text-decoration: none;
-}
-.placeContactLink {
-  position: relative;
-  background-image: linear-gradient(to right, red, orange, yellow);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: max-content;
-  padding: 10px;
-  text-decoration: none;
-  font-size: 1.5em;
-  left: 40%;
-  border-radius: 20px;
-}
-.flexedLogin {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-image: linear-gradient(to right, red, orange, yellow);
-  gap: 0.4em;
-  font-size: 1.5em;
-  border-radius: 20px;
-  padding: 0.05em 0.1em;
-  text-align: center;
-  left: 70%;
-  margin: 30px auto;
-  top: -120px;
-  z-index: 2000;
-}
-.contactPlacement {
-  position: relative;
-  z-index: 2000;
-  left: 0%;
-  display: block;
-  font-size: 1.5em;
-  background-image: linear-gradient(to right, pink, purple, yellow);
-  border-radius: 20px;
-  width: max-content;
-  padding: 0.05em 0.1em;
-  text-align: center;
-  margin: 30px auto;
-}
-.admin {
-  text-decoration: none;
-  position: absolute;
-  z-index: 2000;
-  left: 30%;
-  top: 50%;
-  display: block;
-  font-size: 1.5em;
-  background-image: linear-gradient(150deg, #b92b27, #1565c0);
-  border-radius: 20px;
-  width: max-content;
-  padding: 0.05em 0.1em;
-  text-align: center;
-  margin: 30px auto;
-}
 .banner {
   position: relative;
   z-index: 1000;
@@ -269,14 +190,69 @@ body {
   margin-bottom: 100px;
   background-image: linear-gradient(135deg, #a8edea, #fed6e3);
 }
-.contactPlacementChildAlign {
+
+.container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5% auto;
+  flex-wrap: wrap;
+}
+.container > * {
+  font-size: 1.5em;
+  border-radius: 20px;
+  flex: 0 0 48%;
+  margin-bottom: 4%;
+}
+.flexedLogin {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  font-size: 1.2em;
-  gap: 0.1px;
-  margin-top: 10px;
+  text-align: center;
+  z-index: 2000;
 }
+.loginLink {
+  text-decoration: none;
+  background-image: linear-gradient(to right, red, orange, yellow);
+  width: max-content;
+  text-decoration: none;
+}
+.admin {
+  text-decoration: none;
+  z-index: 2000;
+  display: block;
+  background-image: linear-gradient(150deg, #b92b27, #1565c0);
+  width: max-content;
+  height: max-content;
+  text-align: center;
+}
+.MainCheckout {
+  background-color: pink;
+  position: relative;
+}
+
+.placeContactLink {
+  background-image: linear-gradient(to right, red, orange, yellow);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: max-content;
+  text-decoration: none;
+}
+
+.arrangeBowls {
+  margin-left: var(--pushToRight);
+  margin-top: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: var(--gap);
+  flex-wrap: wrap;
+}
+
 .link:link {
   color: blue;
 }

@@ -71,18 +71,6 @@ function RenderBowls({
         brings you balanced meals, with lots of options, all bursting with
         flavours
       </p>
-      {sessionStorage.getItem("CheckoutData") &&
-        JSON.parse(sessionStorage.getItem("Logged-In", true)) &&
-        !reShowSave && (
-          <Link to={`/checkout`}>
-            <button hidden={processing} className="MainCheckout">
-              🛒 Checkout
-            </button>
-          </Link>
-        )}
-      <Link to={"/contact"} className={HomepageStyles.placeContactLink}>
-        📞 Contact
-      </Link>
       <div className={HomepageStyles.container}>
         <div className={HomepageStyles.flexedLogin}>
           <Link to={"/loginPage"} className={HomepageStyles.loginLink}>
@@ -100,6 +88,21 @@ function RenderBowls({
               </Link>
             </div>
           )}
+        {sessionStorage.getItem("CheckoutData") &&
+          JSON.parse(sessionStorage.getItem("Logged-In", true)) &&
+          !reShowSave && (
+            <Link to={`/checkout`}>
+              <button
+                hidden={processing}
+                className={HomepageStyles.MainCheckout}
+              >
+                🛒 Checkout
+              </button>
+            </Link>
+          )}
+        <Link to={"/contact"} className={HomepageStyles.placeContactLink}>
+          📞 Contact
+        </Link>
       </div>
 
       <div className={HomepageStyles.bowlTextContainer}>
@@ -119,9 +122,6 @@ function RenderBowls({
           <span>s</span>
         </div>
       </div>
-      <Link to={`/checkout`}>
-        <button className="Checkout">Checkout</button>
-      </Link>
       <div id="Bowls" className={HomepageStyles.arrangeBowls}>
         <BowlImage
           name="Soya Chunk High-Protein Bowl"
