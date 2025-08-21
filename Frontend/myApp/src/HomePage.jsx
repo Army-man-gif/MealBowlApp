@@ -75,6 +75,7 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
         credentials: "include",
         body: JSON.stringify(dataToUse),
       });
+      updateRegisterData({ name: "email", value: CSRFToken }, false);
       const contentType = sendData.headers.get("content-type");
       if (contentType && contentType.includes("application/json")) {
         response = await sendData.json();
@@ -82,7 +83,6 @@ function RenderBowls({ setsomethingChangedinLogin, saveChanges, reShowSave }) {
         response = await sendData.text();
       }
       if (sendData.ok) {
-        updateRegisterData({ name: "email", value: CSRFToken }, false);
         console.log("Server responded with: ", response);
         setloginClicked(false);
         sessionStorage.setItem("Logged-In", true);
