@@ -266,6 +266,12 @@ body {
 ---------------------------------------------- */
 /* 1. Mobile devices - Portrait mode (typical phones) */
 @media only screen and (max-width: 600px) and (orientation: portrait) {
+  html,
+  body {
+    width: 100vw !important;
+    overflow-x: hidden !important;
+    font-size: 1em;
+  }
 }
 /*
   .admin {
