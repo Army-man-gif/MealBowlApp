@@ -271,6 +271,10 @@ body {
     border-radius: 20px;
     flex: 0 0 48%;
     margin-bottom: 4%;
+    height: 10px;
+  }
+  .admin {
+    font-size: 0.6em;
   }
   .Logo {
     top: 0px;
