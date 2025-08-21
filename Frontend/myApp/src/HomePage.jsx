@@ -14,6 +14,7 @@ import logo from "./assets/logo.png";
 
 //import { setCookie, getCookieFromBrowser } from "./auth.js";
 import { Link } from "react-router-dom";
+let initial = true;
 function RenderBowls({
   setsomethingChangedinLogin,
   saveChanges,
@@ -26,7 +27,6 @@ function RenderBowls({
   setText,
 }) {
   const [contactClicked, setcontactClicked] = useState(false);
-  const initial = useRef(true);
   const isMounted = useRef(false);
 
   useEffect(() => {
@@ -49,12 +49,12 @@ function RenderBowls({
   }
 
   useEffect(() => {
-    if (!initial.current) {
+    if (!initial) {
       (async () => {
         await saveClicked();
       })();
     } else {
-      initial.current = false;
+      initial = false;
     }
   }, [reShowSave]);
 
