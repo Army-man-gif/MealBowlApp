@@ -93,32 +93,14 @@ function RenderBowls({
             </button>
           </Link>
         )}
-
-      <div className={HomepageStyles.contactPlacement}>
-        <h2 onClick={() => pressed("contact")} className="clickable">
-          📞 Contact us{" "}
-        </h2>
-        {contactClicked && (
-          <div className={HomepageStyles.contactPlacementChildAlign}>
-            <p>Owner: Jyoti Sharma</p>
-            <p>Email: gobbledygook@gmail.com</p>
-            <p>Phone number: 05406405640606</p>
-          </div>
-        )}
-      </div>
+      <Link to={"/contact"} className={HomepageStyles.placeContactLink}>
+        Contact
+      </Link>
       <div className={HomepageStyles.container}>
         <div className={HomepageStyles.flexedLogin}>
-          <LoginFeature
-            setsomethingChangedinLogin={setsomethingChangedinLogin}
-            saveChanges={saveChanges}
-            reShowSave={reShowSave}
-            save={save}
-            setSave={setSave}
-            processing={processing}
-            setprocessing={setprocessing}
-            text={text}
-            setText={setText}
-          />
+          <Link to={"/loginPage"} className={HomepageStyles.loginLink}>
+            Login/Register Page
+          </Link>
         </div>
         {JSON.parse(sessionStorage.getItem("admin", true)) &&
           sessionStorage.getItem("AdminData") &&

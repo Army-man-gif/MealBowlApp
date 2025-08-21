@@ -1,7 +1,9 @@
 import RenderBowls from "./HomePage.jsx";
 import Contents from "./SpecificBowlContents.jsx";
+import Contact from "./Contact.jsx";
 import MainCheckout from "./MainCheckout.jsx";
 import AdminPage from "./Admin.jsx";
+import LoginFeature from "./LoginLogic.jsx";
 
 import "./globalStyles.css";
 import "./variables.css";
@@ -133,6 +135,42 @@ function App() {
             path="/checkout"
             element={
               <MainCheckout
+                somethingChangedinLogin={somethingChangedinLogin}
+                setsomethingChangedinLogin={setsomethingChangedinLogin}
+                saveChanges={saveChanges}
+                reShowSave={reShowSave}
+                setreShowSave={setreShowSave}
+                save={save}
+                setSave={setSave}
+                processing={processing}
+                setprocessing={setprocessing}
+                text={text}
+                setText={setText}
+              />
+            }
+          ></Route>
+          <Route
+            path="/loginPage"
+            element={
+              <LoginFeature
+                somethingChangedinLogin={somethingChangedinLogin}
+                setsomethingChangedinLogin={setsomethingChangedinLogin}
+                saveChanges={saveChanges}
+                reShowSave={reShowSave}
+                setreShowSave={setreShowSave}
+                save={save}
+                setSave={setSave}
+                processing={processing}
+                setprocessing={setprocessing}
+                text={text}
+                setText={setText}
+              />
+            }
+          ></Route>
+          <Route
+            path="/contact"
+            element={
+              <Contact
                 somethingChangedinLogin={somethingChangedinLogin}
                 setsomethingChangedinLogin={setsomethingChangedinLogin}
                 saveChanges={saveChanges}

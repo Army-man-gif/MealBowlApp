@@ -1,4 +1,3 @@
-import HomepageStyles from "./HomePage.module.css";
 import { setCookie, getCookieFromBrowser } from "./auth.js";
 import { useState, useEffect, useRef, use } from "react";
 
