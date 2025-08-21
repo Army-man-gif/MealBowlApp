@@ -242,9 +242,6 @@ function RegisterorLoginPage({
     sessionStorage.setItem("Logged-In", false);
   }
   function pressed(param) {
-    if (param === "contact") {
-      setcontactClicked(!contactClicked);
-    }
     if (param === "login") {
       setloginClicked(!loginClicked);
     }
