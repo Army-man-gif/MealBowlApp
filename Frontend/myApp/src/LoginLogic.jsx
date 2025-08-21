@@ -1,6 +1,6 @@
 import { setCookie, getCookieFromBrowser } from "./auth.js";
-import { useState, useEffect, useRef, use } from "react";
-
+import { useState, useEffect, useRef } from "react";
+import LoginStyles from "./Login.module.css";
 let initial = true;
 function RegisterorLoginPage({
   setsomethingChangedinLogin,
@@ -310,127 +310,129 @@ function RegisterorLoginPage({
 
   return (
     <>
-      {!JSON.parse(sessionStorage.getItem("Logged-In")) ? (
-        DontSkipLogin ? (
-          <h2 onClick={() => pressed("login")} className="clickable">
-            Login
-          </h2>
+      <div className={LoginStyles.flexedLogin}>
+        {!JSON.parse(sessionStorage.getItem("Logged-In")) ? (
+          DontSkipLogin ? (
+            <h2 onClick={() => pressed("login")} className="clickable">
+              Login
+            </h2>
+          ) : (
+            <h2 onClick={() => pressed("login")} className="clickable">
+              Signup
+            </h2>
+          )
         ) : (
-          <h2 onClick={() => pressed("login")} className="clickable">
-            Signup
+          <h2 onClick={() => pressed("logout")} className="clickable">
+            Logout
           </h2>
-        )
-      ) : (
-        <h2 onClick={() => pressed("logout")} className="clickable">
-          Logout
-        </h2>
-      )}
-      {!JSON.parse(sessionStorage.getItem("Logged-In")) &&
-        loginClicked &&
-        (DontSkipLogin ? (
-          <>
-            <br></br>
-            <label htmlFor="username">Enter username: </label>
-            <input
-              className={HomepageStyles.rounded}
-              value={registerData.username || ""}
-              id="username"
-              type="text"
-              name="username"
-              placeholder="Enter username here"
-              disabled={processing}
-              onChange={(e) => updateRegisterData(e, true)}
-            />
-            <label htmlFor="email">Enter email: </label>
-            <input
-              className={HomepageStyles.rounded}
-              value={registerData.email || ""}
-              id="email"
-              name="email"
-              type="email"
-              placeholder="Enter email here"
-              disabled={processing}
-              onChange={(e) => updateRegisterData(e, true)}
-            />
-            <label htmlFor="password">Enter password: </label>
-            <input
-              className={HomepageStyles.rounded}
-              value={registerData.password || ""}
-              id="password"
-              type="password"
-              name="password"
-              placeholder="Enter password here"
-              disabled={processing}
-              onChange={(e) => updateRegisterData(e, true)}
-            />
-            <button
-              type="button"
-              onClick={verifyUsingDatabase}
-              disabled={processing}
-            >
-              {processing ? "Please wait...." : "Login"}
-            </button>
-            <button
-              type="button"
-              onClick={redirectToRegister}
-              disabled={processing}
-            >
-              Create account
-            </button>
-          </>
-        ) : (
-          <>
-            <br></br>
-            <label htmlFor="username">Enter username: </label>
-            <input
-              className={HomepageStyles.rounded}
-              value={registerData.username || ""}
-              id="username"
-              name="username"
-              type="text"
-              placeholder="Enter username here"
-              disabled={processing}
-              onChange={(e) => updateRegisterData(e, true)}
-            />
-            <label htmlFor="email">Enter email: </label>
-            <input
-              className={HomepageStyles.rounded}
-              value={registerData.email || ""}
-              id="email"
-              name="email"
-              type="email"
-              placeholder="Enter email here"
-              disabled={processing}
-              onChange={(e) => updateRegisterData(e, true)}
-            />
-            <label htmlFor="password">Enter password: </label>
-            <input
-              className={HomepageStyles.rounded}
-              value={registerData.password || ""}
-              id="password"
-              name="password"
-              type="text"
-              placeholder="Enter password here"
-              disabled={processing}
-              onChange={(e) => updateRegisterData(e, true)}
-            />
+        )}
+        {!JSON.parse(sessionStorage.getItem("Logged-In")) &&
+          loginClicked &&
+          (DontSkipLogin ? (
+            <>
+              <br></br>
+              <label htmlFor="username">Enter username: </label>
+              <input
+                className="rounded"
+                value={registerData.username || ""}
+                id="username"
+                type="text"
+                name="username"
+                placeholder="Enter username here"
+                disabled={processing}
+                onChange={(e) => updateRegisterData(e, true)}
+              />
+              <label htmlFor="email">Enter email: </label>
+              <input
+                className="rounded"
+                value={registerData.email || ""}
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Enter email here"
+                disabled={processing}
+                onChange={(e) => updateRegisterData(e, true)}
+              />
+              <label htmlFor="password">Enter password: </label>
+              <input
+                className="rounded"
+                value={registerData.password || ""}
+                id="password"
+                type="password"
+                name="password"
+                placeholder="Enter password here"
+                disabled={processing}
+                onChange={(e) => updateRegisterData(e, true)}
+              />
+              <button
+                type="button"
+                onClick={verifyUsingDatabase}
+                disabled={processing}
+              >
+                {processing ? "Please wait...." : "Login"}
+              </button>
+              <button
+                type="button"
+                onClick={redirectToRegister}
+                disabled={processing}
+              >
+                Create account
+              </button>
+            </>
+          ) : (
+            <>
+              <br></br>
+              <label htmlFor="username">Enter username: </label>
+              <input
+                className="rounded"
+                value={registerData.username || ""}
+                id="username"
+                name="username"
+                type="text"
+                placeholder="Enter username here"
+                disabled={processing}
+                onChange={(e) => updateRegisterData(e, true)}
+              />
+              <label htmlFor="email">Enter email: </label>
+              <input
+                className="rounded"
+                value={registerData.email || ""}
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Enter email here"
+                disabled={processing}
+                onChange={(e) => updateRegisterData(e, true)}
+              />
+              <label htmlFor="password">Enter password: </label>
+              <input
+                className="rounded"
+                value={registerData.password || ""}
+                id="password"
+                name="password"
+                type="text"
+                placeholder="Enter password here"
+                disabled={processing}
+                onChange={(e) => updateRegisterData(e, true)}
+              />
 
-            <button
-              type="button"
-              onClick={() => register()}
-              disabled={processing}
-            >
-              {processing ? "Please wait...." : "Signup"}
-            </button>
-            <button
-              type="button"
-              onClick={redirectToLogin}
-              disabled={processing}
-            >
-              Login to account
-            </button>
-          </>
-        ))}
+              <button
+                type="button"
+                onClick={() => register()}
+                disabled={processing}
+              >
+                {processing ? "Please wait...." : "Signup"}
+              </button>
+              <button
+                type="button"
+                onClick={redirectToLogin}
+                disabled={processing}
+              >
+                Login to account
+              </button>
+            </>
+          ))}
+      </div>
     </>
   );
 }

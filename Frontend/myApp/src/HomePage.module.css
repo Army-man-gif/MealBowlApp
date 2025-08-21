@@ -186,11 +186,11 @@ body {
 }
 .flexedLogin {
   position: absolute;
-  background-image: linear-gradient(to right, red, orange, yellow);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-image: linear-gradient(to right, red, orange, yellow);
   gap: 0.4em;
   font-size: 1.5em;
   border-radius: 20px;

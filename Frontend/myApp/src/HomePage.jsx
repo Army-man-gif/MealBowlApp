@@ -94,7 +94,7 @@ function RenderBowls({
           </Link>
         )}
       <Link to={"/contact"} className={HomepageStyles.placeContactLink}>
-        Contact
+        📞 Contact
       </Link>
       <div className={HomepageStyles.container}>
         <div className={HomepageStyles.flexedLogin}>
