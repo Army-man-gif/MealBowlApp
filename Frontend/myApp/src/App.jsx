@@ -28,12 +28,10 @@ function App() {
     } else {
       getAllresult = await getAll.text();
     }
-    if (
-      getAll.ok &&
-      getAllresult &&
-      !getAllresult.error &&
-      Object.keys(getAllresult).length !== 0
-    ) {
+    if (Object.keys(getAllresult).length === 0) {
+      getAllresult = {};
+    }
+    if (getAll.ok && getAllresult && !getAllresult.error) {
       sessionStorage.setItem("CheckoutData", JSON.stringify(getAllresult));
     }
   }
@@ -64,20 +62,16 @@ function App() {
     } else {
       getPricesresult = await getPrices.text();
     }
-    if (
-      getAll.ok &&
-      getAllresult &&
-      !getAllresult.error &&
-      Object.keys(getAllresult).length !== 0
-    ) {
+    if (Object.keys(getAllresult).length === 0) {
+      getAllresult = {};
+    }
+    if (Object.keys(getPricesresult).length === 0) {
+      getPricesresult = {};
+    }
+    if (getAll.ok && getAllresult && !getAllresult.error) {
       sessionStorage.setItem("AdminData", JSON.stringify(getAllresult));
     }
-    if (
-      getPrices.ok &&
-      getPricesresult &&
-      !getPricesresult.error &&
-      Object.keys(getAllresult).length !== 0
-    ) {
+    if (getPrices.ok && getPricesresult && !getPricesresult.error) {
       sessionStorage.setItem("AdminPriceData", JSON.stringify(getPricesresult));
     }
   }
