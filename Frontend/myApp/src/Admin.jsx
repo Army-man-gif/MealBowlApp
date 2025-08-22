@@ -35,21 +35,12 @@ function AdminPage() {
     sessionStorage.setItem("AdminPriceData", JSON.stringify(getPricesresult));
   }
   async function render() {
-    const tryToPullAdminDataFromLocal = JSON.parse(
-      sessionStorage.getItem("AdminData"),
-    );
-    const tryToPullPriceDataFromLocal = JSON.parse(
-      sessionStorage.getItem("AdminPriceData"),
-    );
-    if (Object.keys(tryToPullAdminDataFromLocal).length !== 0) {
-      getAllresult = tryToPullAdminDataFromLocal;
-    }
-    if (Object.keys(tryToPullPriceDataFromLocal).length !== 0) {
-      getPricesresult = tryToPullPriceDataFromLocal;
-    }
-    if (getAllresult == null || getPricesresult == null) {
-      await callAdminData();
-    }
+    const tryToPullAdminDataFromLocal =
+      JSON.parse(sessionStorage.getItem("AdminData")) ?? {};
+    getAllresult = tryToPullAdminDataFromLocal;
+    const tryToPullPriceDataFromLocal =
+      JSON.parse(sessionStorage.getItem("AdminPriceData")) ?? {};
+    getPricesresult = tryToPullPriceDataFromLocal;
     let max = 0;
     const users = Object.keys(getAllresult).length;
     for (const key of Object.keys(getAllresult)) {
