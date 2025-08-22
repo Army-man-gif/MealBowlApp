@@ -124,6 +124,8 @@ function AdminPage() {
           gridTemplateRows: Array(rows).fill("1fr").join(" "),
           gridTemplateColumns: "1fr 3fr",
           rowGap: "50px",
+          position: "absolute",
+          left: "50%",
         }}
       >
         {allData}
