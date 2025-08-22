@@ -278,6 +278,7 @@ body {
   }
   .loginLink {
     padding: 20px, 20px;
+    border-radius: 20px;
   }
   .MainCheckout {
     font-size: 1.7em;
