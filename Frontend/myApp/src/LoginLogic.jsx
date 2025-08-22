@@ -133,6 +133,10 @@ function RegisterorLoginPage({
         sessionStorage.setItem("Logged-In", true);
         const admin = await checkAdmin();
         setsomethingChangedinLogin((prev) => prev + 1);
+        localStorage.setItem(
+          "MostRecentLogin",
+          "User-" + registerData.username,
+        );
         if (admin) {
           sessionStorage.setItem("admin", true);
         } else {
@@ -197,6 +201,7 @@ function RegisterorLoginPage({
       );
       setprocessing(false);
       localStorage.setItem("MostRecentLogin", "User-" + dataToUse.username);
+      console.log("Set mostrecentlogin");
       sessionStorage.setItem("Logged-In", true);
       setLogoutState("Logout");
       await saveClicked();
