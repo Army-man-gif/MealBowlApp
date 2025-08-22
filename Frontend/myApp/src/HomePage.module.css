@@ -215,7 +215,7 @@ body {
   text-decoration: none;
   z-index: 2000;
   font-size: 0.8em;
-  background-image: linear-gradient(150deg, #b92b27, #1565c0);
+  background-image: linear-gradient(to right, red, orange, yellow);
   width: max-content;
   height: max-content;
   text-align: center;
@@ -276,6 +276,12 @@ body {
   .admin {
     font-size: 0.6em;
   }
+  .loginLink {
+    padding: 10px, 10px;
+  }
+  .MainCheckout {
+    font-size: 1.7em;
+  }
   .Logo {
     top: 0px;
     width: 80px;
@@ -291,6 +297,7 @@ body {
   }
   .caption {
     font-size: 0.5em;
+    top: 5%;
   }
   .captionSecond {
     font-size: 1.3em;
@@ -301,47 +308,3 @@ body {
     margin-top: 0.5em;
   }
 }
-/*
-  .admin {
-    position: absolute;
-    z-index: 2000;
-    left: 30%;
-    top: 10%;
-    display: block;
-    font-size: 0.6em;
-    background-image: linear-gradient(150deg, #b92b27, #1565c0);
-    border-radius: 20px;
-    width: max-content;
-    padding: 0.05em 0.1em;
-    text-align: center;
-    margin: 30px auto;
-  }
-  .html {
-    font-size: 6%;
-  }
-  .bowlTextContainer {
-    width: 30rem;
-  }
-  :root {
-    --BowlContainerFontSize: 20rem;
-  }
-  .formatExploreBowls {
-    font-size: 2em;
-    left: -40%;
-  }
-  .arrangeBowls {
-    margin-top: -30px;
-    flex-direction: column;
-    margin-left: 0px;
-  }
-  .contactPlacement {
-    font-size: 0.6em;
-    top: -50px;
-  }
-  .flexedLogin {
-    left: 9%;
-    font-size: 0.6em;
-    top: -50px;
-  }
-
-  */
