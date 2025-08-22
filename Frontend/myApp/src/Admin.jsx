@@ -110,6 +110,7 @@ function AdminPage() {
           <hr
             key={`HorizontalLine-${key}-${i}`}
             style={{
+              background: "aquamarine",
               gridColumn: "1 / -1", // remove this line and put width: x% for non full screen line
               border: "none",
               borderTop: "1px solid red",
