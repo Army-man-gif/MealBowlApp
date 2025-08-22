@@ -1,22 +1,14 @@
-.html {
-  background-image: linear-gradient(to right, red, orange, yellow);
-}
 .contact {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: max-content;
-  gap: 0.4em;
+  background-image: linear-gradient(to right, red, orange, yellow);
   font-size: 1.5em;
-  left: 40%;
-  padding: 0.05em 0.1em;
   text-align: center;
-  z-index: 2000;
+  min-width: 100vw;
+  min-height: 100vh;
 }
 @media only screen and (max-width: 600px) and (orientation: portrait) {
-  .contact {
-    left: 0%;
-  }
 }
