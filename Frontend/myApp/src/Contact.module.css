@@ -16,6 +16,6 @@
 }
 @media only screen and (max-width: 600px) and (orientation: portrait) {
   .contact {
-    left: 10%;
+    left: 0%;
   }
 }
