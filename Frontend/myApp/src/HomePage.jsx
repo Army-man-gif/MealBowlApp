@@ -64,7 +64,8 @@ function RenderBowls({
   }
   useEffect(() => {
     (async () => {
-      await ensureCSRFToken();
+      const tok = await ensureCSRFToken();
+      console.log("Token set:", tok);
     })();
   }, []);
   return (
