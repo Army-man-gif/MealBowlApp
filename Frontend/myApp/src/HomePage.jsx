@@ -96,8 +96,6 @@ function RenderBowls({
           </Link>
         </div>
         {JSON.parse(sessionStorage.getItem("admin", true)) &&
-          sessionStorage.getItem("AdminData") &&
-          sessionStorage.getItem("AdminPriceData") &&
           JSON.parse(sessionStorage.getItem("Logged-In", true)) &&
           !reShowSave && (
             <div className={HomepageStyles.admin}>
@@ -106,8 +104,7 @@ function RenderBowls({
               </Link>
             </div>
           )}
-        {sessionStorage.getItem("CheckoutData") &&
-          JSON.parse(sessionStorage.getItem("Logged-In", true)) &&
+        {JSON.parse(sessionStorage.getItem("Logged-In", true)) &&
           !reShowSave && (
             <Link to={`/checkout`}>
               <button
