@@ -202,7 +202,8 @@ function MainCheckout({
       const usernameKey = localStorage
         .getItem("MostRecentLogin")
         .replace("User-", "");
-      const userDataLocal = tryToPullCheckoutDataFromLocal[usernameKey];
+      const userDataLocal = tryToPullCheckoutDataFromLocal[usernameKey] ?? {};
+      console.log("", userDataLocal);
       setUserData(userDataLocal);
       const initialCur = {};
       Object.entries(userDataLocal).forEach(([key2, value2]) => {
@@ -279,7 +280,10 @@ function MainCheckout({
             </React.Fragment>
           ) : null,
         )}
-        <div>Basket total: {trackPrice ?? userData["TotalPrice"]}</div>
+        {Object.keys(userData).length !== 0 && (
+          <div>Basket total: {trackPrice ?? userData["TotalPrice"]}</div>
+        )}
+        {Object.keys(userData).length === 0 && <div>No data at the moment</div>}
       </div>
     </>
   );

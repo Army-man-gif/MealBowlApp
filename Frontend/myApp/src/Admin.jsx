@@ -53,7 +53,16 @@ function AdminPage() {
     let renderingData = [];
     setRows(max * 3 + users);
     Object.entries(getAllresult).forEach(([key, value], i) => {
-      renderingData.push(<div key={`User-${key}-${i}`}>{key}</div>);
+      renderingData.push(
+        <div
+          style={{ gridColumn: "1", position: "relative", left: "50%" }}
+          key={`User-${key}-${i}`}
+        >
+          <b>
+            <u>{key}</u>
+          </b>
+        </div>,
+      );
       Object.entries(value).forEach(([key2, value2], j) => {
         renderingData.push(
           <div
@@ -92,7 +101,7 @@ function AdminPage() {
         );
       });
       renderingData.push(
-        <div key={`BasketPrice-User-${key}-${i}`}>
+        <div style={{ color: "blue" }} key={`BasketPrice-User-${key}-${i}`}>
           Basket total: {getPricesresult[key]["price"]}
         </div>,
       );
@@ -129,7 +138,11 @@ function AdminPage() {
           rowGap: "50px",
         }}
       >
-        {allData}
+        {allData.length > 0 ? (
+          allData
+        ) : (
+          <div>No user has added any orders yet</div>
+        )}
       </div>
     </>
   );
