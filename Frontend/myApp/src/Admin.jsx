@@ -66,7 +66,7 @@ function AdminPage() {
       Object.entries(value).forEach(([key2, value2], j) => {
         renderingData.push(
           <div
-            style={{ gridColumn: "1", position: "absolute", left: "50%" }}
+            style={{ gridColumn: "1", position: "relative", left: "50%" }}
             key={`BowlName-${key}-${key2}-${j}`}
           >
             {key2}
@@ -74,7 +74,7 @@ function AdminPage() {
         );
         renderingData.push(
           <div
-            style={{ gridColumn: "1", position: "absolute", left: "50%" }}
+            style={{ gridColumn: "1", position: "relative", left: "50%" }}
             key={`NoOfBowls-${key}-${key2}-${j}`}
           >
             Number of bowls: {value2["NumberofBowls"]}
@@ -82,7 +82,7 @@ function AdminPage() {
         );
         renderingData.push(
           <div
-            style={{ gridColumn: "1", position: "absolute", left: "50%" }}
+            style={{ gridColumn: "1", position: "relative", left: "50%" }}
             key={`Price-${key}-${key2}-${j}`}
           >
             Price of this part of the order: {value2["Price"]}
@@ -94,7 +94,7 @@ function AdminPage() {
             style={{
               gridColumn: "1 / -1",
               height: "20px",
-              position: "absolute",
+              position: "relative",
               left: "50%",
             }}
           ></div>,
