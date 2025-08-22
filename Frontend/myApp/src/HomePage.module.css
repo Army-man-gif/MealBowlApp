@@ -277,7 +277,7 @@ body {
     font-size: 0.6em;
   }
   .loginLink {
-    padding: 10px, 10px;
+    padding: 20px, 20px;
   }
   .MainCheckout {
     font-size: 1.7em;
@@ -297,7 +297,7 @@ body {
   }
   .caption {
     font-size: 0.5em;
-    top: 5%;
+    top: 10%;
   }
   .captionSecond {
     font-size: 1.3em;
