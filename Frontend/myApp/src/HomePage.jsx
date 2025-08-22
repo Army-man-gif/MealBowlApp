@@ -92,7 +92,7 @@ function RenderBowls({
       <div className={HomepageStyles.container}>
         <div>
           <Link to={"/loginPage"} className={HomepageStyles.loginLink}>
-            👤 Login/Register 📋
+            👤 Login/Register
           </Link>
         </div>
         {JSON.parse(sessionStorage.getItem("admin", true)) &&
