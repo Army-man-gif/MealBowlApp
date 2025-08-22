@@ -187,10 +187,12 @@ function MainCheckout({
     setEmpty(false);
     async function fetchData() {
       try {
-        tryToPullCheckoutDataFromLocal = JSON.parse(
-          sessionStorage.getItem("CheckoutData"),
-        );
-        if (Object.keys(tryToPullCheckoutDataFromLocal).length !== 0) {
+        tryToPullCheckoutDataFromLocal =
+          JSON.parse(sessionStorage.getItem("CheckoutData")) ?? {};
+        if (
+          tryToPullCheckoutDataFromLocal &&
+          Object.keys(tryToPullCheckoutDataFromLocal).length !== 0
+        ) {
           setCheckoutData(tryToPullCheckoutDataFromLocal);
         } else {
           emptyLocal = true;
