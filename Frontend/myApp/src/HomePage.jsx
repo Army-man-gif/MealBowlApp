@@ -12,7 +12,7 @@ import bowl7 from "./assets/bowl7.jpg";
 import bowl8 from "./assets/Rajma-Chickpea superfood bowl.jpg";
 import logo from "./assets/logo.png";
 
-//import { setCookie, getCookieFromBrowser } from "./auth.js";
+import { setCookie, getCookieFromBrowser } from "./auth.js";
 import { Link } from "react-router-dom";
 function RenderBowls({
   saveChanges,
@@ -49,7 +49,24 @@ function RenderBowls({
       })();
     }
   }, [reShowSave]);
-
+  async function ensureCSRFToken() {
+    let token = await getCookieFromBrowser("csrftoken");
+    if (!token) {
+      await setCookie();
+      // wait until cookie actually exists
+      for (let i = 0; i < 10; i++) {
+        token = await getCookieFromBrowser("csrftoken");
+        if (token) break;
+        await new Promise((r) => setTimeout(r, 100)); // wait 100ms
+      }
+    }
+    return token;
+  }
+  useEffect(() => {
+    (async () => {
+      await ensureCSRFToken();
+    })();
+  }, []);
   return (
     <>
       {reShowSave && <div className="syncText">{text}</div>}
