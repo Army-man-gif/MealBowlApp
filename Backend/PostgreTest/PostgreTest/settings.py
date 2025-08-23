@@ -90,6 +90,7 @@ WSGI_APPLICATION = "PostgreTest.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 import dj_database_url
+import os
 DATABASES = {
     "sqliteConfig": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -103,7 +104,9 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '5432',
     },
-    "default": dj_database_url.parse("postgresql://postgres.qfmnqshhouwerdicukwq:Toothless1.2.3.4@aws-0-eu-west-2.pooler.supabase.com:5432/postgres")
+    "default": dj_database_url.config(
+        default=os.environ.get("DATABASE_URL")
+    )
 }
 
 
