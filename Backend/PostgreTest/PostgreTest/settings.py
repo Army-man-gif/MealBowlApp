@@ -18,14 +18,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
+import dj_database_url
+import os
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-ty#)4xji9edd_5%eva8%%ipo1z5hti1&%$mw+8(0z!o8(fjvhr"
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["mealbowlapp.onrender.com", "localhost", "127.0.0.1","http://127.0.0.1:8000/"]
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
 
 
 # Application definition
@@ -58,15 +59,12 @@ CSRF_COOKIE_HTTPONLY = False
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_SAMESITE = "None"
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:5173","https://army-man-gif.github.io"]
+CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS", "").split(",")
 
 CORS_ALLOW_CREDENTIALS = True
 SECURE_SSL_REDIRECT = True
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://mealbowlapp.onrender.com",
-    "http://localhost:5173",
-    "https://army-man-gif.github.io"]
+CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_ALLOWED_ORIGINS", "").split(",")
 ROOT_URLCONF = "PostgreTest.urls"
 
 TEMPLATES = [
@@ -89,8 +87,7 @@ WSGI_APPLICATION = "PostgreTest.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-import dj_database_url
-import os
+
 DATABASES = {
     "sqliteConfig": {
         "ENGINE": "django.db.backends.sqlite3",
