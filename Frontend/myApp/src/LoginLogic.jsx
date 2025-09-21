@@ -62,10 +62,13 @@ function RegisterorLoginPage({
   async function ensureCSRFToken() {
     let token = await getCookieFromBrowser("csrftoken");
     if (!token) {
-      await fetch("http://127.0.0.1:8000/databaseTesting/setToken/", {
-        method: "GET",
-        credentials: "include",
-      });
+      await fetch(
+        "https://mealbowlapp.onrender.com/databaseTesting/setToken/",
+        {
+          method: "GET",
+          credentials: "include",
+        },
+      );
       // wait until cookie actually exists
       for (let i = 0; i < 10; i++) {
         token = await getCookieFromBrowser("csrftoken");

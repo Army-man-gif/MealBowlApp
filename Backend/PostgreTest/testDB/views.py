@@ -24,9 +24,13 @@ from decimal import Decimal
 # -----------------------------------------------------------
 
 def get_csrf_token(request):
+    print("GET /list/getToken/ hit!")
     token = get_token(request)
-    return JsonResponse({"csrftoken": token})
-
+    response = JsonResponse({'csrftoken': token})
+    response.set_cookie(
+        'csrftoken', token, samesite='None', secure=True, httponly=False
+    )
+    return response
 @ensure_csrf_cookie
 @require_GET
 def setToken(request):
